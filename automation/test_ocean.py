@@ -32,7 +32,7 @@ TOKEN_JSON  = Path(os.environ.get("SERENE_TOKEN",  Path.home() / "serene_token.j
 SECRETS     = Path(os.environ.get("SERENE_SECRETS", Path.home() / "client_secrets.json"))
 MUSIC_DIR   = REPO_DIR / "music"
 
-LOOP_HOURS  = 10
+LOOP_HOURS  = 4
 LOOP_SECS   = LOOP_HOURS * 3600
 YT_CATEGORY = "1"   # Film & Animation
 
@@ -109,25 +109,25 @@ def upload_loop(yt, cat, video, music_path):
             f.write(f"file '{vid_tmp}'\n")
 
     # Build metadata
-    title = f"{video['name']} 🌊 | {LOOP_HOURS}-Hour Ocean Ambience | 4K Loop | Calm Veritas"
-    description = f"""{video['name']} — a seamless {LOOP_HOURS}-hour 4K ambient loop.
+    title = f"{video['name']} 🌊 | {LOOP_HOURS}-Hour Ocean Ambience | 1080p Loop | Calm Veritas"
+    description = f"""{video['name']} — a seamless {LOOP_HOURS}-hour ambient loop.
 
 🌊 Pure ocean atmosphere for sleep, focus, and relaxation.
-No ads interruptions · Full 4K Ultra HD · Best with headphones
+No ads interruptions · Full HD · Best with headphones
 
 🌐 More ambient scenes: https://www.calm-veritas.com
 
 Video: Pexels (Free License) | Music: CC0
 
-#ocean #ambient #relaxing #sleep #4K #10hours #calmveritas #waves #nature
+#ocean #ambient #relaxing #sleep #1080p #{LOOP_HOURS}hours #calmveritas #waves #nature
 """
     tags = ["ocean", "ambient", "relaxing", "sleep", "4K", "waves",
             "nature sounds", "10 hours", "calm veritas", "loop", "meditation"]
 
-    # Re-encode at 4Mbps 4K — ~17GB for 10h, fits on 50GB disk
-    # Ambient video looks great even at 4Mbps (slow movement, no fast cuts)
+    # Encode at 1080p 2.5Mbps — ~4.5GB for 4h, fits easily on 50GB disk
+    # Ambient video looks great at 1080p (slow movement, no fast cuts)
     loop_path = Path("/tmp/ocean_loop.mp4")
-    print(f"  Encoding 4K loop at 4Mbps → {loop_path} (~17GB, takes ~30 min)...")
+    print(f"  Encoding 1080p loop at 2.5Mbps → {loop_path} (~4.5GB, takes ~2-4h)...")
 
     music_abs = REPO_DIR / music_path if (music_path and (REPO_DIR / music_path).exists()) else None
 
@@ -138,8 +138,8 @@ Video: Pexels (Free License) | Music: CC0
             "-stream_loop", "-1", "-i", str(music_abs),
             "-t", str(LOOP_SECS),
             "-c:v", "libx264", "-preset", "veryfast",
-            "-b:v", "4000k", "-maxrate", "4000k", "-bufsize", "8000k",
-            "-vf", "scale=3840:2160",
+            "-b:v", "2500k", "-maxrate", "2500k", "-bufsize", "5000k",
+            "-vf", "scale=1920:1080",
             "-c:a", "aac", "-b:a", "192k",
             "-shortest",
             str(loop_path)
@@ -150,8 +150,8 @@ Video: Pexels (Free License) | Music: CC0
             "-f", "concat", "-safe", "0", "-i", str(concat_f),
             "-t", str(LOOP_SECS),
             "-c:v", "libx264", "-preset", "veryfast",
-            "-b:v", "4000k", "-maxrate", "4000k", "-bufsize", "8000k",
-            "-vf", "scale=3840:2160",
+            "-b:v", "2500k", "-maxrate", "2500k", "-bufsize", "5000k",
+            "-vf", "scale=1920:1080",
             "-an",
             str(loop_path)
         ]

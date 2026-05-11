@@ -1,20 +1,24 @@
 #!/usr/bin/env python3
 """
-Calm Veritas — Hetzner Server Daemon
+Calm Veritas — DigitalOcean Server Daemon
 Polls queue.json from GitHub every hour.
-For each pending item: downloads video + music, creates 10-hour loop with FFmpeg,
-uploads to YouTube with SEO title/description/tags, marks as done.
+For each pending item: downloads 4K video + music, creates 10-hour loop with FFmpeg
+(encoded at 4Mbps 4K), uploads to YouTube with SEO metadata, marks as done.
 
 Usage (run as a background service):
     python server_daemon.py
 
 Or with nohup for 24/7:
-    nohup python server_daemon.py >> /var/log/serene_daemon.log 2>&1 &
+    nohup python server_daemon.py >> /var/log/calm-veritas.log 2>&1 &
 
 Requirements:
     pip install google-api-python-client google-auth-oauthlib
 
-Environment / config at top of file.
+Environment variables (set in /etc/environment by setup_server.sh):
+    SERENE_TOKEN     — path to token.json (YouTube OAuth)
+    SERENE_SECRETS   — path to client_secrets.json
+    FREESOUND_TOKEN  — Freesound API token
+    CALM_VERITAS_REPO — path to repo root (default: /root/serene)
 """
 
 import json
@@ -30,23 +34,26 @@ from pathlib import Path
 
 # ─── CONFIG ──────────────────────────────────────────────────────────────────
 
-# Raw GitHub queue URL (update with your repo)
+# Raw GitHub queue URL
 QUEUE_URL = "https://raw.githubusercontent.com/Insomnia95/serene-ambient/main/data/queue.json"
 
-# Local work directory on the Hetzner server
+# Local work directory on the server
 WORK_DIR = Path("/tmp/serene_work")
 
+# Repo root — needed to resolve local music paths (e.g. music/ocean.mp3)
+REPO_DIR = Path(os.environ.get("CALM_VERITAS_REPO", "/root/serene"))
+
 # Path to your token.json (from local OAuth, scp'd to server)
-TOKEN_JSON = Path(os.environ.get("Calm Veritas_TOKEN", Path.home() / "serene_token.json"))
+TOKEN_JSON = Path(os.environ.get("SERENE_TOKEN", Path.home() / "serene_token.json"))
 
 # Path to client_secrets.json
-CLIENT_SECRETS = Path(os.environ.get("Calm Veritas_SECRETS", Path.home() / "client_secrets.json"))
+CLIENT_SECRETS = Path(os.environ.get("SERENE_SECRETS", Path.home() / "client_secrets.json"))
 
 # How often to poll queue (seconds)
 POLL_INTERVAL = 3600  # 1 hour
 
-# Loop length in seconds (10 hours)
-LOOP_SECONDS = 36000
+# Loop length in seconds (4 hours)
+LOOP_SECONDS = 14400
 
 # YouTube category ID for "Film & Animation" (ambient content)
 YT_CATEGORY_ID = "1"
@@ -84,10 +91,10 @@ def get_duration(path):
 
 def make_10h_loop(video_path, audio_path, out_path):
     """
-    Create a 10-hour loop:
-    - If audio_path is provided: mix audio into video, then loop
-    - If no audio: loop video only
-    Uses -c copy where possible for speed.
+    Create a 10-hour 4K loop encoded at 4Mbps (YouTube-ready).
+    - Re-encodes with libx264 at 4Mbps, upscaled to 3840x2160
+    - If audio_path is provided: mixes looped audio at 192k AAC
+    - Output ~17 GB for 10h (fits on 50 GB disk)
     """
     dur = get_duration(video_path)
     repeats = math.ceil(LOOP_SECONDS / dur) + 1
@@ -97,43 +104,39 @@ def make_10h_loop(video_path, audio_path, out_path):
         for _ in range(repeats):
             f.write(f"file '{video_path}'\n")
 
-    log(f"  Building {repeats}x loop (video duration: {dur:.1f}s)...")
+    log(f"  Building {repeats}x loop (source: {dur:.1f}s → {LOOP_SECONDS//3600}h). Encoding at 4Mbps 4K...")
 
     if audio_path and Path(audio_path).exists():
-        # Step 1: make raw video loop (fast, no re-encode)
-        looped_video = out_path.with_suffix(".looped.mp4")
-        subprocess.run([
+        cmd = [
             "ffmpeg", "-y",
             "-f", "concat", "-safe", "0", "-i", str(concat_file),
-            "-t", str(LOOP_SECONDS),
-            "-c", "copy",
-            str(looped_video)
-        ], check=True, capture_output=True)
-
-        # Step 2: mix in audio (loop audio to match video length)
-        subprocess.run([
-            "ffmpeg", "-y",
-            "-i", str(looped_video),
             "-stream_loop", "-1", "-i", str(audio_path),
             "-t", str(LOOP_SECONDS),
-            "-c:v", "copy",
-            "-c:a", "aac", "-b:a", "128k",
+            "-c:v", "libx264", "-preset", "veryfast",
+            "-b:v", "2500k", "-maxrate", "2500k", "-bufsize", "5000k",
+            "-vf", "scale=1920:1080",
+            "-c:a", "aac", "-b:a", "192k",
             "-shortest",
             str(out_path)
-        ], check=True, capture_output=True)
-
-        looped_video.unlink(missing_ok=True)
+        ]
     else:
-        # No audio — loop video only
-        subprocess.run([
+        cmd = [
             "ffmpeg", "-y",
             "-f", "concat", "-safe", "0", "-i", str(concat_file),
             "-t", str(LOOP_SECONDS),
-            "-c", "copy",
+            "-c:v", "libx264", "-preset", "veryfast",
+            "-b:v", "2500k", "-maxrate", "2500k", "-bufsize", "5000k",
+            "-vf", "scale=1920:1080",
+            "-an",
             str(out_path)
-        ], check=True, capture_output=True)
+        ]
 
+    result = subprocess.run(cmd)
     concat_file.unlink(missing_ok=True)
+
+    if result.returncode != 0:
+        raise RuntimeError("FFmpeg encoding failed")
+
     size_gb = os.path.getsize(out_path) / 1024 / 1024 / 1024
     log(f"  ✓ 10-hour loop created: {out_path} ({size_gb:.2f} GB)")
 
@@ -188,7 +191,7 @@ def build_yt_metadata(item):
     kws    = CATEGORY_KEYWORDS.get(cid, [cname.lower()])
 
     title = (
-        f"{vname} {emoji} | 10-Hour Ambient Loop | {mood} | Calm Veritas"
+        f"{vname} {emoji} | 4-Hour Ambient Loop | {mood} | Calm Veritas"
     )
 
     description = f"""{vname} — a beautiful 10-hour ambient loop from Calm Veritas.
@@ -217,7 +220,7 @@ Video source: Pexels (Free License) | Source: Pexels.com
 
     tags = [
         vname, cname, "ambient", "relaxing", "sleep music",
-        "10 hours", "4K", "loop", "Calm Veritas", mood,
+        "4 hours", "4K", "loop", "Calm Veritas", mood,
         "study music", "focus", "meditation", "background",
     ] + kws[:6]
 
@@ -302,25 +305,25 @@ def save_done(done_set):
 def process_item(item, yt):
     vid_id = item.get("id")
     vname  = item.get("name", "Video")
-    src_hd = item.get("src_hd", item.get("src_4k", ""))
-    music  = item.get("music", "")
+    # Prefer 4K source for encoding; fall back to HD
+    src_url = item.get("src_4k") or item.get("src_hd", "")
+    music   = item.get("music", "")   # e.g. "music/ocean.mp3" (relative to repo)
 
-    if not src_hd:
+    if not src_url:
         log(f"  [skip] No video URL for {vid_id}")
         return False
 
     log(f"\n--- Processing: {vname} (id={vid_id}) ---")
     WORK_DIR.mkdir(parents=True, exist_ok=True)
 
-    video_tmp  = WORK_DIR / f"{vid_id}_video.mp4"
-    music_tmp  = WORK_DIR / f"{vid_id}_music.mp3" if music else None
-    loop_out   = WORK_DIR / f"{vid_id}_10h.mp4"
+    video_tmp = WORK_DIR / f"{vid_id}_video.mp4"
+    loop_out  = WORK_DIR / f"{vid_id}_10h.mp4"
 
     try:
-        # Download video
-        download_file(src_hd, video_tmp, "video")
+        # Download 4K video
+        download_file(src_url, video_tmp, "4K video")
 
-        # Download music if it's a URL (skip if it's a local path reference)
+        # Resolve music: relative path from repo (e.g. music/ocean.mp3)
         local_music = None
         if music:
             if music.startswith("http"):
@@ -331,7 +334,13 @@ def process_item(item, yt):
                 except Exception as e:
                     log(f"  [warn] Could not download music: {e}")
             else:
-                log(f"  [info] Music is a local path ({music}) — skipping download")
+                # Local path relative to repo (git pull keeps it fresh)
+                candidate = REPO_DIR / music
+                if candidate.exists():
+                    local_music = candidate
+                    log(f"  ♪ Using local music: {candidate}")
+                else:
+                    log(f"  [warn] Music file not found: {candidate}")
 
         # Create 10h loop
         make_10h_loop(video_tmp, local_music, loop_out)
@@ -351,8 +360,9 @@ def process_item(item, yt):
         return False
 
     finally:
-        # Clean up local files to save disk space
-        for f in [video_tmp, music_tmp, loop_out]:
+        # Clean up local temp files to save disk space
+        # (never delete local_music if it's in the repo, only if it was downloaded to WORK_DIR)
+        for f in [video_tmp, loop_out]:
             if f and Path(f).exists():
                 Path(f).unlink()
                 log(f"  Cleaned up: {f}")
