@@ -336,6 +336,10 @@ body { display:flex; }
     <div class="ov-bot"></div>
     <video id="vid" autoplay muted loop playsinline></video>
     <div id="vid-spinner"><div class="spinner-ring"></div></div>
+    <div id="vid-error" style="display:none;position:absolute;inset:0;align-items:center;justify-content:center;color:rgba(255,255,255,.5);font-size:13px;font-weight:300;letter-spacing:.1em;flex-direction:column;gap:8px;">
+      <span>video unavailable</span>
+      <span style="font-size:10px;opacity:.6">this clip may have been removed from Pexels</span>
+    </div>
     <div class="player-ui" id="player-ui">
       <div class="player-top">
         <div class="player-logo">Calm Veritas</div>
@@ -600,7 +604,7 @@ function openPlayer(cat, v) {
     openCat(cat);
     setTimeout(() => go('pg-cat', 'pg-player'), 400);
   }
-  history.pushState({ page: 'player', catId: cat.id, videoId: v.id }, '', '#play');
+  history.pushState({ page: 'player', catId: cat.id, videoId: v.id }, '', '#' + cat.id + '/' + v.id);
 }
 
 // Spinner hide when playing
@@ -799,6 +803,36 @@ window.addEventListener('popstate', e => {
 });
 // Set initial history state
 history.replaceState({ page: 'home' }, '', window.location.pathname);
+
+/* ── DEEP LINKS (hash routing) ──────────────────── */
+// URL format: /#categoryId/videoId  e.g. /#ocean/16727103
+function resolveHash() {
+  const hash = window.location.hash.replace('#', '');
+  if (!hash) return;
+  const parts = hash.split('/');
+  const catId = parts[0];
+  const videoId = parts[1];
+  const cat = CATEGORIES.find(c => c.id === catId);
+  if (!cat) return;
+  if (videoId) {
+    const v = cat.videos.find(v => String(v.id) === String(videoId));
+    if (v) { openPlayer(cat, v); return; }
+  }
+  openCat(cat);
+}
+// Run on load
+resolveHash();
+
+/* ── VIDEO ERROR HANDLING ───────────────────────── */
+vid.addEventListener('error', () => {
+  spinner.classList.remove('show');
+  const errBox = document.getElementById('vid-error');
+  if (errBox) errBox.style.display = 'flex';
+});
+vid.addEventListener('playing', () => {
+  const errBox = document.getElementById('vid-error');
+  if (errBox) errBox.style.display = 'none';
+});
 </script>
 </body>
 </html>
