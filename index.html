@@ -337,10 +337,6 @@ body { display:flex; }
     <div class="ov-bot"></div>
     <video id="vid" autoplay muted loop playsinline></video>
     <div id="vid-spinner"><div class="spinner-ring"></div></div>
-    <div id="vid-error" style="display:none;position:absolute;inset:0;align-items:center;justify-content:center;color:rgba(255,255,255,.5);font-size:13px;font-weight:300;letter-spacing:.1em;flex-direction:column;gap:8px;">
-      <span>video unavailable</span>
-      <span style="font-size:10px;opacity:.6">this clip may have been removed from Pexels</span>
-    </div>
     <div class="player-ui" id="player-ui">
       <div class="player-top">
         <div class="player-logo">Calm Veritas</div>
@@ -596,8 +592,8 @@ function openPlayer(cat, v) {
   loadVideo(getHDSrc(v.src));
   document.getElementById('player-scene').textContent = cat.emoji + '  ' + cat.name.toUpperCase() + '  ·  ' + v.name;
   document.getElementById('player-quality').textContent = '1080p · Pexels';
-  // Start ambient music for this category
-  setMusic(cat.music, cat.name);
+  // Start ambient music automatically with the video
+  setMusic(cat.music);
   updatePlayerMusicBtn();
   if (!pg('pg-cat').classList.contains('out')) {
     go('pg-cat', 'pg-player');
@@ -708,19 +704,16 @@ document.addEventListener('fullscreenchange', () => {
 
 /* ── MUSIC ──────────────────────────────────────── */
 const bgm = document.getElementById('bgm');
-const musicBtn = document.getElementById('music-btn');
-const musicTrack = document.getElementById('music-track');
 const navMusic = document.getElementById('nav-music');
-let musicOn = true;   // user preference (on/off toggle)
+let musicOn = true;
 let currentMusic = '';
 
 bgm.volume = 0.45;
 
-// Only called when opening a video — starts music for that category
-function setMusic(src, catName) {
+// Start music — called when opening a video player
+function setMusic(src) {
   if (!src) return;
   currentMusic = src;
-  musicTrack.textContent = catName.toLowerCase();
   if (musicOn) {
     bgm.src = src;
     bgm.play().catch(() => {});
@@ -731,13 +724,11 @@ function setMusic(src, catName) {
 function stopMusic() {
   bgm.pause();
   bgm.src = '';
-  musicTrack.textContent = 'off';
 }
 
-// Toggle button in nav and in player
+// Toggle via nav bar or player button
 function toggleMusic() {
   musicOn = !musicOn;
-  musicBtn.classList.toggle('on', musicOn);
   if (musicOn && currentMusic) {
     bgm.src = currentMusic;
     bgm.play().catch(() => {});
@@ -747,8 +738,7 @@ function toggleMusic() {
   updatePlayerMusicBtn();
 }
 
-navMusic.addEventListener('click', toggleMusic);
-musicBtn.classList.toggle('on', musicOn);
+if (navMusic) navMusic.addEventListener('click', toggleMusic);
 
 document.getElementById('nav-logo').addEventListener('click', goHome);
 document.getElementById('cat-back').addEventListener('click', () => { go('pg-cat','pg-home'); setNavActive(null); });
@@ -774,19 +764,9 @@ function go(from, to) {
 const playerMusicBtn = document.getElementById('player-music-btn');
 function updatePlayerMusicBtn() {
   if (!playerMusicBtn) return;
-  playerMusicBtn.textContent = (musicOn && !bgm.paused) ? '♪ on' : '♪ off';
+  playerMusicBtn.textContent = musicOn ? '♪ music off' : '♪ music on';
 }
-playerMusicBtn.addEventListener('click', () => {
-  if (bgm.paused) {
-    musicOn = true;
-    bgm.play().catch(() => {});
-  } else {
-    bgm.pause();
-    musicOn = false;
-  }
-  updatePlayerMusicBtn();
-  musicBtn.classList.toggle('on', musicOn);
-});
+playerMusicBtn.addEventListener('click', toggleMusic);
 
 /* ── BROWSER BACK BUTTON ────────────────────────── */
 window.addEventListener('popstate', e => {
@@ -827,12 +807,16 @@ resolveHash();
 /* ── VIDEO ERROR HANDLING ───────────────────────── */
 vid.addEventListener('error', () => {
   spinner.classList.remove('show');
-  const errBox = document.getElementById('vid-error');
-  if (errBox) errBox.style.display = 'flex';
-});
-vid.addEventListener('playing', () => {
-  const errBox = document.getElementById('vid-error');
-  if (errBox) errBox.style.display = 'none';
+  stopMusic();
+  // Remove broken video from category and go back
+  if (currentCat && currentVideo) {
+    currentCat.videos = currentCat.videos.filter(v => v.id !== currentVideo.id);
+  }
+  stopVideo();
+  go('pg-player', 'pg-cat');
+  history.replaceState({ page: 'cat', catId: currentCat?.id }, '', '#' + (currentCat?.id || ''));
+  // Rebuild grid without the broken video
+  if (currentCat) openCat(currentCat);
 });
 </script>
 </body>
