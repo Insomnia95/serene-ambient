@@ -124,34 +124,45 @@ Video: Pexels (Free License) | Music: CC0
     tags = ["ocean", "ambient", "relaxing", "sleep", "4K", "waves",
             "nature sounds", "10 hours", "calm veritas", "loop", "meditation"]
 
-    # Use named pipe to avoid writing 30GB to disk
-    pipe_path = tmp_dir / "loop_pipe.mp4"
-    os.mkfifo(str(pipe_path))
-    print(f"  Streaming 4K loop via pipe (no full file on disk)...")
+    # Re-encode at 4Mbps 4K — ~17GB for 10h, fits on 50GB disk
+    # Ambient video looks great even at 4Mbps (slow movement, no fast cuts)
+    loop_path = Path("/tmp/ocean_loop.mp4")
+    print(f"  Encoding 4K loop at 4Mbps → {loop_path} (~17GB, takes ~30 min)...")
 
-    # Start FFmpeg in background writing to pipe
-    if music_path and Path(music_path).exists():
-        music_abs = REPO_DIR / music_path
+    music_abs = REPO_DIR / music_path if (music_path and (REPO_DIR / music_path).exists()) else None
+
+    if music_abs:
         ffmpeg_cmd = [
             "ffmpeg", "-y",
             "-f", "concat", "-safe", "0", "-i", str(concat_f),
             "-stream_loop", "-1", "-i", str(music_abs),
             "-t", str(LOOP_SECS),
-            "-c:v", "copy",
+            "-c:v", "libx264", "-preset", "veryfast",
+            "-b:v", "4000k", "-maxrate", "4000k", "-bufsize", "8000k",
+            "-vf", "scale=3840:2160",
             "-c:a", "aac", "-b:a", "192k",
             "-shortest",
-            str(pipe_path)
+            str(loop_path)
         ]
     else:
         ffmpeg_cmd = [
             "ffmpeg", "-y",
             "-f", "concat", "-safe", "0", "-i", str(concat_f),
             "-t", str(LOOP_SECS),
-            "-c", "copy",
-            str(pipe_path)
+            "-c:v", "libx264", "-preset", "veryfast",
+            "-b:v", "4000k", "-maxrate", "4000k", "-bufsize", "8000k",
+            "-vf", "scale=3840:2160",
+            "-an",
+            str(loop_path)
         ]
 
-    ffmpeg_proc = subprocess.Popen(ffmpeg_cmd, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+    result = subprocess.run(ffmpeg_cmd)
+    if result.returncode != 0:
+        print("  [error] FFmpeg failed")
+        return None
+
+    size_gb = loop_path.stat().st_size / 1024**3
+    print(f"  ✓ Loop encoded: {size_gb:.1f} GB")
 
     # Upload from pipe
     from googleapiclient.http import MediaFileUpload
@@ -164,7 +175,7 @@ Video: Pexels (Free License) | Music: CC0
         },
         "status": {"privacyStatus": "public", "selfDeclaredMadeForKids": False}
     }
-    media = MediaFileUpload(str(pipe_path), mimetype="video/mp4", resumable=True, chunksize=16*1024*1024)
+    media = MediaFileUpload(str(loop_path), mimetype="video/mp4", resumable=True, chunksize=16*1024*1024)
     req = yt.videos().insert(part="snippet,status", body=body, media_body=media)
 
     response = None
@@ -173,13 +184,15 @@ Video: Pexels (Free License) | Music: CC0
         if status:
             print(f"  Upload: {int(status.progress()*100)}%", end="\r")
 
-    ffmpeg_proc.wait()
     vid_id = response.get("id", "")
     print(f"\n  ✓ Loop uploaded: https://www.youtube.com/watch?v={vid_id}")
 
     # Cleanup
     import shutil
     shutil.rmtree(tmp_dir, ignore_errors=True)
+    if loop_path.exists():
+        loop_path.unlink()
+        print("  ✓ Temp file deleted")
     return vid_id
 
 # ─── LIVE STREAM ──────────────────────────────────────────────────────────────
