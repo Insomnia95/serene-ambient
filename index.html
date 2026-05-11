@@ -557,7 +557,6 @@ function openCat(cat) {
   pg('pg-cat').scrollTop = 0;
   go('pg-home', 'pg-cat');
   setNavActive(cat.id);
-  setMusic(cat.music, cat.name);
   history.pushState({ page: 'cat', catId: cat.id }, '', '#' + cat.id);
 }
 
@@ -592,8 +591,8 @@ function openPlayer(cat, v) {
   loadVideo(getHDSrc(v.src));
   document.getElementById('player-scene').textContent = cat.emoji + '  ' + cat.name.toUpperCase() + '  ·  ' + v.name;
   document.getElementById('player-quality').textContent = '1080p · Pexels';
-  // Pause ambient music while video plays
-  bgm.pause();
+  // Start ambient music for this category
+  setMusic(cat.music, cat.name);
   updatePlayerMusicBtn();
   if (!pg('pg-cat').classList.contains('out')) {
     go('pg-cat', 'pg-player');
@@ -636,10 +635,7 @@ qualityToggle.addEventListener('click', () => {
 function stopVideo() {
   vid.pause(); vid.src = '';
   spinner.classList.remove('show');
-  // Resume music when leaving player
-  if (musicOn && currentMusic && userInteracted) {
-    bgm.play().catch(() => {});
-  }
+  stopMusic();
 }
 
 function goHome() {
@@ -710,55 +706,43 @@ const bgm = document.getElementById('bgm');
 const musicBtn = document.getElementById('music-btn');
 const musicTrack = document.getElementById('music-track');
 const navMusic = document.getElementById('nav-music');
-let musicOn = true;   // on by default
+let musicOn = true;   // user preference (on/off toggle)
 let currentMusic = '';
-let userInteracted = false;
 
 bgm.volume = 0.45;
 
-function tryPlay() {
-  if (musicOn && currentMusic && userInteracted) {
+// Only called when opening a video — starts music for that category
+function setMusic(src, catName) {
+  if (!src) return;
+  currentMusic = src;
+  musicTrack.textContent = catName.toLowerCase();
+  if (musicOn) {
+    bgm.src = src;
     bgm.play().catch(() => {});
   }
 }
 
-function setMusic(src, catName) {
-  if (!src) return;
-  musicTrack.textContent = catName.toLowerCase();
-  if (src === currentMusic) { tryPlay(); return; }
-  currentMusic = src;
-  bgm.src = src;
-  tryPlay();
+// Stop music — called when exiting video
+function stopMusic() {
+  bgm.pause();
+  bgm.src = '';
+  musicTrack.textContent = 'off';
 }
 
+// Toggle button in nav and in player
 function toggleMusic() {
   musicOn = !musicOn;
   musicBtn.classList.toggle('on', musicOn);
-  if (musicOn) {
-    tryPlay();
-    musicTrack.textContent = currentCat ? currentCat.name.toLowerCase() : 'ambient';
+  if (musicOn && currentMusic) {
+    bgm.src = currentMusic;
+    bgm.play().catch(() => {});
   } else {
     bgm.pause();
-    musicTrack.textContent = 'off';
   }
+  updatePlayerMusicBtn();
 }
 
-// Whole nav-music bar is clickable
 navMusic.addEventListener('click', toggleMusic);
-
-// Auto-start on first user interaction anywhere
-function onFirstInteraction() {
-  if (userInteracted) return;
-  userInteracted = true;
-  musicBtn.classList.toggle('on', musicOn);
-  tryPlay();
-  document.removeEventListener('click', onFirstInteraction);
-  document.removeEventListener('touchstart', onFirstInteraction);
-}
-document.addEventListener('click', onFirstInteraction);
-document.addEventListener('touchstart', onFirstInteraction);
-
-// Init button state
 musicBtn.classList.toggle('on', musicOn);
 
 document.getElementById('nav-logo').addEventListener('click', goHome);
