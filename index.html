@@ -574,12 +574,12 @@ function loadVideo(src) {
 
 function openPlayer(cat, v) {
   currentVideo = v;
-  isHD = false;
-  qualityToggle.textContent = '4K';
-  qualityToggle.classList.remove('hd');
-  loadVideo(v.src);
+  isHD = true;                          // default: 1080p — smooth streaming
+  qualityToggle.textContent = '→ 4K';
+  qualityToggle.classList.add('hd');
+  loadVideo(getHDSrc(v.src));
   document.getElementById('player-scene').textContent = cat.emoji + '  ' + cat.name.toUpperCase() + '  ·  ' + v.name;
-  document.getElementById('player-quality').textContent = '4K · Pexels';
+  document.getElementById('player-quality').textContent = '1080p · Pexels';
   if (!pg('pg-cat').classList.contains('out')) {
     go('pg-cat', 'pg-player');
   } else {
@@ -592,33 +592,28 @@ function openPlayer(cat, v) {
 vid.addEventListener('playing', () => spinner.classList.remove('show'));
 vid.addEventListener('waiting',  () => spinner.classList.add('show'));
 
-// Auto-fallback to HD on error
+// Fallback: if HD also errors, nothing to do
 vid.addEventListener('error', () => {
-  if (!isHD && currentVideo) {
-    switchToHD();
-  }
+  spinner.classList.remove('show');
 });
 
-function switchToHD() {
-  if (!currentVideo) return;
-  isHD = true;
-  const hdSrc = getHDSrc(currentVideo.src);
-  qualityToggle.textContent = 'HD';
-  qualityToggle.classList.add('hd');
-  document.getElementById('player-quality').textContent = '1080p · Pexels';
-  loadVideo(hdSrc);
-}
-
+// Quality toggle: default is HD, user can try 4K
 qualityToggle.addEventListener('click', () => {
   if (!currentVideo) return;
-  if (!isHD) {
-    switchToHD();
-  } else {
+  if (isHD) {
+    // switch to 4K
     isHD = false;
-    qualityToggle.textContent = '4K';
+    qualityToggle.textContent = 'HD';
     qualityToggle.classList.remove('hd');
     document.getElementById('player-quality').textContent = '4K · Pexels';
     loadVideo(currentVideo.src);
+  } else {
+    // back to HD
+    isHD = true;
+    qualityToggle.textContent = '→ 4K';
+    qualityToggle.classList.add('hd');
+    document.getElementById('player-quality').textContent = '1080p · Pexels';
+    loadVideo(getHDSrc(currentVideo.src));
   }
 });
 
