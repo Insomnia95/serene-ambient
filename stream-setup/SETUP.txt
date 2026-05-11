@@ -1,0 +1,74 @@
+SERENE — YouTube Streaming Setup
+==================================
+
+WHAT THIS DOES
+--------------
+Creates a live YouTube broadcast for each of the 37 ambient videos.
+Each stream loops the video 24/7 with proper SEO title & description.
+
+REQUIREMENTS
+------------
+1. Mac/Linux with Python 3.8+
+2. FFmpeg installed
+3. YouTube channel with Live Streaming enabled
+4. Google Cloud project with YouTube Data API v3
+
+STEP 1 — Install FFmpeg
+-----------------------
+Mac:    brew install ffmpeg
+Linux:  sudo apt install ffmpeg
+
+STEP 2 — Install Python dependencies
+--------------------------------------
+pip install google-api-python-client google-auth-oauthlib
+
+STEP 3 — Google Cloud Setup
+----------------------------
+1. Go to https://console.cloud.google.com
+2. Create a new project (e.g. "serene-streams")
+3. Search for "YouTube Data API v3" → Enable it
+4. Go to Credentials → + Create Credentials → OAuth 2.0 Client ID
+5. Application type: Desktop app → Create
+6. Click Download (JSON) → save as client_secrets.json
+7. Put client_secrets.json in this folder (stream-setup/)
+
+STEP 4 — Enable YouTube Live Streaming
+---------------------------------------
+1. Go to https://studio.youtube.com
+2. Click "Go Live" — follow prompts (may need phone verification)
+3. Wait up to 24h if it's a new channel
+
+STEP 5 — Run the script
+------------------------
+cd stream-setup/
+python create_streams.py
+
+A browser window will open for Google login — log in with the
+account that owns your YouTube channel.
+
+The script will:
+- Create 37 live broadcasts on your channel
+- Print all YouTube URLs
+- Save streams_output.json with FFmpeg commands
+- Generate start_all_streams.sh
+
+STEP 6 — Start Streaming
+--------------------------
+Option A — Start one stream manually:
+  Copy an ffmpeg command from streams_output.json and run it.
+
+Option B — Start all streams at once (needs a server!):
+  mkdir logs
+  bash start_all_streams.sh
+
+NOTE: For 24/7 streaming you need a computer/server that stays on.
+A DigitalOcean VPS ($6/month) is the cheapest option.
+Each stream uses ~4.5 Mbps upload bandwidth.
+
+NOTES ON YOUTUBE POLICIES
+--------------------------
+- Pexels License allows commercial broadcasting of their videos ✓
+- YouTube allows ambient/relaxation live streams ✓
+- Do NOT claim copyright on the Pexels footage itself
+- You can monetize with ads (your own AdSense on the stream) ✓
+- Add "Source: Pexels" in the description to be safe ✓

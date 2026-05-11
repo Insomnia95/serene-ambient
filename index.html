@@ -3,7 +3,15 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>SERENE — Endless Ambient Scenes</title>
+<title>Calm Veritas — Endless Ambient Scenes</title>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-DJE2HJVD6N"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-DJE2HJVD6N');
+</script>
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@200;300;400;500&display=swap" rel="stylesheet">
 <style>
 *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
@@ -281,7 +289,7 @@ body { display:flex; }
 <!-- ══ LEFT NAV ══════════════════════════════════ -->
 <nav id="site-nav">
   <div class="nav-logo" id="nav-logo">
-    <div class="nav-logo-text">SERENE</div>
+    <div class="nav-logo-text">Calm Veritas</div>
     <div class="nav-logo-sub">ambient scenes</div>
   </div>
   <div id="cat-list"></div>
@@ -300,7 +308,7 @@ body { display:flex; }
   <!-- HOME -->
   <div class="page" id="pg-home">
     <div class="home-hero">
-      <div class="home-hero-title">SERENE</div>
+      <div class="home-hero-title">Calm Veritas</div>
       <div class="home-hero-sub">choose a scene · sit back · breathe</div>
     </div>
     <div class="home-ad-strip">
@@ -330,7 +338,7 @@ body { display:flex; }
     <div id="vid-spinner"><div class="spinner-ring"></div></div>
     <div class="player-ui" id="player-ui">
       <div class="player-top">
-        <div class="player-logo">SERENE</div>
+        <div class="player-logo">Calm Veritas</div>
         <div class="player-btns">
           <button class="player-btn" id="player-back">← back</button>
           <button class="player-btn icon" id="fs-btn" title="Fullscreen">⛶</button>
@@ -378,6 +386,7 @@ const T = 'https://images.pexels.com/videos/';
    To add a video: copy an object, paste a new entry.
    To add music: put MP3 in music/ folder, update path.
 ════════════════════════════════════════════════════ */
+// === CATEGORIES START ===
 const CATEGORIES = [
   {
     id:'ocean', name:'Ocean', emoji:'🌊',
@@ -460,6 +469,7 @@ const CATEGORIES = [
     ]
   },
 ];
+// === CATEGORIES END ===
 
 /* ── BUILD NAV TREE ─────────────────────────────── */
 const catList = document.getElementById('cat-list');
