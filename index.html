@@ -699,33 +699,57 @@ document.addEventListener('fullscreenchange', () => {
 const bgm = document.getElementById('bgm');
 const musicBtn = document.getElementById('music-btn');
 const musicTrack = document.getElementById('music-track');
-let musicOn = false;
+const navMusic = document.getElementById('nav-music');
+let musicOn = true;   // on by default
 let currentMusic = '';
+let userInteracted = false;
 
-function setMusic(src, catName) {
-  if (!src || src === currentMusic) return;
-  currentMusic = src;
-  musicTrack.textContent = catName.toLowerCase();
-  if (musicOn) {
-    bgm.src = src;
+bgm.volume = 0.45;
+
+function tryPlay() {
+  if (musicOn && currentMusic && userInteracted) {
     bgm.play().catch(() => {});
   }
 }
 
-musicBtn.addEventListener('click', () => {
+function setMusic(src, catName) {
+  if (!src) return;
+  musicTrack.textContent = catName.toLowerCase();
+  if (src === currentMusic) { tryPlay(); return; }
+  currentMusic = src;
+  bgm.src = src;
+  tryPlay();
+}
+
+function toggleMusic() {
   musicOn = !musicOn;
   musicBtn.classList.toggle('on', musicOn);
   if (musicOn) {
-    if (currentMusic) bgm.src = currentMusic;
-    bgm.play().catch(() => {
-      // Autoplay blocked — user must interact first (they did by clicking)
-    });
+    tryPlay();
     musicTrack.textContent = currentCat ? currentCat.name.toLowerCase() : 'ambient';
   } else {
     bgm.pause();
     musicTrack.textContent = 'off';
   }
-});
+}
+
+// Whole nav-music bar is clickable
+navMusic.addEventListener('click', toggleMusic);
+
+// Auto-start on first user interaction anywhere
+function onFirstInteraction() {
+  if (userInteracted) return;
+  userInteracted = true;
+  musicBtn.classList.toggle('on', musicOn);
+  tryPlay();
+  document.removeEventListener('click', onFirstInteraction);
+  document.removeEventListener('touchstart', onFirstInteraction);
+}
+document.addEventListener('click', onFirstInteraction);
+document.addEventListener('touchstart', onFirstInteraction);
+
+// Init button state
+musicBtn.classList.toggle('on', musicOn);
 
 document.getElementById('nav-logo').addEventListener('click', goHome);
 document.getElementById('cat-back').addEventListener('click', () => { go('pg-cat','pg-home'); setNavActive(null); });
