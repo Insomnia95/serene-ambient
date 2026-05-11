@@ -2,109 +2,508 @@
   "version": 1,
   "last_updated": "2026-05-11",
   "known_ids": [
-    "16727103","29052984","6624689","3446616","33840319","32760161",
-    "35481118","6984877","11353677","17062878","31055868",
-    "15454042","5197762","28628298","13619802","6520303",
-    "35982732","13234202","14050551","2711092","13210975",
-    "19887145","19493013","10697994","19491958","19642768",
-    "29238178","29357730","9557868","32901084","27775202",
-    "14203831","10004412","7670835","16685801","7126521","10916595","15439669"
+    "16727103",
+    "29052984",
+    "6624689",
+    "3446616",
+    "33840319",
+    "32760161",
+    "35481118",
+    "6984877",
+    "11353677",
+    "17062878",
+    "31055868",
+    "15454042",
+    "5197762",
+    "28628298",
+    "13619802",
+    "6520303",
+    "35982732",
+    "13234202",
+    "14050551",
+    "2711092",
+    "13210975",
+    "19887145",
+    "19493013",
+    "10697994",
+    "19491958",
+    "19642768",
+    "29238178",
+    "29357730",
+    "9557868",
+    "32901084",
+    "27775202",
+    "14203831",
+    "10004412",
+    "7670835",
+    "16685801",
+    "7126521",
+    "10916595",
+    "15439669"
   ],
   "categories": [
     {
-      "id": "ocean", "name": "Ocean", "emoji": "🌊",
+      "id": "ocean",
+      "name": "Ocean",
+      "emoji": "🌊",
       "music": "music/ocean.mp3",
-      "queries": ["ocean waves 4k", "sea waves slow motion", "beach waves aerial"],
+      "queries": [
+        "ocean waves 4k",
+        "sea waves slow motion",
+        "beach waves aerial"
+      ],
       "videos": [
-        {"id":"16727103","name":"Deep Ocean Waves","quality":"4K","thumb":"https://images.pexels.com/videos/16727103/beach-beach-waves-blue-ocean-deep-ocean-16727103.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200","src":"https://videos.pexels.com/video-files/16727103/16727103-uhd_3840_2160_60fps.mp4","src_hd":"https://videos.pexels.com/video-files/16727103/16727103-hd_1920_1080_60fps.mp4"},
-        {"id":"29052984","name":"Aerial Beach","quality":"4K","thumb":"https://images.pexels.com/videos/29052984/4k-drone-4k-drone-video-4k-video-aerial-beach-29052984.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200","src":"https://videos.pexels.com/video-files/29052984/29052984-uhd_3840_2160_30fps.mp4","src_hd":"https://videos.pexels.com/video-files/29052984/29052984-hd_1920_1080_30fps.mp4"},
-        {"id":"6624689","name":"Breaking Surf","quality":"4K","thumb":"https://images.pexels.com/videos/6624689/beach-beach-waves-blue-water-breaking-waves-6624689.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200","src":"https://videos.pexels.com/video-files/6624689/6624689-uhd_3840_2160_25fps.mp4","src_hd":"https://videos.pexels.com/video-files/6624689/6624689-hd_1920_1080_25fps.mp4"},
-        {"id":"3446616","name":"Open Sea","quality":"4K","thumb":"https://images.pexels.com/videos/3446616/free-video-3446616.jpg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200","src":"https://videos.pexels.com/video-files/3446616/3446616-uhd_3840_2160_25fps.mp4","src_hd":"https://videos.pexels.com/video-files/3446616/3446616-hd_1920_1080_25fps.mp4"},
-        {"id":"33840319","name":"Tropical Shore","quality":"4K","thumb":"https://images.pexels.com/videos/33840319/2025-travel-4k-4k-beach-4k-beach-waves-33840319.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200","src":"https://videos.pexels.com/video-files/33840319/33840319-uhd_3840_2160_30fps.mp4","src_hd":"https://videos.pexels.com/video-files/33840319/33840319-hd_1920_1080_30fps.mp4"},
-        {"id":"32760161","name":"Wave Close-up","quality":"4K","thumb":"https://images.pexels.com/videos/32760161/2025-travel-4k-beach-4k-beach-waves-4k-closeup-view-32760161.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200","src":"https://videos.pexels.com/video-files/32760161/32760161-uhd_3840_2160_30fps.mp4","src_hd":"https://videos.pexels.com/video-files/32760161/32760161-hd_1920_1080_30fps.mp4"}
+        {
+          "id": "16727103",
+          "name": "Deep Ocean Waves",
+          "quality": "4K",
+          "thumb": "https://images.pexels.com/videos/16727103/beach-beach-waves-blue-ocean-deep-ocean-16727103.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200",
+          "src": "https://videos.pexels.com/video-files/16727103/16727103-uhd_3840_2160_60fps.mp4",
+          "src_hd": "https://videos.pexels.com/video-files/16727103/16727103-hd_1920_1080_60fps.mp4"
+        },
+        {
+          "id": "29052984",
+          "name": "Aerial Beach",
+          "quality": "4K",
+          "thumb": "https://images.pexels.com/videos/29052984/4k-drone-4k-drone-video-4k-video-aerial-beach-29052984.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200",
+          "src": "https://videos.pexels.com/video-files/29052984/29052984-uhd_3840_2160_30fps.mp4",
+          "src_hd": "https://videos.pexels.com/video-files/29052984/29052984-hd_1920_1080_30fps.mp4"
+        },
+        {
+          "id": "6624689",
+          "name": "Breaking Surf",
+          "quality": "4K",
+          "thumb": "https://images.pexels.com/videos/6624689/beach-beach-waves-blue-water-breaking-waves-6624689.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200",
+          "src": "https://videos.pexels.com/video-files/6624689/6624689-uhd_3840_2160_25fps.mp4",
+          "src_hd": "https://videos.pexels.com/video-files/6624689/6624689-hd_1920_1080_25fps.mp4"
+        },
+        {
+          "id": "3446616",
+          "name": "Open Sea",
+          "quality": "4K",
+          "thumb": "https://images.pexels.com/videos/3446616/free-video-3446616.jpg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200",
+          "src": "https://videos.pexels.com/video-files/3446616/3446616-uhd_3840_2160_25fps.mp4",
+          "src_hd": "https://videos.pexels.com/video-files/3446616/3446616-hd_1920_1080_25fps.mp4"
+        },
+        {
+          "id": "33840319",
+          "name": "Tropical Shore",
+          "quality": "4K",
+          "thumb": "https://images.pexels.com/videos/33840319/2025-travel-4k-4k-beach-4k-beach-waves-33840319.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200",
+          "src": "https://videos.pexels.com/video-files/33840319/33840319-uhd_3840_2160_30fps.mp4",
+          "src_hd": "https://videos.pexels.com/video-files/33840319/33840319-hd_1920_1080_30fps.mp4"
+        },
+        {
+          "id": "32760161",
+          "name": "Wave Close-up",
+          "quality": "4K",
+          "thumb": "https://images.pexels.com/videos/32760161/2025-travel-4k-beach-4k-beach-waves-4k-closeup-view-32760161.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200",
+          "src": "https://videos.pexels.com/video-files/32760161/32760161-uhd_3840_2160_30fps.mp4",
+          "src_hd": "https://videos.pexels.com/video-files/32760161/32760161-hd_1920_1080_30fps.mp4"
+        }
       ]
     },
     {
-      "id": "fire", "name": "Fire", "emoji": "🔥",
+      "id": "fire",
+      "name": "Fire",
+      "emoji": "🔥",
       "music": "music/fire.mp3",
-      "queries": ["fireplace 4k", "campfire night", "fire flames close up"],
+      "queries": [
+        "fireplace 4k",
+        "campfire night",
+        "fire flames close up"
+      ],
       "videos": [
-        {"id":"35481118","name":"Winter Fireplace","quality":"4K","thumb":"https://images.pexels.com/videos/35481118/cozy-snowstorm-winter-fire-wood-fire-35481118.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200","src":"https://videos.pexels.com/video-files/35481118/35481118-uhd_3840_2160_30fps.mp4","src_hd":"https://videos.pexels.com/video-files/35481118/35481118-hd_1920_1080_30fps.mp4"},
-        {"id":"6984877","name":"Indoor Fire","quality":"4K","thumb":"https://images.pexels.com/videos/6984877/pexels-photo-6984877.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200","src":"https://videos.pexels.com/video-files/6984877/6984877-uhd_3840_2160_24fps.mp4","src_hd":"https://videos.pexels.com/video-files/6984877/6984877-hd_1920_1080_24fps.mp4"},
-        {"id":"11353677","name":"Open Flame","quality":"4K","thumb":"https://images.pexels.com/videos/11353677/blazing-fire-bonfire-burning-burning-flame-11353677.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200","src":"https://videos.pexels.com/video-files/11353677/11353677-uhd_3840_2160_30fps.mp4","src_hd":"https://videos.pexels.com/video-files/11353677/11353677-hd_1920_1080_30fps.mp4"},
-        {"id":"17062878","name":"Bonfire Night","quality":"4K","thumb":"https://images.pexels.com/videos/17062878/are-lit-atmosphere-beautiful-fire-bonfires-17062878.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200","src":"https://videos.pexels.com/video-files/17062878/17062878-uhd_3840_2160_24fps.mp4","src_hd":"https://videos.pexels.com/video-files/17062878/17062878-hd_1920_1080_24fps.mp4"},
-        {"id":"31055868","name":"Glowing Embers","quality":"4K","thumb":"https://images.pexels.com/videos/31055868/outage-31055868.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200","src":"https://videos.pexels.com/video-files/31055868/31055868-uhd_3840_2160_25fps.mp4","src_hd":"https://videos.pexels.com/video-files/31055868/31055868-hd_1920_1080_25fps.mp4"}
+        {
+          "id": "35481118",
+          "name": "Winter Fireplace",
+          "quality": "4K",
+          "thumb": "https://images.pexels.com/videos/35481118/cozy-snowstorm-winter-fire-wood-fire-35481118.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200",
+          "src": "https://videos.pexels.com/video-files/35481118/35481118-uhd_3840_2160_30fps.mp4",
+          "src_hd": "https://videos.pexels.com/video-files/35481118/35481118-hd_1920_1080_30fps.mp4"
+        },
+        {
+          "id": "6984877",
+          "name": "Indoor Fire",
+          "quality": "4K",
+          "thumb": "https://images.pexels.com/videos/6984877/pexels-photo-6984877.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200",
+          "src": "https://videos.pexels.com/video-files/6984877/6984877-uhd_3840_2160_24fps.mp4",
+          "src_hd": "https://videos.pexels.com/video-files/6984877/6984877-hd_1920_1080_24fps.mp4"
+        },
+        {
+          "id": "11353677",
+          "name": "Open Flame",
+          "quality": "4K",
+          "thumb": "https://images.pexels.com/videos/11353677/blazing-fire-bonfire-burning-burning-flame-11353677.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200",
+          "src": "https://videos.pexels.com/video-files/11353677/11353677-uhd_3840_2160_30fps.mp4",
+          "src_hd": "https://videos.pexels.com/video-files/11353677/11353677-hd_1920_1080_30fps.mp4"
+        },
+        {
+          "id": "17062878",
+          "name": "Bonfire Night",
+          "quality": "4K",
+          "thumb": "https://images.pexels.com/videos/17062878/are-lit-atmosphere-beautiful-fire-bonfires-17062878.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200",
+          "src": "https://videos.pexels.com/video-files/17062878/17062878-uhd_3840_2160_24fps.mp4",
+          "src_hd": "https://videos.pexels.com/video-files/17062878/17062878-hd_1920_1080_24fps.mp4"
+        },
+        {
+          "id": "31055868",
+          "name": "Glowing Embers",
+          "quality": "4K",
+          "thumb": "https://images.pexels.com/videos/31055868/outage-31055868.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200",
+          "src": "https://videos.pexels.com/video-files/31055868/31055868-uhd_3840_2160_25fps.mp4",
+          "src_hd": "https://videos.pexels.com/video-files/31055868/31055868-hd_1920_1080_25fps.mp4"
+        }
       ]
     },
     {
-      "id": "rain", "name": "Rain", "emoji": "🌧",
+      "id": "rain",
+      "name": "Rain",
+      "emoji": "🌧",
       "music": "music/rain.mp3",
-      "queries": ["rain window 4k", "rainfall nature", "heavy rain drops"],
+      "queries": [
+        "rain window 4k",
+        "rainfall nature",
+        "heavy rain drops"
+      ],
       "videos": [
-        {"id":"15454042","name":"Rainy Window","quality":"4K","thumb":"https://images.pexels.com/videos/15454042/drops-glass-landscape-looking-through-window-15454042.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200","src":"https://videos.pexels.com/video-files/15454042/15454042-uhd_3840_2160_25fps.mp4","src_hd":"https://videos.pexels.com/video-files/15454042/15454042-hd_1920_1080_25fps.mp4"},
-        {"id":"5197762","name":"Autumn Rain","quality":"4K","thumb":"https://images.pexels.com/videos/5197762/autumn-calm-cosy-drops-5197762.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200","src":"https://videos.pexels.com/video-files/5197762/5197762-uhd_3840_2160_25fps.mp4","src_hd":"https://videos.pexels.com/video-files/5197762/5197762-hd_1920_1080_25fps.mp4"},
-        {"id":"28628298","name":"City Rain","quality":"4K","thumb":"https://images.pexels.com/videos/28628298/autumn-autumn-atmosphe-city-rain-dark-and-light-contrast-28628298.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200","src":"https://videos.pexels.com/video-files/28628298/28628298-uhd_3840_2160_25fps.mp4","src_hd":"https://videos.pexels.com/video-files/28628298/28628298-hd_1920_1080_25fps.mp4"},
-        {"id":"13619802","name":"Heavy Rain","quality":"4K","thumb":"https://images.pexels.com/videos/13619802/after-rain-after-the-rain-glass-heavy-rain-13619802.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200","src":"https://videos.pexels.com/video-files/13619802/13619802-uhd_3840_2160_60fps.mp4","src_hd":"https://videos.pexels.com/video-files/13619802/13619802-hd_1920_1080_60fps.mp4"},
-        {"id":"6520303","name":"Rain on Glass","quality":"4K","thumb":"https://images.pexels.com/videos/6520303/pexels-photo-6520303.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200","src":"https://videos.pexels.com/video-files/6520303/6520303-uhd_4096_1974_30fps.mp4","src_hd":"https://videos.pexels.com/video-files/6520303/6520303-hd_1920_1080_30fps.mp4"}
+        {
+          "id": "15454042",
+          "name": "Rainy Window",
+          "quality": "4K",
+          "thumb": "https://images.pexels.com/videos/15454042/drops-glass-landscape-looking-through-window-15454042.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200",
+          "src": "https://videos.pexels.com/video-files/15454042/15454042-uhd_3840_2160_25fps.mp4",
+          "src_hd": "https://videos.pexels.com/video-files/15454042/15454042-hd_1920_1080_25fps.mp4"
+        },
+        {
+          "id": "5197762",
+          "name": "Autumn Rain",
+          "quality": "4K",
+          "thumb": "https://images.pexels.com/videos/5197762/autumn-calm-cosy-drops-5197762.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200",
+          "src": "https://videos.pexels.com/video-files/5197762/5197762-uhd_3840_2160_25fps.mp4",
+          "src_hd": "https://videos.pexels.com/video-files/5197762/5197762-hd_1920_1080_25fps.mp4"
+        },
+        {
+          "id": "28628298",
+          "name": "City Rain",
+          "quality": "4K",
+          "thumb": "https://images.pexels.com/videos/28628298/autumn-autumn-atmosphe-city-rain-dark-and-light-contrast-28628298.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200",
+          "src": "https://videos.pexels.com/video-files/28628298/28628298-uhd_3840_2160_25fps.mp4",
+          "src_hd": "https://videos.pexels.com/video-files/28628298/28628298-hd_1920_1080_25fps.mp4"
+        },
+        {
+          "id": "13619802",
+          "name": "Heavy Rain",
+          "quality": "4K",
+          "thumb": "https://images.pexels.com/videos/13619802/after-rain-after-the-rain-glass-heavy-rain-13619802.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200",
+          "src": "https://videos.pexels.com/video-files/13619802/13619802-uhd_3840_2160_60fps.mp4",
+          "src_hd": "https://videos.pexels.com/video-files/13619802/13619802-hd_1920_1080_60fps.mp4"
+        },
+        {
+          "id": "6520303",
+          "name": "Rain on Glass",
+          "quality": "4K",
+          "thumb": "https://images.pexels.com/videos/6520303/pexels-photo-6520303.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200",
+          "src": "https://videos.pexels.com/video-files/6520303/6520303-uhd_4096_1974_30fps.mp4",
+          "src_hd": "https://videos.pexels.com/video-files/6520303/6520303-hd_1920_1080_30fps.mp4"
+        }
       ]
     },
     {
-      "id": "forest", "name": "Forest", "emoji": "🌿",
+      "id": "forest",
+      "name": "Forest",
+      "emoji": "🌿",
       "music": "music/forest.mp3",
-      "queries": ["forest nature 4k", "woodland trees", "forest mist fog"],
+      "queries": [
+        "forest nature 4k",
+        "woodland trees",
+        "forest mist fog"
+      ],
       "videos": [
-        {"id":"35982732","name":"Forest Light","quality":"4K","thumb":"https://images.pexels.com/videos/35982732/pexels-photo-35982732.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200","src":"https://videos.pexels.com/video-files/35982732/35982732-uhd_3840_2160_25fps.mp4","src_hd":"https://videos.pexels.com/video-files/35982732/35982732-hd_1920_1080_25fps.mp4"},
-        {"id":"13234202","name":"Deep Forest","quality":"4K","thumb":"https://images.pexels.com/videos/13234202/pexels-photo-13234202.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200","src":"https://videos.pexels.com/video-files/13234202/13234202-uhd_3840_2160_24fps.mp4","src_hd":"https://videos.pexels.com/video-files/13234202/13234202-hd_1920_1080_24fps.mp4"},
-        {"id":"14050551","name":"Forest Path","quality":"4K","thumb":"https://images.pexels.com/videos/14050551/pexels-photo-14050551.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200","src":"https://videos.pexels.com/video-files/14050551/14050551-uhd_3840_2160_24fps.mp4","src_hd":"https://videos.pexels.com/video-files/14050551/14050551-hd_1920_1080_24fps.mp4"},
-        {"id":"2711092","name":"Woodland","quality":"4K","thumb":"https://images.pexels.com/videos/2711092/free-video-2711092.jpg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200","src":"https://videos.pexels.com/video-files/2711092/2711092-uhd_3840_2160_24fps.mp4","src_hd":"https://videos.pexels.com/video-files/2711092/2711092-hd_1920_1080_24fps.mp4"},
-        {"id":"13210975","name":"Forest Mist","quality":"4K","thumb":"https://images.pexels.com/videos/13210975/pexels-photo-13210975.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200","src":"https://videos.pexels.com/video-files/13210975/13210975-uhd_3840_2160_24fps.mp4","src_hd":"https://videos.pexels.com/video-files/13210975/13210975-hd_1920_1080_24fps.mp4"}
+        {
+          "id": "35982732",
+          "name": "Forest Light",
+          "quality": "4K",
+          "thumb": "https://images.pexels.com/videos/35982732/pexels-photo-35982732.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200",
+          "src": "https://videos.pexels.com/video-files/35982732/35982732-uhd_3840_2160_25fps.mp4",
+          "src_hd": "https://videos.pexels.com/video-files/35982732/35982732-hd_1920_1080_25fps.mp4"
+        },
+        {
+          "id": "13234202",
+          "name": "Deep Forest",
+          "quality": "4K",
+          "thumb": "https://images.pexels.com/videos/13234202/pexels-photo-13234202.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200",
+          "src": "https://videos.pexels.com/video-files/13234202/13234202-uhd_3840_2160_24fps.mp4",
+          "src_hd": "https://videos.pexels.com/video-files/13234202/13234202-hd_1920_1080_24fps.mp4"
+        },
+        {
+          "id": "14050551",
+          "name": "Forest Path",
+          "quality": "4K",
+          "thumb": "https://images.pexels.com/videos/14050551/pexels-photo-14050551.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200",
+          "src": "https://videos.pexels.com/video-files/14050551/14050551-uhd_3840_2160_24fps.mp4",
+          "src_hd": "https://videos.pexels.com/video-files/14050551/14050551-hd_1920_1080_24fps.mp4"
+        },
+        {
+          "id": "2711092",
+          "name": "Woodland",
+          "quality": "4K",
+          "thumb": "https://images.pexels.com/videos/2711092/free-video-2711092.jpg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200",
+          "src": "https://videos.pexels.com/video-files/2711092/2711092-uhd_3840_2160_24fps.mp4",
+          "src_hd": "https://videos.pexels.com/video-files/2711092/2711092-hd_1920_1080_24fps.mp4"
+        },
+        {
+          "id": "13210975",
+          "name": "Forest Mist",
+          "quality": "4K",
+          "thumb": "https://images.pexels.com/videos/13210975/pexels-photo-13210975.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200",
+          "src": "https://videos.pexels.com/video-files/13210975/13210975-uhd_3840_2160_24fps.mp4",
+          "src_hd": "https://videos.pexels.com/video-files/13210975/13210975-hd_1920_1080_24fps.mp4"
+        }
       ]
     },
     {
-      "id": "winter", "name": "Winter", "emoji": "❄️",
+      "id": "winter",
+      "name": "Winter",
+      "emoji": "❄️",
       "music": "music/winter.mp3",
-      "queries": ["snowfall 4k", "winter forest snow", "falling snow slow motion"],
+      "queries": [
+        "snowfall 4k",
+        "winter forest snow",
+        "falling snow slow motion"
+      ],
       "videos": [
-        {"id":"19887145","name":"Falling Snow","quality":"4K","thumb":"https://images.pexels.com/videos/19887145/calming-video-falling-snow-falling-snow-video-nature-video-19887145.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200","src":"https://videos.pexels.com/video-files/19887145/19887145-uhd_3840_2160_24fps.mp4","src_hd":"https://videos.pexels.com/video-files/19887145/19887145-hd_1920_1080_24fps.mp4"},
-        {"id":"19493013","name":"Snowy Forest","quality":"4K","thumb":"https://images.pexels.com/videos/19493013/cold-falling-forest-fresh-19493013.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200","src":"https://videos.pexels.com/video-files/19493013/19493013-uhd_3840_2160_30fps.mp4","src_hd":"https://videos.pexels.com/video-files/19493013/19493013-hd_1920_1080_30fps.mp4"},
-        {"id":"10697994","name":"Winter Calm","quality":"4K","thumb":"https://images.pexels.com/videos/10697994/pexels-photo-10697994.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200","src":"https://videos.pexels.com/video-files/10697994/10697994-hd_3840_2160_30fps.mp4","src_hd":"https://videos.pexels.com/video-files/10697994/10697994-hd_1920_1080_30fps.mp4"},
-        {"id":"19491958","name":"Alpine Snow","quality":"4K","thumb":"https://images.pexels.com/videos/19491958/artificial-snow-bavaria-dji-dji-mavic-19491958.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200","src":"https://videos.pexels.com/video-files/19491958/19491958-uhd_3840_2160_30fps.mp4","src_hd":"https://videos.pexels.com/video-files/19491958/19491958-hd_1920_1080_30fps.mp4"},
-        {"id":"19642768","name":"Cold Forest","quality":"4K","thumb":"https://images.pexels.com/videos/19642768/beautiful-cold-forest-forest-snow-19642768.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200","src":"https://videos.pexels.com/video-files/19642768/19642768-uhd_3840_2160_30fps.mp4","src_hd":"https://videos.pexels.com/video-files/19642768/19642768-hd_1920_1080_30fps.mp4"}
+        {
+          "id": "19887145",
+          "name": "Falling Snow",
+          "quality": "4K",
+          "thumb": "https://images.pexels.com/videos/19887145/calming-video-falling-snow-falling-snow-video-nature-video-19887145.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200",
+          "src": "https://videos.pexels.com/video-files/19887145/19887145-uhd_3840_2160_24fps.mp4",
+          "src_hd": "https://videos.pexels.com/video-files/19887145/19887145-hd_1920_1080_24fps.mp4"
+        },
+        {
+          "id": "19493013",
+          "name": "Snowy Forest",
+          "quality": "4K",
+          "thumb": "https://images.pexels.com/videos/19493013/cold-falling-forest-fresh-19493013.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200",
+          "src": "https://videos.pexels.com/video-files/19493013/19493013-uhd_3840_2160_30fps.mp4",
+          "src_hd": "https://videos.pexels.com/video-files/19493013/19493013-hd_1920_1080_30fps.mp4"
+        },
+        {
+          "id": "10697994",
+          "name": "Winter Calm",
+          "quality": "4K",
+          "thumb": "https://images.pexels.com/videos/10697994/pexels-photo-10697994.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200",
+          "src": "https://videos.pexels.com/video-files/10697994/10697994-hd_3840_2160_30fps.mp4",
+          "src_hd": "https://videos.pexels.com/video-files/10697994/10697994-hd_1920_1080_30fps.mp4"
+        },
+        {
+          "id": "19491958",
+          "name": "Alpine Snow",
+          "quality": "4K",
+          "thumb": "https://images.pexels.com/videos/19491958/artificial-snow-bavaria-dji-dji-mavic-19491958.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200",
+          "src": "https://videos.pexels.com/video-files/19491958/19491958-uhd_3840_2160_30fps.mp4",
+          "src_hd": "https://videos.pexels.com/video-files/19491958/19491958-hd_1920_1080_30fps.mp4"
+        },
+        {
+          "id": "19642768",
+          "name": "Cold Forest",
+          "quality": "4K",
+          "thumb": "https://images.pexels.com/videos/19642768/beautiful-cold-forest-forest-snow-19642768.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200",
+          "src": "https://videos.pexels.com/video-files/19642768/19642768-uhd_3840_2160_30fps.mp4",
+          "src_hd": "https://videos.pexels.com/video-files/19642768/19642768-hd_1920_1080_30fps.mp4"
+        }
       ]
     },
     {
-      "id": "stars", "name": "Stars", "emoji": "🌌",
+      "id": "stars",
+      "name": "Stars",
+      "emoji": "🌌",
       "music": "music/stars.mp3",
-      "queries": ["milky way timelapse 4k", "night sky stars", "galaxy astrophotography"],
+      "queries": [
+        "milky way timelapse 4k",
+        "night sky stars",
+        "galaxy astrophotography"
+      ],
       "videos": [
-        {"id":"29238178","name":"Milky Way","quality":"4K","thumb":"https://images.pexels.com/videos/29238178/4k-resolution-astrology-astronomy-astrophotography-29238178.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200","src":"https://videos.pexels.com/video-files/29238178/29238178-uhd_3840_2160_24fps.mp4","src_hd":"https://videos.pexels.com/video-files/29238178/29238178-hd_1920_1080_24fps.mp4"},
-        {"id":"29357730","name":"Star Field","quality":"4K","thumb":"https://images.pexels.com/videos/29357730/4k-resolution-astronomy-astrophotography-beautiful-sky-29357730.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200","src":"https://videos.pexels.com/video-files/29357730/29357730-uhd_3840_2160_24fps.mp4","src_hd":"https://videos.pexels.com/video-files/29357730/29357730-hd_1920_1080_24fps.mp4"},
-        {"id":"9557868","name":"Galaxy","quality":"4K","thumb":"https://images.pexels.com/videos/9557868/astronomy-cosmos-dark-sky-galaxy-9557868.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200","src":"https://videos.pexels.com/video-files/9557868/9557868-uhd_3840_2160_24fps.mp4","src_hd":"https://videos.pexels.com/video-files/9557868/9557868-hd_1920_1080_24fps.mp4"},
-        {"id":"32901084","name":"Night Sky","quality":"4K","thumb":"https://images.pexels.com/videos/32901084/sky-32901084.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200","src":"https://videos.pexels.com/video-files/32901084/32901084-uhd_3240_2160_25fps.mp4","src_hd":"https://videos.pexels.com/video-files/32901084/32901084-hd_1920_1080_25fps.mp4"},
-        {"id":"27775202","name":"Astro Timelapse","quality":"4K","thumb":"https://images.pexels.com/videos/27775202/amazing-astro-astronomy-australia-27775202.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200","src":"https://videos.pexels.com/video-files/27775202/27775202-uhd_3240_2160_25fps.mp4","src_hd":"https://videos.pexels.com/video-files/27775202/27775202-hd_1920_1080_25fps.mp4"}
+        {
+          "id": "29238178",
+          "name": "Milky Way",
+          "quality": "4K",
+          "thumb": "https://images.pexels.com/videos/29238178/4k-resolution-astrology-astronomy-astrophotography-29238178.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200",
+          "src": "https://videos.pexels.com/video-files/29238178/29238178-uhd_3840_2160_24fps.mp4",
+          "src_hd": "https://videos.pexels.com/video-files/29238178/29238178-hd_1920_1080_24fps.mp4"
+        },
+        {
+          "id": "29357730",
+          "name": "Star Field",
+          "quality": "4K",
+          "thumb": "https://images.pexels.com/videos/29357730/4k-resolution-astronomy-astrophotography-beautiful-sky-29357730.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200",
+          "src": "https://videos.pexels.com/video-files/29357730/29357730-uhd_3840_2160_24fps.mp4",
+          "src_hd": "https://videos.pexels.com/video-files/29357730/29357730-hd_1920_1080_24fps.mp4"
+        },
+        {
+          "id": "9557868",
+          "name": "Galaxy",
+          "quality": "4K",
+          "thumb": "https://images.pexels.com/videos/9557868/astronomy-cosmos-dark-sky-galaxy-9557868.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200",
+          "src": "https://videos.pexels.com/video-files/9557868/9557868-uhd_3840_2160_24fps.mp4",
+          "src_hd": "https://videos.pexels.com/video-files/9557868/9557868-hd_1920_1080_24fps.mp4"
+        },
+        {
+          "id": "32901084",
+          "name": "Night Sky",
+          "quality": "4K",
+          "thumb": "https://images.pexels.com/videos/32901084/sky-32901084.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200",
+          "src": "https://videos.pexels.com/video-files/32901084/32901084-uhd_3240_2160_25fps.mp4",
+          "src_hd": "https://videos.pexels.com/video-files/32901084/32901084-hd_1920_1080_25fps.mp4"
+        },
+        {
+          "id": "27775202",
+          "name": "Astro Timelapse",
+          "quality": "4K",
+          "thumb": "https://images.pexels.com/videos/27775202/amazing-astro-astronomy-australia-27775202.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200",
+          "src": "https://videos.pexels.com/video-files/27775202/27775202-uhd_3240_2160_25fps.mp4",
+          "src_hd": "https://videos.pexels.com/video-files/27775202/27775202-hd_1920_1080_25fps.mp4"
+        }
       ]
     },
     {
-      "id": "abstract", "name": "Abstract", "emoji": "✨",
+      "id": "abstract",
+      "name": "Abstract",
+      "emoji": "✨",
       "music": "music/abstract.mp3",
-      "queries": ["abstract animation 4k", "fluid art satisfying", "neon abstract loop"],
+      "queries": [
+        "abstract animation 4k",
+        "fluid art satisfying",
+        "neon abstract loop"
+      ],
       "videos": [
-        {"id":"14203831","name":"Neon Flow","quality":"4K","thumb":"https://images.pexels.com/videos/14203831/abstract-art-backdrop-background-14203831.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200","src":"https://videos.pexels.com/video-files/14203831/14203831-uhd_3840_2160_60fps.mp4","src_hd":"https://videos.pexels.com/video-files/14203831/14203831-hd_1920_1080_60fps.mp4"},
-        {"id":"10004412","name":"Smoke Art","quality":"4K","thumb":"https://images.pexels.com/videos/10004412/pexels-photo-10004412.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200","src":"https://videos.pexels.com/video-files/10004412/10004412-uhd_4096_2160_30fps.mp4","src_hd":"https://videos.pexels.com/video-files/10004412/10004412-hd_1920_1080_30fps.mp4"},
-        {"id":"7670835","name":"Fluid Colors","quality":"4K","thumb":"https://images.pexels.com/videos/7670835/pexels-photo-7670835.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200","src":"https://videos.pexels.com/video-files/7670835/7670835-uhd_3840_2160_30fps.mp4","src_hd":"https://videos.pexels.com/video-files/7670835/7670835-hd_1920_1080_30fps.mp4"},
-        {"id":"16685801","name":"Geometric","quality":"4K","thumb":"https://images.pexels.com/videos/16685801/3d-color-digital-fractal-16685801.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200","src":"https://videos.pexels.com/video-files/16685801/16685801-uhd_3840_2160_30fps.mp4","src_hd":"https://videos.pexels.com/video-files/16685801/16685801-hd_1920_1080_30fps.mp4"},
-        {"id":"7126521","name":"Liquid Art","quality":"4K","thumb":"https://images.pexels.com/videos/7126521/abstract-acrylic-amazing-art-7126521.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200","src":"https://videos.pexels.com/video-files/7126521/7126521-uhd_4096_2160_30fps.mp4","src_hd":"https://videos.pexels.com/video-files/7126521/7126521-hd_1920_1080_30fps.mp4"},
-        {"id":"10916595","name":"Abstract Loop","quality":"4K","thumb":"https://images.pexels.com/videos/10916595/abstract-animation-art-backdrop-10916595.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200","src":"https://videos.pexels.com/video-files/10916595/10916595-uhd_3840_2160_30fps.mp4","src_hd":"https://videos.pexels.com/video-files/10916595/10916595-hd_1920_1080_30fps.mp4"},
-        {"id":"15439669","name":"Neon Waves","quality":"4K","thumb":"https://images.pexels.com/videos/15439669/3d-cgi-clip-dj-15439669.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200","src":"https://videos.pexels.com/video-files/15439669/15439669-uhd_3836_2160_30fps.mp4","src_hd":"https://videos.pexels.com/video-files/15439669/15439669-hd_1920_1080_30fps.mp4"}
+        {
+          "id": "14203831",
+          "name": "Neon Flow",
+          "quality": "4K",
+          "thumb": "https://images.pexels.com/videos/14203831/abstract-art-backdrop-background-14203831.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200",
+          "src": "https://videos.pexels.com/video-files/14203831/14203831-uhd_3840_2160_60fps.mp4",
+          "src_hd": "https://videos.pexels.com/video-files/14203831/14203831-hd_1920_1080_60fps.mp4"
+        },
+        {
+          "id": "10004412",
+          "name": "Smoke Art",
+          "quality": "4K",
+          "thumb": "https://images.pexels.com/videos/10004412/pexels-photo-10004412.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200",
+          "src": "https://videos.pexels.com/video-files/10004412/10004412-uhd_4096_2160_30fps.mp4",
+          "src_hd": "https://videos.pexels.com/video-files/10004412/10004412-hd_1920_1080_30fps.mp4"
+        },
+        {
+          "id": "7670835",
+          "name": "Fluid Colors",
+          "quality": "4K",
+          "thumb": "https://images.pexels.com/videos/7670835/pexels-photo-7670835.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200",
+          "src": "https://videos.pexels.com/video-files/7670835/7670835-uhd_3840_2160_30fps.mp4",
+          "src_hd": "https://videos.pexels.com/video-files/7670835/7670835-hd_1920_1080_30fps.mp4"
+        },
+        {
+          "id": "16685801",
+          "name": "Geometric",
+          "quality": "4K",
+          "thumb": "https://images.pexels.com/videos/16685801/3d-color-digital-fractal-16685801.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200",
+          "src": "https://videos.pexels.com/video-files/16685801/16685801-uhd_3840_2160_30fps.mp4",
+          "src_hd": "https://videos.pexels.com/video-files/16685801/16685801-hd_1920_1080_30fps.mp4"
+        },
+        {
+          "id": "7126521",
+          "name": "Liquid Art",
+          "quality": "4K",
+          "thumb": "https://images.pexels.com/videos/7126521/abstract-acrylic-amazing-art-7126521.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200",
+          "src": "https://videos.pexels.com/video-files/7126521/7126521-uhd_4096_2160_30fps.mp4",
+          "src_hd": "https://videos.pexels.com/video-files/7126521/7126521-hd_1920_1080_30fps.mp4"
+        },
+        {
+          "id": "10916595",
+          "name": "Abstract Loop",
+          "quality": "4K",
+          "thumb": "https://images.pexels.com/videos/10916595/abstract-animation-art-backdrop-10916595.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200",
+          "src": "https://videos.pexels.com/video-files/10916595/10916595-uhd_3840_2160_30fps.mp4",
+          "src_hd": "https://videos.pexels.com/video-files/10916595/10916595-hd_1920_1080_30fps.mp4"
+        },
+        {
+          "id": "15439669",
+          "name": "Neon Waves",
+          "quality": "4K",
+          "thumb": "https://images.pexels.com/videos/15439669/3d-cgi-clip-dj-15439669.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200",
+          "src": "https://videos.pexels.com/video-files/15439669/15439669-uhd_3836_2160_30fps.mp4",
+          "src_hd": "https://videos.pexels.com/video-files/15439669/15439669-hd_1920_1080_30fps.mp4"
+        }
       ]
     }
   ],
   "candidate_categories": [
-    {"id":"sunset","name":"Sunset","emoji":"🌅","music":"music/sunset.mp3","queries":["sunset golden hour 4k","sunrise timelapse","golden hour sky"]},
-    {"id":"waterfall","name":"Waterfall","emoji":"💧","music":"music/water.mp3","queries":["waterfall 4k nature","waterfall slow motion","jungle waterfall"]},
-    {"id":"desert","name":"Desert","emoji":"🏜","music":"music/desert.mp3","queries":["desert dunes 4k","sand dunes wind","sahara desert aerial"]},
-    {"id":"city","name":"City","emoji":"🌃","music":"music/city.mp3","queries":["city night timelapse 4k","urban night rain","tokyo shibuya night"]},
-    {"id":"underwater","name":"Underwater","emoji":"🐠","music":"music/ocean.mp3","queries":["underwater ocean 4k","coral reef","deep sea fish"]},
-    {"id":"aurora","name":"Aurora","emoji":"🌌","music":"music/stars.mp3","queries":["aurora borealis 4k","northern lights timelapse","aurora norway"]}
+    {
+      "id": "sunset",
+      "name": "Sunset",
+      "emoji": "🌅",
+      "music": "music/sunset.mp3",
+      "queries": [
+        "sunset golden hour 4k",
+        "sunrise timelapse",
+        "golden hour sky"
+      ]
+    },
+    {
+      "id": "waterfall",
+      "name": "Waterfall",
+      "emoji": "💧",
+      "music": "music/waterfall.mp3",
+      "queries": [
+        "waterfall 4k nature",
+        "waterfall slow motion",
+        "jungle waterfall"
+      ]
+    },
+    {
+      "id": "desert",
+      "name": "Desert",
+      "emoji": "🏜",
+      "music": "music/desert.mp3",
+      "queries": [
+        "desert dunes 4k",
+        "sand dunes wind",
+        "sahara desert aerial"
+      ]
+    },
+    {
+      "id": "city",
+      "name": "City",
+      "emoji": "🌃",
+      "music": "music/city.mp3",
+      "queries": [
+        "city night timelapse 4k",
+        "urban night rain",
+        "tokyo shibuya night"
+      ]
+    },
+    {
+      "id": "underwater",
+      "name": "Underwater",
+      "emoji": "🐠",
+      "music": "music/ocean.mp3",
+      "queries": [
+        "underwater ocean 4k",
+        "coral reef",
+        "deep sea fish"
+      ]
+    },
+    {
+      "id": "aurora",
+      "name": "Aurora",
+      "emoji": "🌌",
+      "music": "music/aurora.mp3",
+      "queries": [
+        "aurora borealis 4k",
+        "northern lights timelapse",
+        "aurora norway"
+      ]
+    }
   ]
 }
