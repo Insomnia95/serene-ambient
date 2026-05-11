@@ -341,6 +341,7 @@ body { display:flex; }
         <div class="player-logo">Calm Veritas</div>
         <div class="player-btns">
           <button class="player-btn" id="player-back">← back</button>
+          <button class="player-btn" id="player-music-btn" title="Toggle music">♪ on</button>
           <button class="player-btn icon" id="fs-btn" title="Fullscreen">⛶</button>
         </div>
       </div>
@@ -557,6 +558,7 @@ function openCat(cat) {
   go('pg-home', 'pg-cat');
   setNavActive(cat.id);
   setMusic(cat.music, cat.name);
+  history.pushState({ page: 'cat', catId: cat.id }, '', '#' + cat.id);
 }
 
 /* ── OPEN PLAYER ────────────────────────────────── */
@@ -590,12 +592,16 @@ function openPlayer(cat, v) {
   loadVideo(getHDSrc(v.src));
   document.getElementById('player-scene').textContent = cat.emoji + '  ' + cat.name.toUpperCase() + '  ·  ' + v.name;
   document.getElementById('player-quality').textContent = '1080p · Pexels';
+  // Pause ambient music while video plays
+  bgm.pause();
+  updatePlayerMusicBtn();
   if (!pg('pg-cat').classList.contains('out')) {
     go('pg-cat', 'pg-player');
   } else {
     openCat(cat);
     setTimeout(() => go('pg-cat', 'pg-player'), 400);
   }
+  history.pushState({ page: 'player', catId: cat.id, videoId: v.id }, '', '#play');
 }
 
 // Spinner hide when playing
@@ -630,6 +636,10 @@ qualityToggle.addEventListener('click', () => {
 function stopVideo() {
   vid.pause(); vid.src = '';
   spinner.classList.remove('show');
+  // Resume music when leaving player
+  if (musicOn && currentMusic && userInteracted) {
+    bgm.play().catch(() => {});
+  }
 }
 
 function goHome() {
@@ -770,6 +780,41 @@ function go(from, to) {
   pg(from).classList.add('out');
   setTimeout(() => pg(to).classList.remove('out'), 50);
 }
+
+/* ── PLAYER MUSIC BUTTON ────────────────────────── */
+const playerMusicBtn = document.getElementById('player-music-btn');
+function updatePlayerMusicBtn() {
+  if (!playerMusicBtn) return;
+  playerMusicBtn.textContent = (musicOn && !bgm.paused) ? '♪ on' : '♪ off';
+}
+playerMusicBtn.addEventListener('click', () => {
+  if (bgm.paused) {
+    musicOn = true;
+    bgm.play().catch(() => {});
+  } else {
+    bgm.pause();
+    musicOn = false;
+  }
+  updatePlayerMusicBtn();
+  musicBtn.classList.toggle('on', musicOn);
+});
+
+/* ── BROWSER BACK BUTTON ────────────────────────── */
+window.addEventListener('popstate', e => {
+  const state = e.state;
+  if (!state || state.page === 'home') {
+    // Back to home
+    if (!pg('pg-player').classList.contains('out')) { stopVideo(); go('pg-player', 'pg-cat'); }
+    setTimeout(() => {
+      if (!pg('pg-cat').classList.contains('out')) { go('pg-cat', 'pg-home'); setNavActive(null); }
+    }, 50);
+  } else if (state.page === 'cat') {
+    // Back from player to category
+    if (!pg('pg-player').classList.contains('out')) { stopVideo(); go('pg-player', 'pg-cat'); }
+  }
+});
+// Set initial history state
+history.replaceState({ page: 'home' }, '', window.location.pathname);
 </script>
 </body>
 </html>
