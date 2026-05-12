@@ -134,9 +134,12 @@ def make_10h_loop(video_path, audio_path, out_path):
         k, _, v = line.strip().partition("=")
         progress[k] = v
         if k == "out_time_ms":
+            try:
+                out_sec = int(v) // 1_000_000
+            except ValueError:
+                continue
             now = time.time()
             if now - last_log >= 30:
-                out_sec = int(v) // 1_000_000
                 pct = min(100, int(out_sec / LOOP_SECONDS * 100))
                 h, m, s = out_sec // 3600, (out_sec % 3600) // 60, out_sec % 60
                 log(f"  ⏳ Encoding: {h}:{m:02d}:{s:02d} / {LOOP_SECONDS//3600}h ({pct}%)")
