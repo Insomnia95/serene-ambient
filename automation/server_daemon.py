@@ -94,10 +94,11 @@ def get_duration(path):
 
 def make_10h_loop(video_path, audio_path, out_path):
     """
-    Create a 10-hour 4K loop encoded at 4Mbps (YouTube-ready).
-    - Re-encodes with libx264 at 4Mbps, upscaled to 3840x2160
+    Create a 4-hour 1080p loop using stream copy (no re-encode = fast).
+    - Copies video stream as-is (expects 1080p H.264 input)
     - If audio_path is provided: mixes looped audio at 192k AAC
-    - Output ~17 GB for 10h (fits on 50 GB disk)
+    - Output ~10 GB for 4h at ~5.5Mbps
+    - Speed: ~3x real-time (4h loop done in ~80 minutes)
     """
     dur = get_duration(video_path)
     repeats = math.ceil(LOOP_SECONDS / dur) + 1
@@ -107,7 +108,7 @@ def make_10h_loop(video_path, audio_path, out_path):
         for _ in range(repeats):
             f.write(f"file '{video_path}'\n")
 
-    log(f"  Building {repeats}x loop (source: {dur:.1f}s → {LOOP_SECONDS//3600}h). Encoding at 4Mbps 4K...")
+    log(f"  Building {repeats}x loop (source: {dur:.1f}s → {LOOP_SECONDS//3600}h). Copying stream (no re-encode)...")
 
     if audio_path and Path(audio_path).exists():
         cmd = [
@@ -115,9 +116,7 @@ def make_10h_loop(video_path, audio_path, out_path):
             "-f", "concat", "-safe", "0", "-i", str(concat_file),
             "-stream_loop", "-1", "-i", str(audio_path),
             "-t", str(LOOP_SECONDS),
-            "-c:v", "libx264", "-preset", "veryfast",
-            "-b:v", "2500k", "-maxrate", "2500k", "-bufsize", "5000k",
-            "-vf", "scale=1920:1080",
+            "-c:v", "copy",
             "-c:a", "aac", "-b:a", "192k",
             "-shortest",
             str(out_path)
@@ -127,9 +126,7 @@ def make_10h_loop(video_path, audio_path, out_path):
             "ffmpeg", "-y",
             "-f", "concat", "-safe", "0", "-i", str(concat_file),
             "-t", str(LOOP_SECONDS),
-            "-c:v", "libx264", "-preset", "veryfast",
-            "-b:v", "2500k", "-maxrate", "2500k", "-bufsize", "5000k",
-            "-vf", "scale=1920:1080",
+            "-c:v", "copy",
             "-an",
             str(out_path)
         ]
@@ -141,7 +138,7 @@ def make_10h_loop(video_path, audio_path, out_path):
         raise RuntimeError("FFmpeg encoding failed")
 
     size_gb = os.path.getsize(out_path) / 1024 / 1024 / 1024
-    log(f"  ✓ 10-hour loop created: {out_path} ({size_gb:.2f} GB)")
+    log(f"  ✓ {LOOP_SECONDS//3600}-hour loop created: {out_path} ({size_gb:.2f} GB)")
 
 # ─── SEO METADATA ────────────────────────────────────────────────────────────
 
@@ -308,8 +305,8 @@ def save_done(done_set):
 def process_item(item, yt):
     vid_id = item.get("id")
     vname  = item.get("name", "Video")
-    # Prefer 4K source for encoding; fall back to HD
-    src_url = item.get("src_4k") or item.get("src_hd", "")
+    # Use 1080p source (copy, no re-encode) — 4K not needed
+    src_url = item.get("src_hd") or item.get("src_4k", "")
     music   = item.get("music", "")   # e.g. "music/ocean.mp3" (relative to repo)
 
     if not src_url:
