@@ -535,10 +535,10 @@ function openCat(cat) {
       <div class="card-bg" style="background-image:url('${v.thumb}')"></div>
       <div class="card-fade"></div><div class="card-tint"></div>
       <div class="card-play"><div class="play-icon"></div></div>
-      <div class="badge-4k">${v.quality}</div>
+      <div class="badge-4k">${v.quality || 'HD'}</div>
       <div class="card-info">
         <div class="card-name">${v.name}</div>
-        <div class="card-desc">${v.quality} · pexels</div>
+        <div class="card-desc">${v.quality || 'HD'} · pexels</div>
       </div>`;
     card.addEventListener('click', () => openPlayer(cat, v));
     grid.appendChild(card);
@@ -747,7 +747,7 @@ function go(from, to) {
 const playerMusicBtn = document.getElementById('player-music-btn');
 function updatePlayerMusicBtn() {
   if (!playerMusicBtn) return;
-  playerMusicBtn.textContent = musicOn ? '♪ music off' : '♪ music on';
+  playerMusicBtn.textContent = musicOn ? '♪ music: on' : '♪ music: off';
 }
 playerMusicBtn.addEventListener('click', toggleMusic);
 
