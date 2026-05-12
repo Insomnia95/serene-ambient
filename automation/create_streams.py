@@ -107,8 +107,8 @@ def create_stream_for_category(yt, cat):
         body={
             "snippet": {"title": f"{cname} Stream"},
             "cdn": {
-                "frameRate": "30fps",
-                "resolution": "1080p",
+                "frameRate": "variable",
+                "resolution": "variable",
                 "ingestionType": "rtmp"
             }
         }
@@ -130,21 +130,22 @@ def create_stream_for_category(yt, cat):
     music_exists = music_abs and Path(music_abs).exists()
 
     if music_exists:
+        # Video: copy stream (no re-encode = nearly zero CPU)
+        # Audio: encode from music file (lightweight)
+        # -fflags +genpts fixes timestamp discontinuities on loop
         ffmpeg_cmd = (
-            f'ffmpeg -stream_loop -1 -re -i "{src_hd}" '
+            f'ffmpeg -stream_loop -1 -re -fflags +genpts -i "{src_hd}" '
             f'-stream_loop -1 -i "{music_abs}" '
             f'-map 0:v -map 1:a '
-            f'-vf scale=1920:1080 '
-            f'-c:v libx264 -preset veryfast -b:v 4500k -maxrate 4500k -bufsize 9000k '
-            f'-c:a aac -b:a 192k '
+            f'-c:v copy '
+            f'-c:a aac -b:a 128k '
             f'-f flv "{rtmp_full}"'
         )
     else:
         ffmpeg_cmd = (
-            f'ffmpeg -stream_loop -1 -re -i "{src_hd}" '
-            f'-vf scale=1920:1080 '
-            f'-c:v libx264 -preset veryfast -b:v 4500k -maxrate 4500k -bufsize 9000k '
-            f'-an -f flv "{rtmp_full}"'
+            f'ffmpeg -stream_loop -1 -re -fflags +genpts -i "{src_hd}" '
+            f'-c:v copy -an '
+            f'-f flv "{rtmp_full}"'
         )
 
     print(f"  ✓ {cname}: https://www.youtube.com/watch?v={broadcast_id}")
