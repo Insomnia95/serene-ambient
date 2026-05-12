@@ -3,22 +3,14 @@
   "last_updated": "2026-05-11",
   "known_ids": [
     "16727103",
-    "29052984",
     "6624689",
     "3446616",
-    "33840319",
-    "32760161",
-    "35481118",
     "6984877",
     "11353677",
     "17062878",
-    "31055868",
     "15454042",
     "5197762",
-    "28628298",
     "13619802",
-    "6520303",
-    "35982732",
     "13234202",
     "14050551",
     "2711092",
@@ -28,18 +20,11 @@
     "10697994",
     "19491958",
     "19642768",
-    "29238178",
-    "29357730",
     "9557868",
-    "32901084",
-    "27775202",
     "14203831",
-    "10004412",
     "7670835",
     "16685801",
-    "7126521",
-    "10916595",
-    "15439669"
+    "10916595"
   ],
   "categories": [
     {
@@ -62,14 +47,6 @@
           "src_hd": "https://videos.pexels.com/video-files/16727103/16727103-hd_1920_1080_60fps.mp4"
         },
         {
-          "id": "29052984",
-          "name": "Aerial Beach",
-          "quality": "4K",
-          "thumb": "https://images.pexels.com/videos/29052984/4k-drone-4k-drone-video-4k-video-aerial-beach-29052984.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200",
-          "src": "https://videos.pexels.com/video-files/29052984/29052984-uhd_3840_2160_30fps.mp4",
-          "src_hd": "https://videos.pexels.com/video-files/29052984/29052984-hd_1920_1080_30fps.mp4"
-        },
-        {
           "id": "6624689",
           "name": "Breaking Surf",
           "quality": "4K",
@@ -84,22 +61,6 @@
           "thumb": "https://images.pexels.com/videos/3446616/free-video-3446616.jpg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200",
           "src": "https://videos.pexels.com/video-files/3446616/3446616-uhd_3840_2160_25fps.mp4",
           "src_hd": "https://videos.pexels.com/video-files/3446616/3446616-hd_1920_1080_25fps.mp4"
-        },
-        {
-          "id": "33840319",
-          "name": "Tropical Shore",
-          "quality": "4K",
-          "thumb": "https://images.pexels.com/videos/33840319/2025-travel-4k-4k-beach-4k-beach-waves-33840319.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200",
-          "src": "https://videos.pexels.com/video-files/33840319/33840319-uhd_3840_2160_30fps.mp4",
-          "src_hd": "https://videos.pexels.com/video-files/33840319/33840319-hd_1920_1080_30fps.mp4"
-        },
-        {
-          "id": "32760161",
-          "name": "Wave Close-up",
-          "quality": "4K",
-          "thumb": "https://images.pexels.com/videos/32760161/2025-travel-4k-beach-4k-beach-waves-4k-closeup-view-32760161.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200",
-          "src": "https://videos.pexels.com/video-files/32760161/32760161-uhd_3840_2160_30fps.mp4",
-          "src_hd": "https://videos.pexels.com/video-files/32760161/32760161-hd_1920_1080_30fps.mp4"
         }
       ]
     },
@@ -114,14 +75,6 @@
         "fire flames close up"
       ],
       "videos": [
-        {
-          "id": "35481118",
-          "name": "Winter Fireplace",
-          "quality": "4K",
-          "thumb": "https://images.pexels.com/videos/35481118/cozy-snowstorm-winter-fire-wood-fire-35481118.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200",
-          "src": "https://videos.pexels.com/video-files/35481118/35481118-uhd_3840_2160_30fps.mp4",
-          "src_hd": "https://videos.pexels.com/video-files/35481118/35481118-hd_1920_1080_30fps.mp4"
-        },
         {
           "id": "6984877",
           "name": "Indoor Fire",
@@ -145,14 +98,6 @@
           "thumb": "https://images.pexels.com/videos/17062878/are-lit-atmosphere-beautiful-fire-bonfires-17062878.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200",
           "src": "https://videos.pexels.com/video-files/17062878/17062878-uhd_3840_2160_24fps.mp4",
           "src_hd": "https://videos.pexels.com/video-files/17062878/17062878-hd_1920_1080_24fps.mp4"
-        },
-        {
-          "id": "31055868",
-          "name": "Glowing Embers",
-          "quality": "4K",
-          "thumb": "https://images.pexels.com/videos/31055868/outage-31055868.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200",
-          "src": "https://videos.pexels.com/video-files/31055868/31055868-uhd_3840_2160_25fps.mp4",
-          "src_hd": "https://videos.pexels.com/video-files/31055868/31055868-hd_1920_1080_25fps.mp4"
         }
       ]
     },
@@ -184,28 +129,12 @@
           "src_hd": "https://videos.pexels.com/video-files/5197762/5197762-hd_1920_1080_25fps.mp4"
         },
         {
-          "id": "28628298",
-          "name": "City Rain",
-          "quality": "4K",
-          "thumb": "https://images.pexels.com/videos/28628298/autumn-autumn-atmosphe-city-rain-dark-and-light-contrast-28628298.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200",
-          "src": "https://videos.pexels.com/video-files/28628298/28628298-uhd_3840_2160_25fps.mp4",
-          "src_hd": "https://videos.pexels.com/video-files/28628298/28628298-hd_1920_1080_25fps.mp4"
-        },
-        {
           "id": "13619802",
           "name": "Heavy Rain",
           "quality": "4K",
           "thumb": "https://images.pexels.com/videos/13619802/after-rain-after-the-rain-glass-heavy-rain-13619802.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200",
           "src": "https://videos.pexels.com/video-files/13619802/13619802-uhd_3840_2160_60fps.mp4",
           "src_hd": "https://videos.pexels.com/video-files/13619802/13619802-hd_1920_1080_60fps.mp4"
-        },
-        {
-          "id": "6520303",
-          "name": "Rain on Glass",
-          "quality": "4K",
-          "thumb": "https://images.pexels.com/videos/6520303/pexels-photo-6520303.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200",
-          "src": "https://videos.pexels.com/video-files/6520303/6520303-uhd_4096_1974_30fps.mp4",
-          "src_hd": "https://videos.pexels.com/video-files/6520303/6520303-hd_1920_1080_30fps.mp4"
         }
       ]
     },
@@ -220,14 +149,6 @@
         "forest mist fog"
       ],
       "videos": [
-        {
-          "id": "35982732",
-          "name": "Forest Light",
-          "quality": "4K",
-          "thumb": "https://images.pexels.com/videos/35982732/pexels-photo-35982732.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200",
-          "src": "https://videos.pexels.com/video-files/35982732/35982732-uhd_3840_2160_25fps.mp4",
-          "src_hd": "https://videos.pexels.com/video-files/35982732/35982732-hd_1920_1080_25fps.mp4"
-        },
         {
           "id": "13234202",
           "name": "Deep Forest",
@@ -327,44 +248,12 @@
       ],
       "videos": [
         {
-          "id": "29238178",
-          "name": "Milky Way",
-          "quality": "4K",
-          "thumb": "https://images.pexels.com/videos/29238178/4k-resolution-astrology-astronomy-astrophotography-29238178.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200",
-          "src": "https://videos.pexels.com/video-files/29238178/29238178-uhd_3840_2160_24fps.mp4",
-          "src_hd": "https://videos.pexels.com/video-files/29238178/29238178-hd_1920_1080_24fps.mp4"
-        },
-        {
-          "id": "29357730",
-          "name": "Star Field",
-          "quality": "4K",
-          "thumb": "https://images.pexels.com/videos/29357730/4k-resolution-astronomy-astrophotography-beautiful-sky-29357730.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200",
-          "src": "https://videos.pexels.com/video-files/29357730/29357730-uhd_3840_2160_24fps.mp4",
-          "src_hd": "https://videos.pexels.com/video-files/29357730/29357730-hd_1920_1080_24fps.mp4"
-        },
-        {
           "id": "9557868",
           "name": "Galaxy",
           "quality": "4K",
           "thumb": "https://images.pexels.com/videos/9557868/astronomy-cosmos-dark-sky-galaxy-9557868.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200",
           "src": "https://videos.pexels.com/video-files/9557868/9557868-uhd_3840_2160_24fps.mp4",
           "src_hd": "https://videos.pexels.com/video-files/9557868/9557868-hd_1920_1080_24fps.mp4"
-        },
-        {
-          "id": "32901084",
-          "name": "Night Sky",
-          "quality": "4K",
-          "thumb": "https://images.pexels.com/videos/32901084/sky-32901084.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200",
-          "src": "https://videos.pexels.com/video-files/32901084/32901084-uhd_3240_2160_25fps.mp4",
-          "src_hd": "https://videos.pexels.com/video-files/32901084/32901084-hd_1920_1080_25fps.mp4"
-        },
-        {
-          "id": "27775202",
-          "name": "Astro Timelapse",
-          "quality": "4K",
-          "thumb": "https://images.pexels.com/videos/27775202/amazing-astro-astronomy-australia-27775202.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200",
-          "src": "https://videos.pexels.com/video-files/27775202/27775202-uhd_3240_2160_25fps.mp4",
-          "src_hd": "https://videos.pexels.com/video-files/27775202/27775202-hd_1920_1080_25fps.mp4"
         }
       ]
     },
@@ -388,14 +277,6 @@
           "src_hd": "https://videos.pexels.com/video-files/14203831/14203831-hd_1920_1080_60fps.mp4"
         },
         {
-          "id": "10004412",
-          "name": "Smoke Art",
-          "quality": "4K",
-          "thumb": "https://images.pexels.com/videos/10004412/pexels-photo-10004412.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200",
-          "src": "https://videos.pexels.com/video-files/10004412/10004412-uhd_4096_2160_30fps.mp4",
-          "src_hd": "https://videos.pexels.com/video-files/10004412/10004412-hd_1920_1080_30fps.mp4"
-        },
-        {
           "id": "7670835",
           "name": "Fluid Colors",
           "quality": "4K",
@@ -412,28 +293,12 @@
           "src_hd": "https://videos.pexels.com/video-files/16685801/16685801-hd_1920_1080_30fps.mp4"
         },
         {
-          "id": "7126521",
-          "name": "Liquid Art",
-          "quality": "4K",
-          "thumb": "https://images.pexels.com/videos/7126521/abstract-acrylic-amazing-art-7126521.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200",
-          "src": "https://videos.pexels.com/video-files/7126521/7126521-uhd_4096_2160_30fps.mp4",
-          "src_hd": "https://videos.pexels.com/video-files/7126521/7126521-hd_1920_1080_30fps.mp4"
-        },
-        {
           "id": "10916595",
           "name": "Abstract Loop",
           "quality": "4K",
           "thumb": "https://images.pexels.com/videos/10916595/abstract-animation-art-backdrop-10916595.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200",
           "src": "https://videos.pexels.com/video-files/10916595/10916595-uhd_3840_2160_30fps.mp4",
           "src_hd": "https://videos.pexels.com/video-files/10916595/10916595-hd_1920_1080_30fps.mp4"
-        },
-        {
-          "id": "15439669",
-          "name": "Neon Waves",
-          "quality": "4K",
-          "thumb": "https://images.pexels.com/videos/15439669/3d-cgi-clip-dj-15439669.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200",
-          "src": "https://videos.pexels.com/video-files/15439669/15439669-uhd_3836_2160_30fps.mp4",
-          "src_hd": "https://videos.pexels.com/video-files/15439669/15439669-hd_1920_1080_30fps.mp4"
         }
       ]
     }
