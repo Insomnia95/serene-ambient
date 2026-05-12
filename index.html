@@ -458,9 +458,12 @@ const CATEGORIES = [
 ];
 // === CATEGORIES END ===
 
+// Фильтруем категории без видео — иначе крашится весь JS
+const ACTIVE_CATEGORIES = CATEGORIES.filter(c => c.videos && c.videos.length > 0);
+
 /* ── BUILD NAV TREE ─────────────────────────────── */
 const catList = document.getElementById('cat-list');
-CATEGORIES.forEach(cat => {
+ACTIVE_CATEGORIES.forEach(cat => {
   const wrap = document.createElement('div');
   const head = document.createElement('div');
   head.className = 'nav-cat-head';
@@ -501,7 +504,7 @@ CATEGORIES.forEach(cat => {
 
 /* ── BUILD HOME GRID ────────────────────────────── */
 const homeGrid = document.getElementById('home-grid');
-CATEGORIES.forEach(cat => {
+ACTIVE_CATEGORIES.forEach(cat => {
   const card = document.createElement('div');
   card.className = 'card card-home';
   card.innerHTML = `
@@ -592,11 +595,6 @@ function openPlayer(cat, v) {
 // Spinner hide when playing
 vid.addEventListener('playing', () => spinner.classList.remove('show'));
 vid.addEventListener('waiting',  () => spinner.classList.add('show'));
-
-// Fallback: if HD also errors, nothing to do
-vid.addEventListener('error', () => {
-  spinner.classList.remove('show');
-});
 
 // Quality toggle: default is HD, user can try 4K
 qualityToggle.addEventListener('click', () => {
@@ -793,15 +791,45 @@ resolveHash();
 vid.addEventListener('error', () => {
   spinner.classList.remove('show');
   stopMusic();
-  // Remove broken video from category and go back
-  if (currentCat && currentVideo) {
+  if (!currentVideo) return;
+  // Remove broken video from its category silently
+  if (currentCat) {
     currentCat.videos = currentCat.videos.filter(v => v.id !== currentVideo.id);
   }
-  stopVideo();
-  go('pg-player', 'pg-cat');
-  history.replaceState({ page: 'cat', catId: currentCat?.id }, '', '#' + (currentCat?.id || ''));
-  // Rebuild grid without the broken video
-  if (currentCat) openCat(currentCat);
+  currentVideo = null;
+  vid.pause(); vid.src = '';
+  // Go back to category page (or home if no videos left)
+  if (currentCat && currentCat.videos.length > 0) {
+    pg('pg-player').classList.add('out');
+    setTimeout(() => {
+      pg('pg-cat').classList.remove('out');
+      // Rebuild grid without the broken video
+      const grid = document.getElementById('cat-grid');
+      grid.innerHTML = '';
+      currentCat.videos.forEach(v => {
+        const card = document.createElement('div');
+        card.className = 'card card-vid';
+        card.innerHTML = `
+          <div class="card-bg" style="background-image:url('${v.thumb}')"></div>
+          <div class="card-fade"></div><div class="card-tint"></div>
+          <div class="card-play"><div class="play-icon"></div></div>
+          <div class="badge-4k">${v.quality || 'HD'}</div>
+          <div class="card-info">
+            <div class="card-name">${v.name}</div>
+            <div class="card-desc">${v.quality || 'HD'} · pexels</div>
+          </div>`;
+        card.addEventListener('click', () => openPlayer(currentCat, v));
+        grid.appendChild(card);
+      });
+      history.replaceState({ page: 'cat', catId: currentCat.id }, '', '#' + currentCat.id);
+    }, 50);
+  } else {
+    pg('pg-player').classList.add('out');
+    pg('pg-cat').classList.add('out');
+    setTimeout(() => pg('pg-home').classList.remove('out'), 50);
+    setNavActive(null);
+    history.replaceState({ page: 'home' }, '', window.location.pathname);
+  }
 });
 </script>
 </body>
