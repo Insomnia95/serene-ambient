@@ -142,8 +142,17 @@ def main():
     DB_PATH.write_text(json.dumps(db, indent=2, ensure_ascii=False))
     print(f"\n✓ Done. {updated} categories updated in videos_db.json")
     print(f"Music files saved to: {MUSIC_DIR}")
-    print(f"\nNext step — push to GitHub:")
-    print(f"  git add -A && git commit -m 'Add ambient music tracks' && git push")
+
+    if updated > 0:
+        import subprocess
+        try:
+            subprocess.run(["git", "-C", str(REPO_DIR), "add", "-A"], check=True)
+            subprocess.run(["git", "-C", str(REPO_DIR), "commit", "-m",
+                            f"Add music for {updated} categories"], check=True)
+            subprocess.run(["git", "-C", str(REPO_DIR), "push"], check=True)
+            print("✓ Запушено в GitHub")
+        except subprocess.CalledProcessError as e:
+            print(f"  [warn] git push не удался: {e}")
 
 if __name__ == "__main__":
     main()

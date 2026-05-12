@@ -411,7 +411,23 @@ def main():
                 if success:
                     done_set.add(vid_id)
                     save_done(done_set)
-                    log(f"✓ Completed: {vid_id}")
+                    # Mark as done in queue.json and push to GitHub
+                    try:
+                        q = fetch_json(QUEUE_URL)
+                        for it in q.get("items", []):
+                            if str(it.get("id")) == vid_id:
+                                it["status"] = "done"
+                        queue_local = REPO_DIR / "data" / "queue.json"
+                        queue_local.write_text(json.dumps(q, indent=2, ensure_ascii=False))
+                        import subprocess
+                        subprocess.run(["git", "-C", str(REPO_DIR), "add", "data/queue.json"], check=True)
+                        subprocess.run(["git", "-C", str(REPO_DIR), "commit", "-m",
+                                        f"[daemon] Done: {item.get('name', vid_id)}"], check=True)
+                        subprocess.run(["git", "-C", str(REPO_DIR), "push"], check=True)
+                        log(f"✓ Completed and pushed: {vid_id}")
+                    except Exception as e:
+                        log(f"  [warn] Could not push queue update: {e}")
+                        log(f"✓ Completed: {vid_id}")
                 else:
                     log(f"[warn] Failed: {vid_id} — will retry next cycle")
 

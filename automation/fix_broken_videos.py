@@ -160,8 +160,19 @@ def main():
     # Regenerate index.html
     generate_index(db)
 
-    print("\nNext: push to GitHub")
-    print("  git add -A && git commit -m 'Fix broken video URLs' && git push")
+    if fixed > 0 or removed > 0:
+        import subprocess
+        try:
+            subprocess.run(["git", "-C", str(REPO_DIR), "add", "-A"], check=True)
+            subprocess.run(["git", "-C", str(REPO_DIR), "commit", "-m",
+                            f"Fix broken videos: {fixed} fixed, {removed} removed"], check=True)
+            subprocess.run(["git", "-C", str(REPO_DIR), "push"], check=True)
+            print("✓ Запушено в GitHub — Vercel задеплоит автоматически")
+        except subprocess.CalledProcessError as e:
+            print(f"  [warn] git push не удался: {e}")
+            print("  Запушь вручную: git add -A && git commit -m 'Fix broken video URLs' && git push")
+    else:
+        print("\nВсе видео в порядке, пуш не нужен.")
 
 if __name__ == "__main__":
     main()
