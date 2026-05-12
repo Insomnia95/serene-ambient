@@ -581,7 +581,8 @@ function openPlayer(cat, v) {
   document.getElementById('player-scene').textContent = cat.emoji + '  ' + cat.name.toUpperCase() + '  ·  ' + v.name;
   document.getElementById('player-quality').textContent = '1080p · Pexels';
   // Start ambient music automatically with the video
-  setMusic(cat.music);
+  // Prefer per-video music, fall back to category music
+  setMusic(v.music || cat.music);
   updatePlayerMusicBtn();
   if (!pg('pg-cat').classList.contains('out')) {
     go('pg-cat', 'pg-player');

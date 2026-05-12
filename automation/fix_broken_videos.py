@@ -72,13 +72,15 @@ def generate_index(db):
         cmusic = cat.get("music", "")
         videos_js = []
         for v in cat.get("videos", []):
-            vsrc  = v["src"].replace("'", "\\'")
-            vhd   = v.get("src_hd", hd_src(v["src"])).replace("'", "\\'")
-            vname = v["name"].replace("'", "\\'")
-            vthumb= v.get("thumb", "").replace("'", "\\'")
+            vsrc   = v["src"].replace("'", "\\'")
+            vhd    = v.get("src_hd", hd_src(v["src"])).replace("'", "\\'")
+            vname  = v["name"].replace("'", "\\'")
+            vthumb = v.get("thumb", "").replace("'", "\\'")
+            vmusic = v.get("music", "").replace("'", "\\'")
             videos_js.append(
                 f"    {{ id:{v['id']!r}, name:{vname!r}, "
-                f"thumb:{vthumb!r}, src:{vsrc!r}, src_hd:{vhd!r} }}"
+                f"thumb:{vthumb!r}, src:{vsrc!r}, src_hd:{vhd!r}, "
+                f"music:{vmusic!r} }}"
             )
         cats_js_lines += [
             "  {",
