@@ -71,8 +71,11 @@ def fetch_json(url):
 
 def download_file(url, dest_path, label="file"):
     log(f"  Downloading {label}: {url}")
-    req = urllib.request.Request(url)
-    with urllib.request.urlopen(req, timeout=60) as r, open(dest_path, "wb") as f:
+    req = urllib.request.Request(url, headers={
+        "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
+        "Referer": "https://www.pexels.com/",
+    })
+    with urllib.request.urlopen(req, timeout=120) as r, open(dest_path, "wb") as f:
         chunk = 65536
         while True:
             block = r.read(chunk)
