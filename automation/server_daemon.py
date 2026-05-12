@@ -112,7 +112,7 @@ def make_10h_loop(video_path, audio_path, out_path):
 
     if audio_path and Path(audio_path).exists():
         cmd = [
-            "ffmpeg", "-y",
+            "ffmpeg", "-y", "-loglevel", "warning",
             "-f", "concat", "-safe", "0", "-i", str(concat_file),
             "-stream_loop", "-1", "-i", str(audio_path),
             "-t", str(LOOP_SECONDS),
@@ -123,7 +123,7 @@ def make_10h_loop(video_path, audio_path, out_path):
         ]
     else:
         cmd = [
-            "ffmpeg", "-y",
+            "ffmpeg", "-y", "-loglevel", "warning",
             "-f", "concat", "-safe", "0", "-i", str(concat_file),
             "-t", str(LOOP_SECONDS),
             "-c:v", "copy",

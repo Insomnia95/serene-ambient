@@ -618,6 +618,7 @@ qualityToggle.addEventListener('click', () => {
 });
 
 function stopVideo() {
+  currentVideo = null;  // clear before src='' to prevent error handler from removing the video
   vid.pause(); vid.src = '';
   spinner.classList.remove('show');
   stopMusic();
