@@ -24,6 +24,7 @@ import tempfile
 import threading
 import time
 import urllib.request
+from datetime import datetime, timezone
 from pathlib import Path
 
 REPO_DIR    = Path(__file__).parent.parent
@@ -197,16 +198,16 @@ Video: Pexels (Free License) | Music: CC0
 
 # ─── LIVE STREAM ──────────────────────────────────────────────────────────────
 
-def create_live_stream(yt, cat, video):
+def create_live_stream(yt, cat, video, music_path):
     print("\n=== Live Stream — Ocean ===")
 
-    title = f"🌊 Ocean Waves Live · 4K Ambient · Calm Veritas"
+    title = f"🌊 Ocean Waves Live · Ambient with Music · Calm Veritas"
     description = f"""Live ocean ambience streaming 24/7 — {video['name']}.
 
-🌊 Endless ocean waves for sleep, focus, and relaxation.
+🌊 Endless ocean waves with ambient music for sleep, focus, and relaxation.
 🌐 More ambient scenes: https://www.calm-veritas.com
 
-#ocean #live #ambient #relaxing #4K #sleep #calmveritas
+#ocean #live #ambient #relaxing #sleep #calmveritas
 """
 
     # Create broadcast
@@ -216,7 +217,7 @@ def create_live_stream(yt, cat, video):
             "snippet": {
                 "title": title,
                 "description": description,
-                "scheduledStartTime": "2026-01-01T00:00:00Z",
+                "scheduledStartTime": (datetime.now(timezone.utc).replace(second=0, microsecond=0)).strftime("%Y-%m-%dT%H:%M:%SZ"),
             },
             "status": {"privacyStatus": "public", "selfDeclaredMadeForKids": False},
             "contentDetails": {"enableAutoStart": True, "enableAutoStop": False}
@@ -250,21 +251,43 @@ def create_live_stream(yt, cat, video):
 
     print(f"  ✓ RTMP: {rtmp_url}/****")
 
-    # Write FFmpeg command to file
+    # Resolve music file path on server
     src_hd = video.get("src_hd", video["src"])
-    ffmpeg_stream = (
-        f'ffmpeg -stream_loop -1 -re -i "{src_hd}" '
-        f'-vf scale=1920:1080 '
-        f'-c:v libx264 -preset veryfast -b:v 4500k -maxrate 4500k -bufsize 9000k '
-        f'-c:a aac -b:a 128k '
-        f'-f flv "{rtmp_full}"'
-    )
+    music_abs = str(REPO_DIR / music_path) if music_path else None
+
+    # Build FFmpeg command — with or without music
+    if music_abs and Path(music_abs).exists():
+        # Video from Pexels URL (looped) + local music (looped), mixed together
+        ffmpeg_stream = (
+            f'ffmpeg -stream_loop -1 -re -i "{src_hd}" '
+            f'-stream_loop -1 -i "{music_abs}" '
+            f'-map 0:v -map 1:a '
+            f'-vf scale=1920:1080 '
+            f'-c:v libx264 -preset veryfast -b:v 4500k -maxrate 4500k -bufsize 9000k '
+            f'-c:a aac -b:a 192k '
+            f'-f flv "{rtmp_full}"'
+        )
+        print(f"  ♪ Music: {music_abs}")
+    else:
+        # No music — video only
+        ffmpeg_stream = (
+            f'ffmpeg -stream_loop -1 -re -i "{src_hd}" '
+            f'-vf scale=1920:1080 '
+            f'-c:v libx264 -preset veryfast -b:v 4500k -maxrate 4500k -bufsize 9000k '
+            f'-an '
+            f'-f flv "{rtmp_full}"'
+        )
+        print(f"  [warn] Music file not found — streaming video only")
 
     stream_file = REPO_DIR / "automation" / "start_ocean_stream.sh"
-    stream_file.write_text(f"#!/bin/bash\nnohup {ffmpeg_stream} >> /var/log/ocean_stream.log 2>&1 &\necho 'Stream started'\n")
+    stream_file.write_text(
+        f"#!/bin/bash\n"
+        f"nohup {ffmpeg_stream} >> /var/log/ocean_stream.log 2>&1 &\n"
+        f"echo 'Stream started (PID: '$!'). Logs: tail -f /var/log/ocean_stream.log'\n"
+    )
     stream_file.chmod(0o755)
     print(f"  ✓ Stream script: {stream_file}")
-    print(f"\n  To start streaming, run on server:")
+    print(f"\n  Запусти трансляцию на сервере:")
     print(f"  bash automation/start_ocean_stream.sh")
 
     return broadcast_id, rtmp_full
@@ -291,7 +314,7 @@ def main():
         upload_loop(yt, cat, video, music_path)
 
     if do_stream:
-        create_live_stream(yt, cat, video)
+        create_live_stream(yt, cat, video, music_path)
 
     print("\n=== Done ===")
 
