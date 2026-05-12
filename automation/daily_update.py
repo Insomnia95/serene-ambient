@@ -276,16 +276,55 @@ def git_push(message):
 
 # ─── MAIN ────────────────────────────────────────────────────────────────────
 
+def check_url(url):
+    """Быстрая HEAD-проверка URL — вернёт True если доступен."""
+    try:
+        req = urllib.request.Request(url, method="HEAD", headers={
+            "User-Agent": "Mozilla/5.0",
+            "Referer": "https://www.pexels.com/",
+        })
+        with urllib.request.urlopen(req, timeout=8) as r:
+            return r.status == 200
+    except Exception:
+        return False
+
+def remove_broken_videos(db):
+    """Удаляет из БД видео с недоступными URL. Возвращает кол-во удалённых."""
+    removed = 0
+    for cat in db.get("categories", []):
+        valid = []
+        for v in cat.get("videos", []):
+            url = v.get("src_hd") or v.get("src", "")
+            if check_url(url):
+                valid.append(v)
+            else:
+                print(f"  ✗ Удалено битое видео [{cat['id']}]: {v.get('name')} (id={v['id']})")
+                removed += 1
+                db["known_ids"] = [x for x in db.get("known_ids", []) if str(x) != str(v["id"])]
+        cat["videos"] = valid
+    return removed
+
 def main():
     today = datetime.now(timezone.utc).strftime("%Y-%m-%d")
     print(f"\n=== Calm Veritas Daily Update — {today} ===\n")
 
     db = json.loads(DB_PATH.read_text())
+
+    # ── Проверка битых видео перед добавлением новых ──────────────────────────
+    print("Проверяю существующие видео...")
+    removed = remove_broken_videos(db)
+    if removed > 0:
+        print(f"  Удалено {removed} битых видео")
+        DB_PATH.write_text(json.dumps(db, indent=2, ensure_ascii=False))
+        generate_index(db)
+    else:
+        print("  Все видео доступны ✓")
+
     known_ids = set(str(x) for x in db.get("known_ids", []))
     queue = load_queue()
 
     target_count = random.randint(MIN_NEW, MAX_NEW)
-    print(f"Target: {target_count} new video(s)\n")
+    print(f"\nTarget: {target_count} new video(s)\n")
 
     added = []
     active_cats    = db.get("categories", [])
