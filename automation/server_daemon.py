@@ -236,7 +236,7 @@ def get_youtube_service():
     from google_auth_oauthlib.flow import InstalledAppFlow
     from googleapiclient.discovery import build
 
-    SCOPES = ["https://www.googleapis.com/auth/youtube.upload"]
+    SCOPES = ["https://www.googleapis.com/auth/youtube"]
     creds = None
 
     if TOKEN_JSON.exists():
