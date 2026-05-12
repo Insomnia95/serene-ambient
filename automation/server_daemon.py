@@ -108,37 +108,49 @@ def make_10h_loop(video_path, audio_path, out_path):
         for _ in range(repeats):
             f.write(f"file '{video_path}'\n")
 
-    log(f"  Building {repeats}x loop (source: {dur:.1f}s → {LOOP_SECONDS//3600}h). Copying stream (no re-encode)...")
+    log(f"  Building {repeats}x loop (source: {dur:.1f}s → {LOOP_SECONDS//3600}h). Copying stream...")
+
+    base_cmd = [
+        "ffmpeg", "-y", "-loglevel", "error",
+        "-f", "concat", "-safe", "0", "-i", str(concat_file),
+    ]
+    if audio_path and Path(audio_path).exists():
+        base_cmd += ["-stream_loop", "-1", "-i", str(audio_path)]
+
+    base_cmd += ["-t", str(LOOP_SECONDS), "-c:v", "copy"]
 
     if audio_path and Path(audio_path).exists():
-        cmd = [
-            "ffmpeg", "-y", "-loglevel", "warning",
-            "-f", "concat", "-safe", "0", "-i", str(concat_file),
-            "-stream_loop", "-1", "-i", str(audio_path),
-            "-t", str(LOOP_SECONDS),
-            "-c:v", "copy",
-            "-c:a", "aac", "-b:a", "192k",
-            "-shortest",
-            str(out_path)
-        ]
+        base_cmd += ["-c:a", "aac", "-b:a", "192k", "-shortest"]
     else:
-        cmd = [
-            "ffmpeg", "-y", "-loglevel", "warning",
-            "-f", "concat", "-safe", "0", "-i", str(concat_file),
-            "-t", str(LOOP_SECONDS),
-            "-c:v", "copy",
-            "-an",
-            str(out_path)
-        ]
+        base_cmd += ["-an"]
 
-    result = subprocess.run(cmd)
+    base_cmd += ["-progress", "pipe:1", "-nostats", str(out_path)]
+
+    proc = subprocess.Popen(base_cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
+
+    last_log = 0
+    progress = {}
+    for line in proc.stdout:
+        k, _, v = line.strip().partition("=")
+        progress[k] = v
+        if k == "out_time_ms":
+            now = time.time()
+            if now - last_log >= 30:
+                out_sec = int(v) // 1_000_000
+                pct = min(100, int(out_sec / LOOP_SECONDS * 100))
+                h, m, s = out_sec // 3600, (out_sec % 3600) // 60, out_sec % 60
+                log(f"  ⏳ Encoding: {h}:{m:02d}:{s:02d} / {LOOP_SECONDS//3600}h ({pct}%)")
+                last_log = now
+
+    proc.wait()
     concat_file.unlink(missing_ok=True)
 
-    if result.returncode != 0:
-        raise RuntimeError("FFmpeg encoding failed")
+    if proc.returncode != 0:
+        err = proc.stderr.read() if proc.stderr else ""
+        raise RuntimeError(f"FFmpeg failed (code {proc.returncode}): {err[:300]}")
 
     size_gb = os.path.getsize(out_path) / 1024 / 1024 / 1024
-    log(f"  ✓ {LOOP_SECONDS//3600}-hour loop created: {out_path} ({size_gb:.2f} GB)")
+    log(f"  ✓ {LOOP_SECONDS//3600}-hour loop ready: {out_path} ({size_gb:.2f} GB)")
 
 # ─── SEO METADATA ────────────────────────────────────────────────────────────
 
@@ -259,7 +271,10 @@ def get_youtube_service():
 def upload_to_youtube(yt, video_path, title, description, tags):
     from googleapiclient.http import MediaFileUpload
 
-    log(f"  Uploading to YouTube: {title}")
+    size_mb = os.path.getsize(video_path) / 1024 / 1024
+    log(f"  ⬆️  Uploading to YouTube: {title}")
+    log(f"      File: {video_path.name} ({size_mb:.0f} MB)")
+
     body = {
         "snippet": {
             "title":       title[:100],
@@ -278,14 +293,20 @@ def upload_to_youtube(yt, video_path, title, description, tags):
     request = yt.videos().insert(part="snippet,status", body=body, media_body=media)
 
     response = None
+    upload_start = time.time()
     while response is None:
         status, response = request.next_chunk()
         if status:
             pct = int(status.progress() * 100)
-            log(f"    Upload progress: {pct}%")
+            done_mb = size_mb * status.progress()
+            elapsed = time.time() - upload_start
+            speed_mb = done_mb / elapsed if elapsed > 0 else 0
+            eta_s = int((size_mb - done_mb) / speed_mb) if speed_mb > 0 else 0
+            log(f"    ⬆️  {pct}%  ({done_mb:.0f}/{size_mb:.0f} MB)  {speed_mb:.1f} MB/s  ETA {eta_s//60}m{eta_s%60:02d}s")
 
     vid_id = response.get("id", "")
-    log(f"  ✓ Uploaded: https://www.youtube.com/watch?v={vid_id}")
+    total_min = (time.time() - upload_start) / 60
+    log(f"  ✓ Uploaded in {total_min:.1f} min: https://www.youtube.com/watch?v={vid_id}")
     return vid_id
 
 # ─── QUEUE MANAGEMENT ────────────────────────────────────────────────────────
