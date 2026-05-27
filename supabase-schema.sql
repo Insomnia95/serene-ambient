@@ -54,3 +54,13 @@ alter table posts enable row level security;
 create policy "Posts are public" on posts for select using (true);
 create policy "Auth users create posts" on posts for insert with check (auth.uid() = user_id);
 create policy "Authors update own posts" on posts for update using (auth.uid() = user_id);
+
+-- 4. Email subscribers
+create table subscribers (
+  id uuid default gen_random_uuid() primary key,
+  email text not null unique,
+  subscribed_at timestamptz default now()
+);
+alter table subscribers enable row level security;
+create policy "Anyone can subscribe" on subscribers for insert with check (true);
+create policy "Admins can view subscribers" on subscribers for select using (false);
