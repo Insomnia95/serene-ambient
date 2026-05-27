@@ -28,9 +28,9 @@ body {
   border-bottom:1px solid rgba(255,255,255,.08);
 }
 .logo {
-  font-size:16px; font-weight:400; letter-spacing:.3em;
-  text-indent:.3em; color:#fff; text-decoration:none;
+  text-decoration:none; display:flex; align-items:center;
 }
+.logo img { height:34px; display:block; }
 .header-nav { display:flex; gap:32px; align-items:center; }
 .header-nav a {
   font-size:13px; font-weight:400; letter-spacing:.12em;
@@ -331,7 +331,7 @@ body {
 <!-- ── HEADER ───────────────────────────── -->
 <header id="header">
   <div class="header-top">
-    <a class="logo" href="/">Calm Veritas</a>
+    <a class="logo" href="/"><img src="/logo-white.png" alt="Calm Veritas"></a>
     <nav class="header-nav">
       <a href="/blog/" class="header-link">Blog</a>
       <a href="#checklists">Checklists</a>

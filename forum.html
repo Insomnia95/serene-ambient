@@ -18,7 +18,8 @@ body { font-family:'Montserrat',sans-serif; background:#f5f5f3; color:#1a1a1a; -
   display:flex; align-items:center; justify-content:space-between;
   padding:20px 0; border-bottom:1px solid rgba(255,255,255,.08);
 }
-.logo { font-size:15px; font-weight:400; letter-spacing:.3em; color:#fff; text-decoration:none; }
+.logo { text-decoration:none; display:flex; align-items:center; }
+.logo img { height:32px; display:block; }
 .header-nav { display:flex; gap:24px; align-items:center; }
 .header-nav a { font-size:12px; font-weight:400; letter-spacing:.08em; text-transform:uppercase; color:rgba(255,255,255,.5); text-decoration:none; transition:color .15s; }
 .header-nav a:hover { color:#fff; }
@@ -202,7 +203,7 @@ footer a { color:#888; text-decoration:none; margin:0 8px; }
 <!-- ── HEADER ── -->
 <header id="header">
   <div class="header-top">
-    <a class="logo" href="/">Calm Veritas</a>
+    <a class="logo" href="/"><img src="/logo-white.png" alt="Calm Veritas"></a>
     <nav class="header-nav">
       <a href="/">Home</a>
       <a href="/blog/">Blog</a>
