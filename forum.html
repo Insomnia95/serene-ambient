@@ -19,7 +19,7 @@ body { font-family:'Montserrat',sans-serif; background:#f5f5f3; color:#1a1a1a; -
   padding:20px 0; border-bottom:1px solid rgba(255,255,255,.08);
 }
 .logo { text-decoration:none; display:flex; align-items:center; }
-.logo img { height:32px; display:block; }
+.logo img { height:52px; display:block; }
 .header-nav { display:flex; gap:24px; align-items:center; }
 .header-nav a { font-size:12px; font-weight:400; letter-spacing:.08em; text-transform:uppercase; color:rgba(255,255,255,.5); text-decoration:none; transition:color .15s; }
 .header-nav a:hover { color:#fff; }
@@ -525,6 +525,15 @@ async function loadPosts(thread) {
   const list = document.getElementById('posts-list');
   list.innerHTML = '';
 
+  // Load OP reactions
+  const { data: opReactions } = await db.from('thread_reactions')
+    .select('emoji, user_id').eq('thread_id', thread.id);
+  const opReactMap = {};
+  (opReactions || []).forEach(r => {
+    if (!opReactMap[r.emoji]) opReactMap[r.emoji] = [];
+    opReactMap[r.emoji].push(r.user_id);
+  });
+
   // First post = opening post (thread body)
   const opAuthor = thread.profiles?.username || 'Anonymous';
   const opDate = new Date(thread.created_at).toLocaleDateString('en-US',{month:'short',day:'numeric'});
@@ -532,7 +541,13 @@ async function loadPosts(thread) {
   op.className = 'post-card op';
   op.innerHTML = `
     <div class="post-author">${escHtml(opAuthor)} <span class="post-author-tag">OP</span> <span class="post-time">${opDate}</span></div>
-    <div class="post-body">${escHtml(thread.body)}</div>`;
+    <div class="post-body">${escHtml(thread.body)}</div>
+    <div class="post-actions">
+      <div class="reactions" id="react-thread-${thread.id}">${buildThreadReactions(thread.id, opReactMap)}</div>
+      <div class="post-action-links">
+        <button class="action-link" onclick="replyTo('${escHtml(opAuthor)}')">↩ Reply</button>
+      </div>
+    </div>`;
   list.appendChild(op);
 
   // Replies
@@ -601,6 +616,34 @@ async function loadPosts(thread) {
 
 // ── REACTIONS ──────────────────────────
 const EMOJIS = ['👍','❤️','🔥','🙏'];
+
+function buildThreadReactions(threadId, emojiMap) {
+  return EMOJIS.map(e => {
+    const users = emojiMap[e] || [];
+    const count = users.length;
+    const active = currentUser && users.includes(currentUser.id) ? ' active' : '';
+    return `<button class="reaction-btn${active}" onclick="toggleThreadReaction('${threadId}','${e}')">${e} <span class="r-count">${count > 0 ? count : ''}</span></button>`;
+  }).join('');
+}
+
+async function toggleThreadReaction(threadId, emoji) {
+  if (!currentUser) { openAuth(); return; }
+  const { data: existing } = await db.from('thread_reactions')
+    .select('id').eq('thread_id', threadId).eq('user_id', currentUser.id).eq('emoji', emoji).maybeSingle();
+  if (existing) {
+    await db.from('thread_reactions').delete().eq('id', existing.id);
+  } else {
+    await db.from('thread_reactions').insert({ thread_id: threadId, user_id: currentUser.id, emoji });
+  }
+  const { data: reactions } = await db.from('thread_reactions').select('emoji, user_id').eq('thread_id', threadId);
+  const emojiMap = {};
+  (reactions || []).forEach(r => {
+    if (!emojiMap[r.emoji]) emojiMap[r.emoji] = [];
+    emojiMap[r.emoji].push(r.user_id);
+  });
+  const el = document.getElementById('react-thread-' + threadId);
+  if (el) el.innerHTML = buildThreadReactions(threadId, emojiMap);
+}
 
 function buildReactions(postId, emojiMap) {
   return EMOJIS.map(e => {
