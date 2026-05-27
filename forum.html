@@ -424,7 +424,7 @@ async function loadThreads() {
   list.innerHTML = '<div class="empty-state">Loading...</div>';
 
   let query = db.from('threads')
-    .select('*, profiles(username)')
+    .select('*')
     .order('created_at', { ascending: false });
 
   if (currentCat !== 'all') query = query.eq('category', currentCat);
@@ -434,6 +434,15 @@ async function loadThreads() {
   if (error || !data) {
     list.innerHTML = '<div class="empty-state">Could not load discussions.<br>Check your Supabase configuration.</div>';
     return;
+  }
+
+  // Fetch usernames separately
+  if (data.length > 0) {
+    const ids = [...new Set(data.map(t => t.user_id))];
+    const { data: profiles } = await db.from('profiles').select('id, username').in('id', ids);
+    const pMap = {};
+    (profiles || []).forEach(p => pMap[p.id] = p);
+    data.forEach(t => t.profiles = pMap[t.user_id] || null);
   }
   if (data.length === 0) {
     list.innerHTML = '<div class="empty-state">No discussions yet in this topic.<br>Be the first to start one.</div>';
@@ -500,12 +509,22 @@ async function loadPosts(thread) {
   list.appendChild(op);
 
   // Replies
-  const { data } = await db.from('posts')
-    .select('*, profiles(username)')
+  const { data: postsRaw } = await db.from('posts')
+    .select('*')
     .eq('thread_id', thread.id)
     .order('created_at', { ascending: true });
 
-  (data || []).forEach(p => {
+  // Fetch usernames for posts
+  const data = postsRaw || [];
+  if (data.length > 0) {
+    const ids = [...new Set(data.map(p => p.user_id))];
+    const { data: profiles } = await db.from('profiles').select('id, username').in('id', ids);
+    const pMap = {};
+    (profiles || []).forEach(p => pMap[p.id] = p);
+    data.forEach(p => p.profiles = pMap[p.user_id] || null);
+  }
+
+  data.forEach(p => {
     const card = document.createElement('div');
     card.className = 'post-card';
     const a = p.profiles?.username || 'Anonymous';
