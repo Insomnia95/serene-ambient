@@ -375,6 +375,9 @@ async function init() {
       btn.classList.add('active');
       currentCat = btn.dataset.cat;
       document.getElementById('current-cat-label').textContent = CAT_LABELS[currentCat] || currentCat;
+      // Always return to list view when switching category
+      document.getElementById('thread-view').style.display = 'none';
+      document.getElementById('list-view').style.display = 'block';
       loadThreads();
     });
   });
