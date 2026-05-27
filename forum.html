@@ -1,0 +1,557 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Community — Calm Veritas</title>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
+<!-- Supabase SDK -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<style>
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior:smooth; }
+body { font-family:'Montserrat',sans-serif; background:#f5f5f3; color:#1a1a1a; -webkit-font-smoothing:antialiased; }
+
+/* ── HEADER ── */
+#header { background:#111; padding:0 40px; }
+.header-top {
+  display:flex; align-items:center; justify-content:space-between;
+  padding:20px 0; border-bottom:1px solid rgba(255,255,255,.08);
+}
+.logo { font-size:15px; font-weight:400; letter-spacing:.3em; color:#fff; text-decoration:none; }
+.header-nav { display:flex; gap:24px; align-items:center; }
+.header-nav a { font-size:10px; font-weight:400; letter-spacing:.12em; text-transform:uppercase; color:rgba(255,255,255,.45); text-decoration:none; transition:color .15s; }
+.header-nav a:hover { color:#fff; }
+#auth-btn { background:#fff; color:#111; padding:8px 16px; font-size:10px; font-weight:500; letter-spacing:.1em; text-transform:uppercase; border:none; cursor:pointer; font-family:'Montserrat',sans-serif; transition:background .15s; }
+#auth-btn:hover { background:#e8e8e8; }
+.header-sub { padding:14px 0; display:flex; align-items:center; justify-content:space-between; }
+.header-sub-title { font-size:13px; font-weight:300; letter-spacing:.04em; color:rgba(255,255,255,.5); }
+.header-sub-title strong { color:rgba(255,255,255,.85); font-weight:400; }
+
+/* ── LAYOUT ── */
+#main { max-width:1100px; margin:0 auto; padding:32px 40px; display:grid; grid-template-columns:200px 1fr; gap:28px; align-items:start; }
+@media (max-width:800px) { #main { grid-template-columns:1fr; padding:20px; } #sidebar { display:none; } }
+
+/* ── SIDEBAR ── */
+#sidebar { display:flex; flex-direction:column; gap:4px; }
+.cat-btn {
+  display:flex; align-items:center; justify-content:space-between;
+  padding:10px 14px; border:none; background:#fff; border:1px solid #e8e8e6;
+  font-family:'Montserrat',sans-serif; font-size:11px; font-weight:400; letter-spacing:.02em;
+  color:#555; cursor:pointer; text-align:left; transition:all .13s; margin-bottom:2px;
+}
+.cat-btn:hover { background:#f0f0ee; color:#1a1a1a; }
+.cat-btn.active { background:#1a1a1a; color:#fff; border-color:#1a1a1a; }
+.cat-btn .cat-count { font-size:9px; opacity:.5; }
+.sidebar-label { font-size:9px; font-weight:500; letter-spacing:.18em; text-transform:uppercase; color:#999; padding:4px 14px 8px; }
+
+/* ── FORUM MAIN ── */
+#forum-col { display:flex; flex-direction:column; gap:16px; }
+.forum-toolbar {
+  display:flex; align-items:center; justify-content:space-between; gap:12px; flex-wrap:wrap;
+}
+.forum-title { font-size:10px; font-weight:500; letter-spacing:.18em; text-transform:uppercase; color:#999; }
+#new-thread-btn {
+  font-family:'Montserrat',sans-serif;
+  font-size:10px; font-weight:500; letter-spacing:.1em; text-transform:uppercase;
+  background:#1a1a1a; color:#fff; border:none; padding:10px 20px; cursor:pointer;
+  transition:background .15s;
+}
+#new-thread-btn:hover { background:#333; }
+
+/* ── THREAD LIST ── */
+#threads-list { display:flex; flex-direction:column; gap:2px; }
+.thread-card {
+  background:#fff; border:1px solid #e8e8e6;
+  padding:18px 20px; cursor:pointer; transition:border-color .13s, box-shadow .13s;
+  display:grid; grid-template-columns:1fr auto; gap:12px; align-items:center;
+}
+.thread-card:hover { border-color:#bbb; box-shadow:0 2px 8px rgba(0,0,0,.05); }
+.thread-cat-tag { font-size:8px; font-weight:500; letter-spacing:.18em; text-transform:uppercase; color:#999; margin-bottom:6px; }
+.thread-title { font-size:14px; font-weight:400; letter-spacing:-.01em; color:#1a1a1a; line-height:1.4; margin-bottom:6px; }
+.thread-meta { font-size:10px; font-weight:300; letter-spacing:.04em; color:#bbb; display:flex; gap:12px; }
+.thread-stats { display:flex; flex-direction:column; align-items:flex-end; gap:4px; flex-shrink:0; }
+.thread-reply-count { font-size:11px; font-weight:300; color:#bbb; }
+.thread-reply-label { font-size:8px; letter-spacing:.1em; text-transform:uppercase; color:#ccc; }
+.thread-pinned { font-size:8px; font-weight:500; letter-spacing:.12em; text-transform:uppercase; background:#f5f5f3; color:#888; padding:3px 8px; border:1px solid #e8e8e6; }
+.empty-state { text-align:center; padding:48px 20px; color:#bbb; font-size:12px; font-weight:300; letter-spacing:.04em; line-height:1.8; }
+
+/* ── THREAD VIEW ── */
+#thread-view { display:none; flex-direction:column; gap:16px; }
+.thread-back { font-size:10px; font-weight:400; letter-spacing:.1em; text-transform:uppercase; color:#999; background:none; border:none; cursor:pointer; font-family:'Montserrat',sans-serif; padding:0; transition:color .15s; }
+.thread-back:hover { color:#1a1a1a; }
+.thread-header { background:#fff; border:1px solid #e8e8e6; padding:24px 24px 20px; }
+.thread-header-cat { font-size:9px; font-weight:500; letter-spacing:.18em; text-transform:uppercase; color:#999; margin-bottom:8px; }
+.thread-header-title { font-size:20px; font-weight:400; letter-spacing:-.01em; color:#1a1a1a; line-height:1.35; margin-bottom:10px; }
+.thread-header-meta { font-size:10px; font-weight:300; letter-spacing:.04em; color:#bbb; }
+
+.posts-list { display:flex; flex-direction:column; gap:2px; }
+.post-card { background:#fff; border:1px solid #e8e8e6; padding:20px 24px; }
+.post-card.op { border-left:3px solid #1a1a1a; }
+.post-author { font-size:10px; font-weight:500; letter-spacing:.08em; color:#555; margin-bottom:4px; display:flex; align-items:center; gap:10px; }
+.post-author-tag { font-size:8px; font-weight:400; letter-spacing:.12em; text-transform:uppercase; color:#bbb; background:#f5f5f3; padding:2px 7px; border:1px solid #e8e8e6; }
+.post-time { font-size:9px; font-weight:300; letter-spacing:.06em; color:#ccc; }
+.post-body { font-size:13px; font-weight:300; letter-spacing:.01em; color:#333; line-height:1.8; margin-top:8px; }
+
+/* ── REPLY FORM ── */
+.reply-box { background:#fff; border:1px solid #e8e8e6; padding:20px 24px; }
+.reply-box-title { font-size:10px; font-weight:500; letter-spacing:.14em; text-transform:uppercase; color:#999; margin-bottom:14px; }
+.reply-textarea {
+  width:100%; padding:12px 14px; min-height:100px; resize:vertical;
+  font-family:'Montserrat',sans-serif; font-size:12px; font-weight:300; letter-spacing:.02em;
+  border:1px solid #e8e8e6; background:#f9f9f7; color:#1a1a1a; outline:none;
+  transition:border-color .15s;
+}
+.reply-textarea:focus { border-color:#aaa; background:#fff; }
+.reply-submit {
+  margin-top:10px; font-family:'Montserrat',sans-serif;
+  font-size:10px; font-weight:500; letter-spacing:.1em; text-transform:uppercase;
+  background:#1a1a1a; color:#fff; border:none; padding:11px 22px; cursor:pointer;
+  transition:background .15s;
+}
+.reply-submit:hover { background:#333; }
+.login-prompt { font-size:12px; font-weight:300; color:#888; padding:16px 0; }
+.login-prompt a { color:#1a1a1a; cursor:pointer; text-decoration:underline; }
+
+/* ── MODALS ── */
+.modal-bg {
+  position:fixed; inset:0; background:rgba(0,0,0,.55);
+  display:flex; align-items:center; justify-content:center;
+  z-index:1000; opacity:0; pointer-events:none; transition:opacity .2s;
+}
+.modal-bg.open { opacity:1; pointer-events:all; }
+.modal {
+  background:#fff; padding:36px 32px; width:100%; max-width:420px;
+  transform:translateY(12px); transition:transform .2s;
+}
+.modal-bg.open .modal { transform:none; }
+.modal-title { font-size:16px; font-weight:400; letter-spacing:-.01em; color:#1a1a1a; margin-bottom:6px; }
+.modal-sub { font-size:11px; font-weight:300; color:#888; letter-spacing:.02em; margin-bottom:24px; line-height:1.6; }
+.modal-close { position:absolute; top:16px; right:16px; background:none; border:none; font-size:18px; cursor:pointer; color:#bbb; }
+.modal { position:relative; }
+.form-field {
+  width:100%; padding:12px 14px; margin-bottom:10px;
+  font-family:'Montserrat',sans-serif; font-size:12px; font-weight:300;
+  border:1px solid #e8e8e6; background:#fafaf8; color:#1a1a1a; outline:none;
+  transition:border-color .15s;
+}
+.form-field:focus { border-color:#999; background:#fff; }
+.form-label { font-size:9px; font-weight:500; letter-spacing:.14em; text-transform:uppercase; color:#999; display:block; margin-bottom:6px; margin-top:4px; }
+.form-btn {
+  width:100%; padding:13px; margin-top:6px;
+  font-family:'Montserrat',sans-serif;
+  font-size:10px; font-weight:500; letter-spacing:.12em; text-transform:uppercase;
+  background:#1a1a1a; color:#fff; border:none; cursor:pointer;
+  transition:background .15s;
+}
+.form-btn:hover { background:#333; }
+.modal-switch { font-size:11px; font-weight:300; color:#888; text-align:center; margin-top:16px; }
+.modal-switch a { color:#1a1a1a; cursor:pointer; text-decoration:underline; }
+.form-error { font-size:10px; font-weight:400; color:#c0392b; letter-spacing:.04em; margin-bottom:8px; display:none; }
+
+/* ── NEW THREAD MODAL ── */
+#new-thread-modal .modal { max-width:560px; }
+.cat-select {
+  width:100%; padding:11px 14px; margin-bottom:10px;
+  font-family:'Montserrat',sans-serif; font-size:12px; font-weight:300;
+  border:1px solid #e8e8e6; background:#fafaf8; color:#1a1a1a; outline:none;
+  cursor:pointer;
+}
+
+/* ── FOOTER ── */
+footer { text-align:center; padding:24px; border-top:1px solid #e8e8e6; font-size:9px; font-weight:300; letter-spacing:.08em; color:#bbb; margin-top:40px; }
+footer a { color:#888; text-decoration:none; margin:0 8px; }
+</style>
+</head>
+<body>
+
+<!-- ── HEADER ── -->
+<header id="header">
+  <div class="header-top">
+    <a class="logo" href="/">Calm Veritas</a>
+    <nav class="header-nav">
+      <a href="/">Home</a>
+      <a href="/blog/">Blog</a>
+      <span id="user-display" style="color:rgba(255,255,255,.55);font-size:10px;letter-spacing:.08em;"></span>
+      <button id="auth-btn" onclick="openAuth()">Sign in</button>
+    </nav>
+  </div>
+  <div class="header-sub">
+    <div class="header-sub-title"><strong>Community.</strong> Discuss books, sleep, anxiety, health — with people who read the same research.</div>
+  </div>
+</header>
+
+<!-- ── MAIN ── -->
+<div id="main">
+
+  <!-- SIDEBAR -->
+  <aside id="sidebar">
+    <div class="sidebar-label">Topics</div>
+    <button class="cat-btn active" data-cat="all">All <span class="cat-count">—</span></button>
+    <button class="cat-btn" data-cat="books">📚 Books</button>
+    <button class="cat-btn" data-cat="sleep">🌙 Sleep</button>
+    <button class="cat-btn" data-cat="anxiety">🧠 Anxiety</button>
+    <button class="cat-btn" data-cat="focus">🎯 Focus</button>
+    <button class="cat-btn" data-cat="stoicism">🏛 Stoicism</button>
+    <button class="cat-btn" data-cat="health">💊 Health</button>
+    <button class="cat-btn" data-cat="general">💬 General</button>
+  </aside>
+
+  <!-- FORUM CONTENT -->
+  <div id="forum-col">
+
+    <!-- THREAD LIST VIEW -->
+    <div id="list-view">
+      <div class="forum-toolbar">
+        <div class="forum-title" id="current-cat-label">All discussions</div>
+        <button id="new-thread-btn" onclick="openNewThread()">+ New thread</button>
+      </div>
+      <div id="threads-list">
+        <div class="empty-state">Loading discussions...</div>
+      </div>
+    </div>
+
+    <!-- THREAD VIEW -->
+    <div id="thread-view">
+      <button class="thread-back" onclick="showList()">← Back to discussions</button>
+      <div id="thread-header-area"></div>
+      <div class="posts-list" id="posts-list"></div>
+      <div id="reply-area"></div>
+    </div>
+
+  </div>
+</div>
+
+<footer>
+  <a href="/">Home</a> · <a href="/blog/">Blog</a> · <a href="/disclosure.html">Disclosure</a>
+  <div style="margin-top:8px;">© 2026 Calm Veritas · No fluff. Just truth.</div>
+</footer>
+
+<!-- ── AUTH MODAL ── -->
+<div class="modal-bg" id="auth-modal">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal('auth-modal')">×</button>
+    <div id="auth-mode-login">
+      <div class="modal-title">Welcome back</div>
+      <div class="modal-sub">Sign in to join the discussion.</div>
+      <div class="form-error" id="login-error"></div>
+      <label class="form-label">Email</label>
+      <input class="form-field" type="email" id="login-email" placeholder="your@email.com">
+      <label class="form-label">Password</label>
+      <input class="form-field" type="password" id="login-pass" placeholder="••••••••">
+      <button class="form-btn" onclick="doLogin()">Sign in</button>
+      <div class="modal-switch">No account? <a onclick="switchToSignup()">Create one free →</a></div>
+    </div>
+    <div id="auth-mode-signup" style="display:none">
+      <div class="modal-title">Join the community</div>
+      <div class="modal-sub">Free. No newsletter required. Discuss what matters.</div>
+      <div class="form-error" id="signup-error"></div>
+      <label class="form-label">Username</label>
+      <input class="form-field" type="text" id="signup-username" placeholder="how you'll appear in discussions">
+      <label class="form-label">Email</label>
+      <input class="form-field" type="email" id="signup-email" placeholder="your@email.com">
+      <label class="form-label">Password</label>
+      <input class="form-field" type="password" id="signup-pass" placeholder="min. 6 characters">
+      <button class="form-btn" onclick="doSignup()">Create account</button>
+      <div class="modal-switch">Already have one? <a onclick="switchToLogin()">Sign in →</a></div>
+    </div>
+  </div>
+</div>
+
+<!-- ── NEW THREAD MODAL ── -->
+<div class="modal-bg" id="new-thread-modal">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal('new-thread-modal')">×</button>
+    <div class="modal-title">Start a discussion</div>
+    <div class="modal-sub">Ask a question, share a finding, or start a book discussion.</div>
+    <div class="form-error" id="thread-error"></div>
+    <label class="form-label">Topic</label>
+    <select class="cat-select" id="thread-cat">
+      <option value="general">💬 General</option>
+      <option value="books">📚 Books</option>
+      <option value="sleep">🌙 Sleep</option>
+      <option value="anxiety">🧠 Anxiety</option>
+      <option value="focus">🎯 Focus</option>
+      <option value="stoicism">🏛 Stoicism</option>
+      <option value="health">💊 Health</option>
+    </select>
+    <label class="form-label">Title</label>
+    <input class="form-field" type="text" id="thread-title" placeholder="What do you want to discuss?">
+    <label class="form-label">Your opening post</label>
+    <textarea class="form-field reply-textarea" id="thread-body" placeholder="Share your thoughts, question, or perspective..." style="min-height:120px;"></textarea>
+    <button class="form-btn" onclick="doCreateThread()">Post discussion</button>
+  </div>
+</div>
+
+<script>
+// ══════════════════════════════════════════
+// SUPABASE CONFIG — replace with your keys
+// supabase.com → New Project → Settings → API
+// ══════════════════════════════════════════
+const SUPABASE_URL  = 'https://bywoxbrugnrhcomrqats.supabase.co';
+const SUPABASE_KEY  = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJ5d294YnJ1Z25yaGNvbXJxYXRzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzk4OTk2MzQsImV4cCI6MjA5NTQ3NTYzNH0.8mr5NCxzS3AM26ZvJK_la0NXswObvYKyXDfgS2zg2s4';
+
+const { createClient } = supabase;
+const db = createClient(SUPABASE_URL, SUPABASE_KEY);
+
+// ── STATE ──────────────────────────────
+let currentUser   = null;
+let currentCat    = 'all';
+let currentThread = null;
+
+const CAT_LABELS = {
+  all:'All discussions', books:'📚 Books', sleep:'🌙 Sleep',
+  anxiety:'🧠 Anxiety', focus:'🎯 Focus', stoicism:'🏛 Stoicism',
+  health:'💊 Health', general:'💬 General'
+};
+
+// ── INIT ───────────────────────────────
+async function init() {
+  const { data: { session } } = await db.auth.getSession();
+  if (session) setUser(session.user);
+
+  db.auth.onAuthStateChange((_e, session) => {
+    if (session) setUser(session.user);
+    else clearUser();
+  });
+
+  loadThreads();
+
+  document.querySelectorAll('.cat-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      currentCat = btn.dataset.cat;
+      document.getElementById('current-cat-label').textContent = CAT_LABELS[currentCat] || currentCat;
+      loadThreads();
+    });
+  });
+}
+
+// ── AUTH ───────────────────────────────
+function setUser(user) {
+  currentUser = user;
+  const name = user.user_metadata?.username || user.email.split('@')[0];
+  document.getElementById('user-display').textContent = name;
+  const btn = document.getElementById('auth-btn');
+  btn.textContent = 'Sign out';
+  btn.onclick = doSignout;
+}
+function clearUser() {
+  currentUser = null;
+  document.getElementById('user-display').textContent = '';
+  const btn = document.getElementById('auth-btn');
+  btn.textContent = 'Sign in';
+  btn.onclick = openAuth;
+}
+async function doLogin() {
+  const email = document.getElementById('login-email').value;
+  const pass  = document.getElementById('login-pass').value;
+  const err   = document.getElementById('login-error');
+  err.style.display = 'none';
+  const { error } = await db.auth.signInWithPassword({ email, password: pass });
+  if (error) { err.textContent = error.message; err.style.display = 'block'; return; }
+  closeModal('auth-modal');
+}
+async function doSignup() {
+  const username = document.getElementById('signup-username').value.trim();
+  const email    = document.getElementById('signup-email').value;
+  const pass     = document.getElementById('signup-pass').value;
+  const err      = document.getElementById('signup-error');
+  err.style.display = 'none';
+  if (!username) { err.textContent = 'Username is required.'; err.style.display = 'block'; return; }
+  const { error } = await db.auth.signUp({
+    email, password: pass,
+    options: { data: { username } }
+  });
+  if (error) { err.textContent = error.message; err.style.display = 'block'; return; }
+  closeModal('auth-modal');
+  alert('Check your email to confirm your account!');
+}
+async function doSignout() {
+  await db.auth.signOut();
+  loadThreads();
+}
+
+// ── THREADS ────────────────────────────
+async function loadThreads() {
+  const list = document.getElementById('threads-list');
+  list.innerHTML = '<div class="empty-state">Loading...</div>';
+
+  let query = db.from('threads')
+    .select('*, profiles(username)')
+    .order('created_at', { ascending: false });
+
+  if (currentCat !== 'all') query = query.eq('category', currentCat);
+
+  const { data, error } = await query;
+
+  if (error || !data) {
+    list.innerHTML = '<div class="empty-state">Could not load discussions.<br>Check your Supabase configuration.</div>';
+    return;
+  }
+  if (data.length === 0) {
+    list.innerHTML = '<div class="empty-state">No discussions yet in this topic.<br>Be the first to start one.</div>';
+    return;
+  }
+
+  list.innerHTML = '';
+  data.forEach(t => {
+    const card = document.createElement('div');
+    card.className = 'thread-card';
+    const catLabel = CAT_LABELS[t.category] || t.category;
+    const author = t.profiles?.username || 'Anonymous';
+    const date = new Date(t.created_at).toLocaleDateString('en-US', { month:'short', day:'numeric', year:'numeric' });
+    card.innerHTML = `
+      <div>
+        <div class="thread-cat-tag">${catLabel}</div>
+        <div class="thread-title">${escHtml(t.title)}</div>
+        <div class="thread-meta">
+          <span>${author}</span>
+          <span>${date}</span>
+        </div>
+      </div>
+      <div class="thread-stats">
+        <div class="thread-reply-count">${t.reply_count || 0}</div>
+        <div class="thread-reply-label">replies</div>
+      </div>`;
+    card.addEventListener('click', () => openThread(t));
+    list.appendChild(card);
+  });
+}
+
+async function openThread(thread) {
+  currentThread = thread;
+  document.getElementById('list-view').style.display = 'none';
+  const view = document.getElementById('thread-view');
+  view.style.display = 'flex';
+
+  const catLabel = CAT_LABELS[thread.category] || thread.category;
+  const author = thread.profiles?.username || 'Anonymous';
+  const date = new Date(thread.created_at).toLocaleDateString('en-US', { month:'long', day:'numeric', year:'numeric' });
+
+  document.getElementById('thread-header-area').innerHTML = `
+    <div class="thread-header">
+      <div class="thread-header-cat">${catLabel}</div>
+      <div class="thread-header-title">${escHtml(thread.title)}</div>
+      <div class="thread-header-meta">Started by ${author} · ${date}</div>
+    </div>`;
+
+  loadPosts(thread);
+}
+
+async function loadPosts(thread) {
+  const list = document.getElementById('posts-list');
+  list.innerHTML = '';
+
+  // First post = opening post (thread body)
+  const opAuthor = thread.profiles?.username || 'Anonymous';
+  const opDate = new Date(thread.created_at).toLocaleDateString('en-US',{month:'short',day:'numeric'});
+  const op = document.createElement('div');
+  op.className = 'post-card op';
+  op.innerHTML = `
+    <div class="post-author">${escHtml(opAuthor)} <span class="post-author-tag">OP</span> <span class="post-time">${opDate}</span></div>
+    <div class="post-body">${escHtml(thread.body)}</div>`;
+  list.appendChild(op);
+
+  // Replies
+  const { data } = await db.from('posts')
+    .select('*, profiles(username)')
+    .eq('thread_id', thread.id)
+    .order('created_at', { ascending: true });
+
+  (data || []).forEach(p => {
+    const card = document.createElement('div');
+    card.className = 'post-card';
+    const a = p.profiles?.username || 'Anonymous';
+    const d = new Date(p.created_at).toLocaleDateString('en-US',{month:'short',day:'numeric'});
+    card.innerHTML = `
+      <div class="post-author">${escHtml(a)} <span class="post-time">${d}</span></div>
+      <div class="post-body">${escHtml(p.body)}</div>`;
+    list.appendChild(card);
+  });
+
+  // Reply area
+  const replyArea = document.getElementById('reply-area');
+  if (currentUser) {
+    replyArea.innerHTML = `
+      <div class="reply-box">
+        <div class="reply-box-title">Reply</div>
+        <textarea class="reply-textarea" id="reply-body" placeholder="Share your thoughts..."></textarea>
+        <button class="reply-submit" onclick="doReply()">Post reply</button>
+      </div>`;
+  } else {
+    replyArea.innerHTML = `
+      <div class="reply-box">
+        <div class="login-prompt"><a onclick="openAuth()">Sign in</a> or <a onclick="switchToSignup();openAuth()">create a free account</a> to reply.</div>
+      </div>`;
+  }
+}
+
+async function doReply() {
+  const body = document.getElementById('reply-body').value.trim();
+  if (!body) return;
+  const { error } = await db.from('posts').insert({
+    thread_id: currentThread.id,
+    user_id: currentUser.id,
+    body
+  });
+  if (error) { alert('Could not post reply: ' + error.message); return; }
+  // Update reply count
+  await db.from('threads').update({ reply_count: (currentThread.reply_count || 0) + 1 }).eq('id', currentThread.id);
+  currentThread.reply_count = (currentThread.reply_count || 0) + 1;
+  loadPosts(currentThread);
+}
+
+async function doCreateThread() {
+  if (!currentUser) { closeModal('new-thread-modal'); openAuth(); return; }
+  const title = document.getElementById('thread-title').value.trim();
+  const body  = document.getElementById('thread-body').value.trim();
+  const cat   = document.getElementById('thread-cat').value;
+  const err   = document.getElementById('thread-error');
+  err.style.display = 'none';
+  if (!title || !body) { err.textContent = 'Title and opening post are required.'; err.style.display = 'block'; return; }
+
+  const { data, error } = await db.from('threads').insert({
+    title, body, category: cat,
+    user_id: currentUser.id,
+    reply_count: 0
+  }).select().single();
+
+  if (error) { err.textContent = error.message; err.style.display = 'block'; return; }
+  closeModal('new-thread-modal');
+  document.getElementById('thread-title').value = '';
+  document.getElementById('thread-body').value = '';
+  loadThreads();
+  openThread(data);
+}
+
+function showList() {
+  document.getElementById('thread-view').style.display = 'none';
+  document.getElementById('list-view').style.display = 'block';
+  loadThreads();
+}
+
+// ── MODALS ─────────────────────────────
+function openAuth() { document.getElementById('auth-modal').classList.add('open'); }
+function openNewThread() {
+  if (!currentUser) { openAuth(); return; }
+  document.getElementById('new-thread-modal').classList.add('open');
+}
+function closeModal(id) { document.getElementById(id).classList.remove('open'); }
+function switchToLogin() { document.getElementById('auth-mode-login').style.display=''; document.getElementById('auth-mode-signup').style.display='none'; }
+function switchToSignup() { document.getElementById('auth-mode-login').style.display='none'; document.getElementById('auth-mode-signup').style.display=''; }
+
+document.querySelectorAll('.modal-bg').forEach(bg => {
+  bg.addEventListener('click', e => { if (e.target === bg) bg.classList.remove('open'); });
+});
+
+// ── UTILS ──────────────────────────────
+function escHtml(str) {
+  return String(str).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+init();
+</script>
+</body>
+</html>
