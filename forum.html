@@ -113,6 +113,29 @@ body { font-family:'Montserrat',sans-serif; background:#f5f5f3; color:#1a1a1a; -
 .login-prompt { font-size:14px; font-weight:400; color:#888; padding:16px 0; }
 .login-prompt a { color:#1a1a1a; cursor:pointer; text-decoration:underline; }
 
+/* ── POST ACTIONS ── */
+.post-actions { display:flex; align-items:center; justify-content:space-between; margin-top:14px; flex-wrap:wrap; gap:8px; }
+.reactions { display:flex; gap:4px; flex-wrap:wrap; }
+.reaction-btn {
+  display:inline-flex; align-items:center; gap:5px;
+  padding:5px 10px; border:1px solid #e8e8e6; background:#f9f9f7;
+  font-family:'Montserrat',sans-serif; font-size:12px; font-weight:400;
+  cursor:pointer; transition:all .13s; color:#555;
+}
+.reaction-btn:hover { border-color:#bbb; background:#f0f0ee; }
+.reaction-btn.active { background:#1a1a1a; color:#fff; border-color:#1a1a1a; }
+.reaction-btn .r-count { font-size:11px; opacity:.7; }
+.post-action-links { display:flex; gap:12px; align-items:center; }
+.action-link {
+  background:none; border:none; cursor:pointer;
+  font-family:'Montserrat',sans-serif; font-size:11px; font-weight:400;
+  letter-spacing:.06em; color:#bbb; transition:color .13s; padding:0;
+  text-transform:uppercase;
+}
+.action-link:hover { color:#555; }
+.action-link.report-link:hover { color:#c0392b; }
+.reported-tag { font-size:10px; font-weight:400; letter-spacing:.06em; color:#bbb; text-transform:uppercase; }
+
 /* ── MODALS ── */
 .modal-bg {
   position:fixed; inset:0; background:rgba(0,0,0,.55);
@@ -514,14 +537,27 @@ async function loadPosts(thread) {
     .eq('thread_id', thread.id)
     .order('created_at', { ascending: true });
 
-  // Fetch usernames for posts
   const data = postsRaw || [];
+
+  // Fetch usernames
   if (data.length > 0) {
     const ids = [...new Set(data.map(p => p.user_id))];
     const { data: profiles } = await db.from('profiles').select('id, username').in('id', ids);
     const pMap = {};
     (profiles || []).forEach(p => pMap[p.id] = p);
     data.forEach(p => p.profiles = pMap[p.user_id] || null);
+  }
+
+  // Fetch reactions for all posts
+  let reactMap = {};
+  if (data.length > 0) {
+    const postIds = data.map(p => p.id);
+    const { data: reactions } = await db.from('reactions').select('post_id, emoji, user_id').in('post_id', postIds);
+    (reactions || []).forEach(r => {
+      if (!reactMap[r.post_id]) reactMap[r.post_id] = {};
+      if (!reactMap[r.post_id][r.emoji]) reactMap[r.post_id][r.emoji] = [];
+      reactMap[r.post_id][r.emoji].push(r.user_id);
+    });
   }
 
   data.forEach(p => {
@@ -531,7 +567,14 @@ async function loadPosts(thread) {
     const d = new Date(p.created_at).toLocaleDateString('en-US',{month:'short',day:'numeric'});
     card.innerHTML = `
       <div class="post-author">${escHtml(a)} <span class="post-time">${d}</span></div>
-      <div class="post-body">${escHtml(p.body)}</div>`;
+      <div class="post-body">${escHtml(p.body)}</div>
+      <div class="post-actions">
+        <div class="reactions" id="react-${p.id}">${buildReactions(p.id, reactMap[p.id] || {})}</div>
+        <div class="post-action-links">
+          <button class="action-link" onclick="replyTo('${escHtml(a)}')">↩ Reply</button>
+          ${currentUser ? `<button class="action-link report-link" id="report-${p.id}" onclick="doReport('${p.id}')">Report</button>` : ''}
+        </div>
+      </div>`;
     list.appendChild(card);
   });
 
@@ -550,6 +593,63 @@ async function loadPosts(thread) {
         <div class="login-prompt"><a onclick="openAuth()">Sign in</a> or <a onclick="switchToSignup();openAuth()">create a free account</a> to reply.</div>
       </div>`;
   }
+}
+
+// ── REACTIONS ──────────────────────────
+const EMOJIS = ['👍','❤️','🔥','🙏'];
+
+function buildReactions(postId, emojiMap) {
+  return EMOJIS.map(e => {
+    const users = emojiMap[e] || [];
+    const count = users.length;
+    const active = currentUser && users.includes(currentUser.id) ? ' active' : '';
+    return `<button class="reaction-btn${active}" onclick="toggleReaction('${postId}','${e}')">${e} <span class="r-count">${count > 0 ? count : ''}</span></button>`;
+  }).join('');
+}
+
+async function toggleReaction(postId, emoji) {
+  if (!currentUser) { openAuth(); return; }
+  const { data: existing } = await db.from('reactions')
+    .select('id').eq('post_id', postId).eq('user_id', currentUser.id).eq('emoji', emoji).maybeSingle();
+
+  if (existing) {
+    await db.from('reactions').delete().eq('id', existing.id);
+  } else {
+    await db.from('reactions').insert({ post_id: postId, user_id: currentUser.id, emoji });
+  }
+
+  // Refresh reactions for this post
+  const { data: reactions } = await db.from('reactions').select('emoji, user_id').eq('post_id', postId);
+  const emojiMap = {};
+  (reactions || []).forEach(r => {
+    if (!emojiMap[r.emoji]) emojiMap[r.emoji] = [];
+    emojiMap[r.emoji].push(r.user_id);
+  });
+  const el = document.getElementById('react-' + postId);
+  if (el) el.innerHTML = buildReactions(postId, emojiMap);
+}
+
+// ── REPLY ───────────────────────────────
+function replyTo(username) {
+  const ta = document.getElementById('reply-body');
+  if (!ta) { openAuth(); return; }
+  ta.focus();
+  if (!ta.value) ta.value = '@' + username + ' ';
+  else ta.value += '\n@' + username + ' ';
+  ta.scrollIntoView({ behavior: 'smooth', block: 'center' });
+}
+
+// ── REPORT ──────────────────────────────
+async function doReport(postId) {
+  if (!currentUser) { openAuth(); return; }
+  const btn = document.getElementById('report-' + postId);
+  if (!btn) return;
+  const { error } = await db.from('reports').insert({ post_id: postId, user_id: currentUser.id });
+  if (error && error.code === '23505') {
+    btn.outerHTML = '<span class="reported-tag">Reported</span>';
+    return;
+  }
+  btn.outerHTML = '<span class="reported-tag">Reported</span>';
 }
 
 async function doReply() {
