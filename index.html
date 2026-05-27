@@ -1,0 +1,622 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Calm Veritas — Endless Ambient Scenes</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌊</text></svg>">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@200;300;400;500&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+html, body {
+  width:100%; height:100%; overflow:hidden;
+  font-family:'Montserrat', sans-serif;
+  background:#efefef; color:#111;
+}
+body { display:flex; }
+
+/* ── LEFT NAV ─────────────────────────── */
+#site-nav {
+  width:186px; flex-shrink:0;
+  background:#fff; border-right:1px solid #e8e8e8;
+  display:flex; flex-direction:column;
+  z-index:10; overflow:hidden;
+}
+.nav-logo {
+  padding:16px 15px 13px;
+  border-bottom:1px solid #f0f0f0;
+  cursor:pointer; flex-shrink:0;
+}
+.nav-logo:hover .nav-logo-text { opacity:.7; }
+.nav-logo-text {
+  font-size:15px; font-weight:200;
+  letter-spacing:.42em; text-indent:.42em;
+  transition:opacity .2s;
+}
+.nav-logo-sub {
+  font-size:7.5px; font-weight:300;
+  letter-spacing:.2em; color:#c0c0c0;
+  margin-top:3px; text-transform:uppercase;
+}
+
+#cat-list { flex:1; overflow-y:auto; padding:6px 0; }
+#cat-list::-webkit-scrollbar { width:2px; }
+#cat-list::-webkit-scrollbar-thumb { background:rgba(0,0,0,.07); }
+
+.nav-cat-head {
+  display:flex; align-items:center;
+  padding:6px 13px; cursor:pointer;
+  font-size:11px; font-weight:400; letter-spacing:.04em;
+  color:#444; transition:background .14s; user-select:none;
+}
+.nav-cat-head:hover { background:#f6f6f6; }
+.nav-cat-head.active { color:#111; background:#f3f3f3; }
+.nav-cat-emoji { font-size:12px; margin-right:7px; flex-shrink:0; }
+.nav-cat-name { flex:1; }
+.nav-cat-count {
+  font-size:8.5px; font-weight:300;
+  color:#ccc; margin-right:3px;
+}
+.nav-arrow {
+  font-size:9px; color:#ccc; transition:transform .18s; line-height:1;
+}
+.nav-cat-head.open .nav-arrow { transform:rotate(90deg); }
+
+.nav-sub { display:none; }
+.nav-sub.open { display:block; background:#fafafa; border-bottom:1px solid #f0f0f0; }
+.nav-sub-item {
+  padding:4px 12px 4px 32px;
+  font-size:9.5px; font-weight:300;
+  color:#777; letter-spacing:.02em;
+  cursor:pointer; transition:color .13s, background .13s;
+  white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
+}
+.nav-sub-item:hover { color:#111; background:#ededed; }
+
+/* ── BLOG NAV ─────────────────────────── */
+.nav-divider { height:1px; background:#f0f0f0; margin:2px 0; flex-shrink:0; }
+.nav-blog-link {
+  display:flex; align-items:center;
+  padding:6px 13px; cursor:pointer;
+  font-size:11px; font-weight:400; letter-spacing:.04em;
+  color:#444; transition:background .14s;
+  text-decoration:none; flex-shrink:0;
+}
+.nav-blog-link:hover { background:#f6f6f6; color:#111; }
+.nav-blog-emoji { font-size:12px; margin-right:7px; flex-shrink:0; }
+
+/* ── MUSIC ────────────────────────────── */
+.nav-music {
+  border-top:1px solid #f0f0f0; padding:11px 13px;
+  display:flex; align-items:center; gap:7px; flex-shrink:0;
+  cursor:pointer;
+}
+.music-btn {
+  background:none; border:none; cursor:pointer;
+  font-size:14px; opacity:.35; transition:opacity .2s;
+  font-family:inherit; padding:0; line-height:1;
+}
+.music-btn.on { opacity:.85; }
+.music-meta { flex:1; min-width:0; }
+.music-label {
+  font-size:8px; font-weight:300; letter-spacing:.14em;
+  color:#bbb; text-transform:uppercase; display:block;
+}
+.music-track {
+  font-size:8px; font-weight:300; letter-spacing:.04em;
+  color:#ccc; white-space:nowrap; overflow:hidden;
+  text-overflow:ellipsis; display:block; margin-top:2px;
+}
+
+/* ── MAIN AREA ────────────────────────── */
+#main-area { flex:1; position:relative; overflow:hidden; }
+
+.page {
+  position:absolute; inset:0; overflow-y:auto; overflow-x:hidden;
+  background:#efefef;
+  transition:opacity .32s ease, transform .32s ease;
+}
+.page.out { opacity:0; pointer-events:none; transform:translateX(12px); }
+.page::-webkit-scrollbar { width:3px; }
+.page::-webkit-scrollbar-thumb { background:rgba(0,0,0,.1); border-radius:2px; }
+
+/* ── PAGE HEADERS ─────────────────────── */
+.pg-header {
+  background:#fff; border-bottom:1px solid #e8e8e8;
+  padding:0 18px; height:50px;
+  display:flex; align-items:center; gap:12px;
+  position:sticky; top:0; z-index:5;
+}
+.pg-title {
+  font-size:12px; font-weight:300;
+  letter-spacing:.2em; text-indent:.2em; color:#888;
+}
+.pg-back {
+  background:none; border:1px solid #ddd; color:#777;
+  font-family:'Montserrat',sans-serif; font-size:8.5px;
+  font-weight:300; letter-spacing:.14em; padding:5px 11px;
+  cursor:pointer; transition:all .18s;
+}
+.pg-back:hover { border-color:#999; color:#111; }
+
+.home-hero {
+  background:#fff; border-bottom:1px solid #e8e8e8;
+  padding:18px 18px 14px;
+}
+.home-hero-title {
+  font-size:clamp(20px,2.6vw,34px); font-weight:200;
+  letter-spacing:.34em; text-indent:.34em;
+}
+.home-hero-sub {
+  margin-top:5px; font-size:8.5px; font-weight:300;
+  letter-spacing:.2em; color:#bbb; text-transform:uppercase;
+}
+.home-ad-strip {
+  background:#fff; border-bottom:1px solid #ebebeb;
+  display:flex; justify-content:center;
+}
+.home-ad-strip .ad-slot { width:728px; height:90px; }
+
+/* ── GRID ─────────────────────────────── */
+.content-pad { padding:14px 16px; }
+.grid {
+  display:grid; gap:11px;
+  grid-template-columns:repeat(auto-fill,minmax(210px,1fr));
+}
+
+/* ── CARDS ────────────────────────────── */
+.card {
+  position:relative; cursor:pointer;
+  overflow:hidden; border-radius:3px;
+  background:#ccc;
+  box-shadow:0 1px 3px rgba(0,0,0,.08);
+  transition:box-shadow .24s, transform .2s;
+}
+.card:hover { box-shadow:0 6px 20px rgba(0,0,0,.14); transform:translateY(-3px); }
+.card-home { aspect-ratio:4/3; }
+.card-vid  { aspect-ratio:16/9; }
+.card-bg {
+  position:absolute; inset:0;
+  background-size:cover; background-position:center;
+  transition:transform .55s cubic-bezier(.2,.8,.2,1);
+}
+.card:hover .card-bg { transform:scale(1.05); }
+.card-fade { position:absolute; inset:0; background:linear-gradient(to top,rgba(0,0,0,.7) 0%,transparent 52%); }
+.card-tint { position:absolute; inset:0; background:rgba(0,0,0,0); transition:background .2s; }
+.card:hover .card-tint { background:rgba(0,0,0,.05); }
+.card-play {
+  position:absolute; inset:0;
+  display:flex; align-items:center; justify-content:center;
+  opacity:0; transition:opacity .18s;
+}
+.card:hover .card-play { opacity:1; }
+.play-icon {
+  width:42px; height:42px; border:1.5px solid rgba(255,255,255,.8);
+  border-radius:50%; display:flex; align-items:center; justify-content:center;
+  backdrop-filter:blur(4px); background:rgba(0,0,0,.2);
+}
+.play-icon::after {
+  content:''; width:0; height:0; border-style:solid;
+  border-width:7px 0 7px 12px;
+  border-color:transparent transparent transparent rgba(255,255,255,.9);
+  margin-left:3px;
+}
+.card-arrow { position:absolute; inset:0; display:flex; align-items:center; justify-content:center; opacity:0; transition:opacity .18s; font-size:26px; color:rgba(255,255,255,.85); }
+.card:hover .card-arrow { opacity:1; }
+.card-info { position:absolute; bottom:0; left:0; right:0; padding:11px 13px 10px; }
+.card-emoji { font-size:17px; margin-bottom:4px; display:block; }
+.card-name { font-size:13px; font-weight:400; letter-spacing:.02em; color:#fff; }
+.card-desc { margin-top:3px; font-size:7.5px; font-weight:300; letter-spacing:.14em; color:rgba(255,255,255,.5); text-transform:uppercase; }
+.badge-4k {
+  position:absolute; top:8px; right:8px;
+  background:rgba(0,0,0,.38); backdrop-filter:blur(4px);
+  border:1px solid rgba(255,255,255,.16);
+  color:rgba(255,255,255,.72); font-size:7px; font-weight:400;
+  letter-spacing:.1em; padding:2px 6px; border-radius:2px;
+}
+
+/* ── AD SIDEBAR ───────────────────────── */
+#ad-sidebar {
+  width:300px; flex-shrink:0;
+  background:#f7f7f7; border-left:1px solid #e8e8e8;
+  display:flex; flex-direction:column; overflow:hidden;
+}
+.ad-slot { display:block; overflow:hidden; }
+.ad-slot-300x250 { width:300px; height:250px; }
+.ad-slot-300x600 { width:300px; height:600px; }
+
+/* ── RESPONSIVE ───────────────────────── */
+@media (max-width:1080px) { #ad-sidebar { display:none; } }
+@media (max-width:700px) {
+  #site-nav { width:150px; }
+  .nav-cat-count, .nav-arrow { display:none; }
+  .nav-sub-item { padding-left:26px; font-size:9px; }
+}
+@media (max-width:520px) { #site-nav { display:none; } }
+
+/* ── PLAYER ───────────────────────────── */
+#pg-player {
+  position:fixed !important; inset:0; z-index:100;
+  background:#000; cursor:default;
+}
+#vid { width:100%; height:100%; object-fit:cover; display:block; }
+.ov-top { position:absolute; top:0; left:0; right:0; height:140px; background:linear-gradient(to bottom,rgba(0,0,0,.55),transparent); pointer-events:none; }
+.ov-bot { position:absolute; bottom:0; left:0; right:0; height:110px; background:linear-gradient(to top,rgba(0,0,0,.45),transparent); pointer-events:none; }
+.player-ui {
+  position:absolute; inset:0;
+  display:flex; flex-direction:column; justify-content:space-between;
+  padding:22px 28px;
+  transition:opacity .4s ease;
+}
+.player-ui.hidden { opacity:0; pointer-events:none; }
+.player-top { display:flex; justify-content:space-between; align-items:center; gap:10px; }
+.player-logo { font-size:16px; font-weight:200; letter-spacing:.42em; text-indent:.42em; color:rgba(255,255,255,.85); text-shadow:0 2px 16px rgba(0,0,0,.9); flex:1; }
+.player-btns { display:flex; gap:8px; align-items:center; }
+.player-btn { background:rgba(255,255,255,.08); border:1px solid rgba(255,255,255,.2); color:rgba(255,255,255,.85); font-family:'Montserrat',sans-serif; font-size:8.5px; font-weight:300; letter-spacing:.18em; padding:7px 16px; cursor:pointer; backdrop-filter:blur(8px); transition:all .18s; }
+.player-btn:hover { background:rgba(255,255,255,.18); color:#fff; }
+.player-btn.icon { padding:7px 11px; font-size:13px; letter-spacing:0; }
+.player-bottom { display:flex; justify-content:space-between; align-items:flex-end; }
+.player-scene { font-size:9.5px; font-weight:300; letter-spacing:.22em; color:rgba(255,255,255,.4); text-transform:uppercase; }
+.player-quality-label { font-size:8px; font-weight:300; letter-spacing:.18em; color:rgba(255,255,255,.2); margin-top:3px; }
+.quality-toggle {
+  background:rgba(255,255,255,.08); border:1px solid rgba(255,255,255,.15);
+  color:rgba(255,255,255,.5); font-family:'Montserrat',sans-serif;
+  font-size:8px; font-weight:300; letter-spacing:.14em;
+  padding:5px 10px; cursor:pointer; backdrop-filter:blur(6px);
+  transition:all .18s;
+}
+.quality-toggle:hover { color:rgba(255,255,255,.85); border-color:rgba(255,255,255,.3); }
+.quality-toggle.hd { color:rgba(255,200,100,.7); border-color:rgba(255,200,100,.3); }
+
+#vid-spinner {
+  position:absolute; inset:0;
+  display:flex; align-items:center; justify-content:center;
+  pointer-events:none; opacity:0; transition:opacity .3s;
+}
+#vid-spinner.show { opacity:1; }
+.spinner-ring {
+  width:36px; height:36px;
+  border:1.5px solid rgba(255,255,255,.15);
+  border-top-color:rgba(255,255,255,.6);
+  border-radius:50%;
+  animation:spin .8s linear infinite;
+}
+@keyframes spin { to { transform:rotate(360deg); } }
+</style>
+</head>
+<body>
+
+<!-- ══ LEFT NAV ══════════════════════════════════ -->
+<nav id="site-nav">
+  <div class="nav-logo" id="nav-logo">
+    <div class="nav-logo-text">Calm Veritas</div>
+    <div class="nav-logo-sub">ambient scenes</div>
+  </div>
+  <div id="cat-list"></div>
+
+  <div class="nav-divider"></div>
+  <a class="nav-blog-link" href="/blog/">
+    <span class="nav-blog-emoji">✍️</span>Blog
+  </a>
+  <div class="nav-divider"></div>
+
+  <div class="nav-music" id="nav-music">
+    <button class="music-btn" id="music-btn">♪</button>
+    <div class="music-meta">
+      <span class="music-label">ambient sound</span>
+      <span class="music-track" id="music-track">off</span>
+    </div>
+  </div>
+</nav>
+
+<!-- ══ MAIN AREA ═════════════════════════════════ -->
+<div id="main-area">
+
+  <!-- HOME -->
+  <div class="page" id="pg-home">
+    <div class="home-hero">
+      <div class="home-hero-title">Calm Veritas</div>
+      <div class="home-hero-sub">choose a scene · sit back · breathe</div>
+    </div>
+    <div class="home-ad-strip">
+      <div class="ad-slot"><!-- 728×90 --></div>
+    </div>
+    <div class="content-pad">
+      <div class="grid" id="home-grid"></div>
+    </div>
+  </div>
+
+  <!-- CATEGORY -->
+  <div class="page out" id="pg-cat">
+    <div class="pg-header">
+      <button class="pg-back" id="cat-back">← all</button>
+      <div class="pg-title" id="cat-title"></div>
+    </div>
+    <div class="content-pad">
+      <div class="grid" id="cat-grid"></div>
+    </div>
+  </div>
+
+  <!-- PLAYER -->
+  <div class="page out" id="pg-player">
+    <div class="ov-top"></div>
+    <div class="ov-bot"></div>
+    <video id="vid" autoplay muted loop playsinline></video>
+    <div id="vid-spinner"><div class="spinner-ring"></div></div>
+    <div class="player-ui" id="player-ui">
+      <div class="player-top">
+        <div class="player-logo">Calm Veritas</div>
+        <div class="player-btns">
+          <button class="player-btn" id="player-back">← back</button>
+          <button class="player-btn" id="player-music-btn" title="Toggle music">♪ on</button>
+          <button class="player-btn icon" id="fs-btn" title="Fullscreen">⛶</button>
+        </div>
+      </div>
+      <div class="player-bottom">
+        <div class="player-info">
+          <div class="player-scene" id="player-scene"></div>
+          <div class="player-quality-label" id="player-quality"></div>
+        </div>
+        <button class="quality-toggle" id="quality-toggle">4K</button>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- ══ AD SIDEBAR ═════════════════════════════════ -->
+<aside id="ad-sidebar">
+  <div class="ad-slot ad-slot-300x250"><!-- 300×250 --></div>
+  <div class="ad-slot ad-slot-300x250"><!-- 300×250 --></div>
+</aside>
+
+<audio id="bgm" loop preload="none"></audio>
+
+<script>
+const CATEGORIES = [
+  {
+    id:'ocean', name:'Ocean', emoji:'🌊', music:'music/ocean.mp3',
+    videos:[
+      {id:'16727103',name:'Deep Ocean Waves',thumb:'https://images.pexels.com/videos/16727103/beach-beach-waves-blue-ocean-deep-ocean-16727103.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200',src:'https://videos.pexels.com/video-files/16727103/16727103-uhd_3840_2160_60fps.mp4',src_hd:'https://videos.pexels.com/video-files/16727103/16727103-hd_1920_1080_60fps.mp4',music:''},
+      {id:'6624689',name:'Breaking Surf',thumb:'https://images.pexels.com/videos/6624689/beach-beach-waves-blue-water-breaking-waves-6624689.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200',src:'https://videos.pexels.com/video-files/6624689/6624689-uhd_3840_2160_25fps.mp4',src_hd:'https://videos.pexels.com/video-files/6624689/6624689-hd_1920_1080_25fps.mp4',music:''},
+      {id:'3446616',name:'Open Sea',thumb:'https://images.pexels.com/videos/3446616/free-video-3446616.jpg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200',src:'https://videos.pexels.com/video-files/3446616/3446616-uhd_3840_2160_25fps.mp4',src_hd:'https://videos.pexels.com/video-files/3446616/3446616-hd_1920_1080_25fps.mp4',music:''}
+    ]
+  },
+  {
+    id:'fire', name:'Fire', emoji:'🔥', music:'music/fire.mp3',
+    videos:[
+      {id:'6984877',name:'Indoor Fire',thumb:'https://images.pexels.com/videos/6984877/pexels-photo-6984877.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200',src:'https://videos.pexels.com/video-files/6984877/6984877-uhd_3840_2160_24fps.mp4',src_hd:'https://videos.pexels.com/video-files/6984877/6984877-hd_1920_1080_24fps.mp4',music:''},
+      {id:'11353677',name:'Open Flame',thumb:'https://images.pexels.com/videos/11353677/blazing-fire-bonfire-burning-burning-flame-11353677.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200',src:'https://videos.pexels.com/video-files/11353677/11353677-uhd_3840_2160_30fps.mp4',src_hd:'https://videos.pexels.com/video-files/11353677/11353677-hd_1920_1080_30fps.mp4',music:''},
+      {id:'17062878',name:'Bonfire Night',thumb:'https://images.pexels.com/videos/17062878/are-lit-atmosphere-beautiful-fire-bonfires-17062878.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200',src:'https://videos.pexels.com/video-files/17062878/17062878-uhd_3840_2160_24fps.mp4',src_hd:'https://videos.pexels.com/video-files/17062878/17062878-hd_1920_1080_24fps.mp4',music:''}
+    ]
+  },
+  {
+    id:'rain', name:'Rain', emoji:'🌧', music:'music/rain.mp3',
+    videos:[
+      {id:'15454042',name:'Rainy Window',thumb:'https://images.pexels.com/videos/15454042/drops-glass-landscape-looking-through-window-15454042.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200',src:'https://videos.pexels.com/video-files/15454042/15454042-uhd_3840_2160_25fps.mp4',src_hd:'https://videos.pexels.com/video-files/15454042/15454042-hd_1920_1080_25fps.mp4',music:''},
+      {id:'5197762',name:'Autumn Rain',thumb:'https://images.pexels.com/videos/5197762/autumn-calm-cosy-drops-5197762.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200',src:'https://videos.pexels.com/video-files/5197762/5197762-uhd_3840_2160_25fps.mp4',src_hd:'https://videos.pexels.com/video-files/5197762/5197762-hd_1920_1080_25fps.mp4',music:''},
+      {id:'13619802',name:'Heavy Rain',thumb:'https://images.pexels.com/videos/13619802/after-rain-after-the-rain-glass-heavy-rain-13619802.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200',src:'https://videos.pexels.com/video-files/13619802/13619802-uhd_3840_2160_60fps.mp4',src_hd:'https://videos.pexels.com/video-files/13619802/13619802-hd_1920_1080_60fps.mp4',music:''}
+    ]
+  },
+  {
+    id:'forest', name:'Forest', emoji:'🌿', music:'music/forest.mp3',
+    videos:[
+      {id:'13234202',name:'Deep Forest',thumb:'https://images.pexels.com/videos/13234202/pexels-photo-13234202.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200',src:'https://videos.pexels.com/video-files/13234202/13234202-uhd_3840_2160_24fps.mp4',src_hd:'https://videos.pexels.com/video-files/13234202/13234202-hd_1920_1080_24fps.mp4',music:''},
+      {id:'14050551',name:'Forest Path',thumb:'https://images.pexels.com/videos/14050551/pexels-photo-14050551.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200',src:'https://videos.pexels.com/video-files/14050551/14050551-uhd_3840_2160_24fps.mp4',src_hd:'https://videos.pexels.com/video-files/14050551/14050551-hd_1920_1080_24fps.mp4',music:''},
+      {id:'2711092',name:'Woodland',thumb:'https://images.pexels.com/videos/2711092/free-video-2711092.jpg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200',src:'https://videos.pexels.com/video-files/2711092/2711092-uhd_3840_2160_24fps.mp4',src_hd:'https://videos.pexels.com/video-files/2711092/2711092-hd_1920_1080_24fps.mp4',music:''},
+      {id:'13210975',name:'Forest Mist',thumb:'https://images.pexels.com/videos/13210975/pexels-photo-13210975.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200',src:'https://videos.pexels.com/video-files/13210975/13210975-uhd_3840_2160_24fps.mp4',src_hd:'https://videos.pexels.com/video-files/13210975/13210975-hd_1920_1080_24fps.mp4',music:''}
+    ]
+  },
+  {
+    id:'winter', name:'Winter', emoji:'❄️', music:'music/winter.mp3',
+    videos:[
+      {id:'19887145',name:'Falling Snow',thumb:'https://images.pexels.com/videos/19887145/calming-video-falling-snow-falling-snow-video-nature-video-19887145.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200',src:'https://videos.pexels.com/video-files/19887145/19887145-uhd_3840_2160_24fps.mp4',src_hd:'https://videos.pexels.com/video-files/19887145/19887145-hd_1920_1080_24fps.mp4',music:''},
+      {id:'19493013',name:'Snowy Forest',thumb:'https://images.pexels.com/videos/19493013/cold-falling-forest-fresh-19493013.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200',src:'https://videos.pexels.com/video-files/19493013/19493013-uhd_3840_2160_30fps.mp4',src_hd:'https://videos.pexels.com/video-files/19493013/19493013-hd_1920_1080_30fps.mp4',music:''},
+      {id:'10697994',name:'Winter Calm',thumb:'https://images.pexels.com/videos/10697994/pexels-photo-10697994.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200',src:'https://videos.pexels.com/video-files/10697994/10697994-hd_3840_2160_30fps.mp4',src_hd:'https://videos.pexels.com/video-files/10697994/10697994-hd_1920_1080_30fps.mp4',music:''},
+      {id:'19491958',name:'Alpine Snow',thumb:'https://images.pexels.com/videos/19491958/artificial-snow-bavaria-dji-dji-mavic-19491958.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200',src:'https://videos.pexels.com/video-files/19491958/19491958-uhd_3840_2160_30fps.mp4',src_hd:'https://videos.pexels.com/video-files/19491958/19491958-hd_1920_1080_30fps.mp4',music:''},
+      {id:'19642768',name:'Cold Forest',thumb:'https://images.pexels.com/videos/19642768/beautiful-cold-forest-forest-snow-19642768.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200',src:'https://videos.pexels.com/video-files/19642768/19642768-uhd_3840_2160_30fps.mp4',src_hd:'https://videos.pexels.com/video-files/19642768/19642768-hd_1920_1080_30fps.mp4',music:''}
+    ]
+  },
+  {
+    id:'stars', name:'Stars', emoji:'🌌', music:'music/stars.mp3',
+    videos:[
+      {id:'9557868',name:'Galaxy',thumb:'https://images.pexels.com/videos/9557868/astronomy-cosmos-dark-sky-galaxy-9557868.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200',src:'https://videos.pexels.com/video-files/9557868/9557868-uhd_3840_2160_24fps.mp4',src_hd:'https://videos.pexels.com/video-files/9557868/9557868-hd_1920_1080_24fps.mp4',music:''}
+    ]
+  },
+  {
+    id:'abstract', name:'Abstract', emoji:'✨', music:'music/abstract.mp3',
+    videos:[
+      {id:'14203831',name:'Neon Flow',thumb:'https://images.pexels.com/videos/14203831/abstract-art-backdrop-background-14203831.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200',src:'https://videos.pexels.com/video-files/14203831/14203831-uhd_3840_2160_60fps.mp4',src_hd:'https://videos.pexels.com/video-files/14203831/14203831-hd_1920_1080_60fps.mp4',music:''},
+      {id:'7670835',name:'Fluid Colors',thumb:'https://images.pexels.com/videos/7670835/pexels-photo-7670835.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200',src:'https://videos.pexels.com/video-files/7670835/7670835-uhd_3840_2160_30fps.mp4',src_hd:'https://videos.pexels.com/video-files/7670835/7670835-hd_1920_1080_30fps.mp4',music:''},
+      {id:'16685801',name:'Geometric',thumb:'https://images.pexels.com/videos/16685801/3d-color-digital-fractal-16685801.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200',src:'https://videos.pexels.com/video-files/16685801/16685801-uhd_3840_2160_30fps.mp4',src_hd:'https://videos.pexels.com/video-files/16685801/16685801-hd_1920_1080_30fps.mp4',music:''},
+      {id:'10916595',name:'Abstract Loop',thumb:'https://images.pexels.com/videos/10916595/abstract-animation-art-backdrop-10916595.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200',src:'https://videos.pexels.com/video-files/10916595/10916595-uhd_3840_2160_30fps.mp4',src_hd:'https://videos.pexels.com/video-files/10916595/10916595-hd_1920_1080_30fps.mp4',music:''}
+    ]
+  },
+];
+
+const ACTIVE_CATEGORIES = CATEGORIES.filter(c => c.videos && c.videos.length > 0);
+
+const catList = document.getElementById('cat-list');
+ACTIVE_CATEGORIES.forEach(cat => {
+  const wrap = document.createElement('div');
+  const head = document.createElement('div');
+  head.className = 'nav-cat-head';
+  head.dataset.id = cat.id;
+  head.innerHTML = `<span class="nav-cat-emoji">${cat.emoji}</span><span class="nav-cat-name">${cat.name}</span><span class="nav-cat-count">${cat.videos.length}</span><span class="nav-arrow">›</span>`;
+  const sub = document.createElement('div');
+  sub.className = 'nav-sub';
+  sub.id = 'sub-' + cat.id;
+  cat.videos.forEach(v => {
+    const item = document.createElement('div');
+    item.className = 'nav-sub-item';
+    item.textContent = v.name;
+    item.addEventListener('click', e => { e.stopPropagation(); openPlayer(cat, v); });
+    sub.appendChild(item);
+  });
+  head.addEventListener('click', () => {
+    const isOpen = head.classList.contains('open');
+    document.querySelectorAll('.nav-cat-head.open').forEach(h => {
+      h.classList.remove('open');
+      document.getElementById('sub-' + h.dataset.id).classList.remove('open');
+    });
+    if (!isOpen) { head.classList.add('open'); sub.classList.add('open'); openCat(cat); }
+    else { goHome(); }
+  });
+  wrap.appendChild(head); wrap.appendChild(sub); catList.appendChild(wrap);
+});
+
+const homeGrid = document.getElementById('home-grid');
+ACTIVE_CATEGORIES.forEach(cat => {
+  const card = document.createElement('div');
+  card.className = 'card card-home';
+  card.innerHTML = `
+    <div class="card-bg" style="background-image:url('${cat.videos[0].thumb}')"></div>
+    <div class="card-fade"></div><div class="card-tint"></div>
+    <div class="card-arrow">›</div>
+    <div class="badge-4k">4K</div>
+    <div class="card-info">
+      <span class="card-emoji">${cat.emoji}</span>
+      <div class="card-name">${cat.name}</div>
+      <div class="card-desc">${cat.videos.length} scenes</div>
+    </div>`;
+  card.addEventListener('click', () => openCat(cat));
+  homeGrid.appendChild(card);
+});
+
+let currentCat = null;
+function openCat(cat) {
+  currentCat = cat;
+  document.getElementById('cat-title').textContent = cat.emoji + '  ' + cat.name;
+  const grid = document.getElementById('cat-grid');
+  grid.innerHTML = '';
+  cat.videos.forEach(v => {
+    const card = document.createElement('div');
+    card.className = 'card card-vid';
+    card.innerHTML = `
+      <div class="card-bg" style="background-image:url('${v.thumb}')"></div>
+      <div class="card-fade"></div><div class="card-tint"></div>
+      <div class="card-play"><div class="play-icon"></div></div>
+      <div class="badge-4k">${v.quality||'HD'}</div>
+      <div class="card-info">
+        <div class="card-name">${v.name}</div>
+        <div class="card-desc">${v.quality||'HD'} · pexels</div>
+      </div>`;
+    card.addEventListener('click', () => openPlayer(cat, v));
+    grid.appendChild(card);
+  });
+  pg('pg-cat').scrollTop = 0;
+  go('pg-home','pg-cat');
+  setNavActive(cat.id);
+  history.pushState({page:'cat',catId:cat.id},'','#'+cat.id);
+}
+
+const vid = document.getElementById('vid');
+const spinner = document.getElementById('vid-spinner');
+const playerUI = document.getElementById('player-ui');
+const qualityToggle = document.getElementById('quality-toggle');
+let currentVideo = null, isHD = false, uiTimer = null;
+
+function getHDSrc(src) {
+  return src.replace(/uhd_\d+_\d+_(\d+fps)/,'hd_1920_1080_$1').replace(/hd_3840_2160_(\d+fps)/,'hd_1920_1080_$1').replace(/hd_4096_\d+_(\d+fps)/,'hd_1920_1080_$1');
+}
+function loadVideo(src) { spinner.classList.add('show'); vid.src=src; vid.load(); vid.play().catch(()=>{}); }
+
+function openPlayer(cat,v) {
+  currentVideo=v; isHD=true;
+  qualityToggle.textContent='→ 4K'; qualityToggle.classList.add('hd');
+  loadVideo(getHDSrc(v.src));
+  document.getElementById('player-scene').textContent = cat.emoji+'  '+cat.name.toUpperCase()+'  ·  '+v.name;
+  document.getElementById('player-quality').textContent = '1080p · Pexels';
+  setMusic(v.music||cat.music); updatePlayerMusicBtn();
+  if (!pg('pg-cat').classList.contains('out')) { go('pg-cat','pg-player'); }
+  else { openCat(cat); setTimeout(()=>go('pg-cat','pg-player'),400); }
+  history.pushState({page:'player',catId:cat.id,videoId:v.id},'','#'+cat.id+'/'+v.id);
+}
+
+vid.addEventListener('playing', () => spinner.classList.remove('show'));
+vid.addEventListener('waiting',  () => spinner.classList.add('show'));
+
+qualityToggle.addEventListener('click', () => {
+  if (!currentVideo) return;
+  if (isHD) { isHD=false; qualityToggle.textContent='HD'; qualityToggle.classList.remove('hd'); document.getElementById('player-quality').textContent='4K · Pexels'; loadVideo(currentVideo.src); }
+  else { isHD=true; qualityToggle.textContent='→ 4K'; qualityToggle.classList.add('hd'); document.getElementById('player-quality').textContent='1080p · Pexels'; loadVideo(getHDSrc(currentVideo.src)); }
+});
+
+function stopVideo() { currentVideo=null; vid.pause(); vid.src=''; spinner.classList.remove('show'); stopMusic(); }
+function goHome() {
+  if (!pg('pg-player').classList.contains('out')) { stopVideo(); go('pg-player','pg-cat'); return; }
+  if (!pg('pg-cat').classList.contains('out')) { go('pg-cat','pg-home'); }
+  setNavActive(null);
+}
+function setNavActive(id) { document.querySelectorAll('.nav-cat-head').forEach(h=>h.classList.toggle('active',h.dataset.id===id)); }
+
+const playerEl = document.getElementById('pg-player');
+function showUI() { playerUI.classList.remove('hidden'); playerEl.style.cursor='default'; clearTimeout(uiTimer); }
+function scheduleHideUI() { clearTimeout(uiTimer); uiTimer=setTimeout(()=>{ if(document.fullscreenElement){playerUI.classList.add('hidden');playerEl.style.cursor='none';} },3000); }
+function toggleFS() { if(!document.fullscreenElement){playerEl.requestFullscreen().catch(()=>{});}else{document.exitFullscreen();} }
+
+document.getElementById('fs-btn').addEventListener('click', toggleFS);
+vid.addEventListener('dblclick', toggleFS);
+playerEl.addEventListener('mousemove', () => { if(document.fullscreenElement){showUI();scheduleHideUI();} });
+document.addEventListener('fullscreenchange', () => {
+  if(document.fullscreenElement){document.getElementById('fs-btn').title='Exit fullscreen (Esc)';scheduleHideUI();}
+  else{document.getElementById('fs-btn').title='Fullscreen';showUI();playerEl.style.cursor='default';}
+});
+
+const bgm = document.getElementById('bgm');
+const navMusic = document.getElementById('nav-music');
+let musicOn=true, currentMusic='';
+bgm.volume=0.45;
+function setMusic(src){if(!src)return;currentMusic=src;if(musicOn){bgm.src=src;bgm.play().catch(()=>{}); }}
+function stopMusic(){bgm.pause();bgm.src='';}
+function toggleMusic(){musicOn=!musicOn;if(musicOn&&currentMusic){bgm.src=currentMusic;bgm.play().catch(()=>{});}else{bgm.pause();}updatePlayerMusicBtn();}
+if(navMusic) navMusic.addEventListener('click',toggleMusic);
+
+document.getElementById('nav-logo').addEventListener('click', goHome);
+document.getElementById('cat-back').addEventListener('click', ()=>{go('pg-cat','pg-home');setNavActive(null);});
+document.getElementById('player-back').addEventListener('click', ()=>{if(document.fullscreenElement)document.exitFullscreen();stopVideo();go('pg-player','pg-cat');});
+document.addEventListener('keydown', e=>{
+  if(e.key==='Escape'){if(document.fullscreenElement)return;
+    if(!pg('pg-player').classList.contains('out')){stopVideo();go('pg-player','pg-cat');}
+    else if(!pg('pg-cat').classList.contains('out')){go('pg-cat','pg-home');setNavActive(null);}
+  }
+});
+
+function pg(id){return document.getElementById(id);}
+function go(from,to){pg(from).classList.add('out');setTimeout(()=>pg(to).classList.remove('out'),50);}
+
+const playerMusicBtn=document.getElementById('player-music-btn');
+function updatePlayerMusicBtn(){if(!playerMusicBtn)return;playerMusicBtn.textContent=musicOn?'♪ music: on':'♪ music: off';}
+playerMusicBtn.addEventListener('click',toggleMusic);
+
+window.addEventListener('popstate',e=>{
+  const state=e.state;
+  if(!state||state.page==='home'){if(!pg('pg-player').classList.contains('out')){stopVideo();go('pg-player','pg-cat');}setTimeout(()=>{if(!pg('pg-cat').classList.contains('out')){go('pg-cat','pg-home');setNavActive(null);}},50);}
+  else if(state.page==='cat'){if(!pg('pg-player').classList.contains('out')){stopVideo();go('pg-player','pg-cat');}}
+});
+history.replaceState({page:'home'},'',window.location.pathname);
+
+function resolveHash(){
+  const hash=window.location.hash.replace('#','');
+  if(!hash)return;
+  const parts=hash.split('/');
+  const cat=CATEGORIES.find(c=>c.id===parts[0]);
+  if(!cat)return;
+  if(parts[1]){const v=cat.videos.find(v=>String(v.id)===String(parts[1]));if(v){openPlayer(cat,v);return;}}
+  openCat(cat);
+}
+resolveHash();
+
+vid.addEventListener('error',()=>{
+  spinner.classList.remove('show'); stopMusic();
+  if(!currentVideo)return;
+  if(currentCat)currentCat.videos=currentCat.videos.filter(v=>v.id!==currentVideo.id);
+  currentVideo=null; vid.pause(); vid.src='';
+  if(currentCat&&currentCat.videos.length>0){
+    pg('pg-player').classList.add('out');
+    setTimeout(()=>{pg('pg-cat').classList.remove('out');const grid=document.getElementById('cat-grid');grid.innerHTML='';currentCat.videos.forEach(v=>{const card=document.createElement('div');card.className='card card-vid';card.innerHTML=`<div class="card-bg" style="background-image:url('${v.thumb}')"></div><div class="card-fade"></div><div class="card-tint"></div><div class="card-play"><div class="play-icon"></div></div><div class="badge-4k">${v.quality||'HD'}</div><div class="card-info"><div class="card-name">${v.name}</div><div class="card-desc">${v.quality||'HD'} · pexels</div></div>`;card.addEventListener('click',()=>openPlayer(currentCat,v));grid.appendChild(card);});history.replaceState({page:'cat',catId:currentCat.id},'','#'+currentCat.id);},50);
+  }else{pg('pg-player').classList.add('out');pg('pg-cat').classList.add('out');setTimeout(()=>pg('pg-home').classList.remove('out'),50);setNavActive(null);history.replaceState({page:'home'},'',window.location.pathname);}
+});
+</script>
+</body>
+</html>

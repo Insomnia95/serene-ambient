@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Blog — Calm Veritas</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌊</text></svg>">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@200;300;400;500&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+html, body {
+  width:100%; min-height:100%;
+  font-family:'Montserrat', sans-serif;
+  background:#efefef; color:#111;
+}
+body { display:flex; }
+
+/* ── LEFT NAV ─────────────────────────── */
+#site-nav {
+  width:186px; flex-shrink:0;
+  background:#fff; border-right:1px solid #e8e8e8;
+  display:flex; flex-direction:column;
+  z-index:10; position:sticky; top:0; height:100vh;
+}
+.nav-logo {
+  padding:16px 15px 13px;
+  border-bottom:1px solid #f0f0f0;
+  cursor:pointer; flex-shrink:0; text-decoration:none; display:block;
+}
+.nav-logo:hover .nav-logo-text { opacity:.7; }
+.nav-logo-text {
+  font-size:15px; font-weight:200;
+  letter-spacing:.42em; text-indent:.42em;
+  transition:opacity .2s; color:#111;
+}
+.nav-logo-sub {
+  font-size:7.5px; font-weight:300;
+  letter-spacing:.2em; color:#c0c0c0;
+  margin-top:3px; text-transform:uppercase;
+}
+
+.nav-section { flex:1; overflow-y:auto; padding:6px 0; }
+
+.nav-item {
+  display:flex; align-items:center;
+  padding:6px 13px; cursor:pointer;
+  font-size:11px; font-weight:400; letter-spacing:.04em;
+  color:#444; transition:background .14s;
+  text-decoration:none;
+}
+.nav-item:hover { background:#f6f6f6; }
+.nav-item.active { color:#111; background:#f3f3f3; font-weight:500; }
+.nav-item-emoji { font-size:12px; margin-right:7px; }
+
+.nav-divider { height:1px; background:#f0f0f0; margin:6px 0; }
+
+.nav-back {
+  border-top:1px solid #f0f0f0; padding:11px 13px;
+  display:flex; align-items:center; gap:7px;
+  text-decoration:none; flex-shrink:0;
+}
+.nav-back:hover { background:#f6f6f6; }
+.nav-back-text {
+  font-size:8px; font-weight:300; letter-spacing:.14em;
+  color:#bbb; text-transform:uppercase;
+}
+
+/* ── MAIN ─────────────────────────────── */
+#main { flex:1; min-height:100vh; }
+
+.page-header {
+  background:#fff; border-bottom:1px solid #e8e8e8;
+  padding:18px 24px 14px; position:sticky; top:0; z-index:5;
+}
+.page-header-title {
+  font-size:clamp(18px,2vw,28px); font-weight:200;
+  letter-spacing:.3em; text-indent:.3em;
+}
+.page-header-sub {
+  margin-top:5px; font-size:8.5px; font-weight:300;
+  letter-spacing:.2em; color:#bbb; text-transform:uppercase;
+}
+
+/* ── FILTER TABS ──────────────────────── */
+.filter-bar {
+  background:#fff; border-bottom:1px solid #ebebeb;
+  padding:0 24px; display:flex; gap:0; overflow-x:auto;
+}
+.filter-bar::-webkit-scrollbar { display:none; }
+.filter-tab {
+  padding:11px 16px; font-size:9px; font-weight:300;
+  letter-spacing:.14em; color:#aaa; text-transform:uppercase;
+  cursor:pointer; border-bottom:2px solid transparent;
+  transition:color .18s, border-color .18s; white-space:nowrap;
+  background:none; border-top:none; border-left:none; border-right:none;
+  font-family:'Montserrat',sans-serif;
+}
+.filter-tab:hover { color:#555; }
+.filter-tab.active { color:#111; border-bottom-color:#111; }
+
+/* ── ARTICLES GRID ────────────────────── */
+.content-pad { padding:20px 24px; }
+.articles-grid {
+  display:grid; gap:14px;
+  grid-template-columns:repeat(auto-fill, minmax(280px,1fr));
+}
+
+/* ── ARTICLE CARD ─────────────────────── */
+.article-card {
+  background:#fff; border:1px solid #e8e8e8;
+  cursor:pointer; transition:box-shadow .22s, transform .2s;
+  display:flex; flex-direction:column;
+}
+.article-card:hover {
+  box-shadow:0 4px 18px rgba(0,0,0,.09);
+  transform:translateY(-2px);
+}
+.article-card-body { padding:18px 18px 14px; flex:1; }
+.article-tag {
+  font-size:7.5px; font-weight:400; letter-spacing:.18em;
+  text-transform:uppercase; color:#bbb; margin-bottom:10px;
+  display:block;
+}
+.article-title {
+  font-size:14px; font-weight:400; letter-spacing:.01em;
+  line-height:1.5; color:#111; margin-bottom:8px;
+}
+.article-excerpt {
+  font-size:9px; font-weight:300; letter-spacing:.03em;
+  color:#888; line-height:1.7;
+}
+.article-card-footer {
+  padding:10px 18px 14px;
+  display:flex; align-items:center; justify-content:space-between;
+  border-top:1px solid #f5f5f5; margin-top:8px;
+}
+.article-meta {
+  font-size:7.5px; font-weight:300; letter-spacing:.1em;
+  color:#ccc; text-transform:uppercase;
+}
+.article-arrow {
+  font-size:11px; color:#ccc; transition:color .18s, transform .18s;
+}
+.article-card:hover .article-arrow { color:#111; transform:translateX(3px); }
+
+/* ── CHECKLIST BADGE ──────────────────── */
+.article-badge {
+  display:inline-block; font-size:7px; font-weight:400;
+  letter-spacing:.12em; text-transform:uppercase;
+  background:#f5f5f5; color:#999; padding:2px 7px;
+  margin-bottom:10px; margin-right:6px;
+}
+.article-badge.free { background:#111; color:#fff; }
+
+/* ── RESPONSIVE ───────────────────────── */
+@media (max-width:700px) {
+  #site-nav { width:150px; }
+}
+@media (max-width:520px) {
+  #site-nav { display:none; }
+}
+</style>
+</head>
+<body>
+
+<!-- ── LEFT NAV ──────────────────────────── -->
+<nav id="site-nav">
+  <a class="nav-logo" href="/">
+    <div class="nav-logo-text">Calm Veritas</div>
+    <div class="nav-logo-sub">no fluff. just truth.</div>
+  </a>
+
+  <div class="nav-section">
+    <a class="nav-item active" data-cat="all" href="#all">
+      <span class="nav-item-emoji">📖</span> All
+    </a>
+    <a class="nav-item" data-cat="sleep" href="#sleep">
+      <span class="nav-item-emoji">🌙</span> Sleep
+    </a>
+    <a class="nav-item" data-cat="anxiety" href="#anxiety">
+      <span class="nav-item-emoji">🧠</span> Anxiety
+    </a>
+    <a class="nav-item" data-cat="focus" href="#focus">
+      <span class="nav-item-emoji">🎯</span> Focus
+    </a>
+    <a class="nav-item" data-cat="stoicism" href="#stoicism">
+      <span class="nav-item-emoji">🏛</span> Stoicism
+    </a>
+
+    <div class="nav-divider"></div>
+
+    <a class="nav-item" data-cat="checklists" href="#checklists">
+      <span class="nav-item-emoji">✅</span> Checklists
+    </a>
+  </div>
+
+  <a class="nav-back" href="/">
+    <span style="font-size:11px;color:#ccc">←</span>
+    <span class="nav-back-text">ambient scenes</span>
+  </a>
+</nav>
+
+<!-- ── MAIN ──────────────────────────────── -->
+<div id="main">
+
+  <div class="page-header">
+    <div class="page-header-title">Blog</div>
+    <div class="page-header-sub">evidence-based calm · no fluff</div>
+  </div>
+
+  <div class="filter-bar">
+    <button class="filter-tab active" data-cat="all">All</button>
+    <button class="filter-tab" data-cat="sleep">Sleep</button>
+    <button class="filter-tab" data-cat="anxiety">Anxiety</button>
+    <button class="filter-tab" data-cat="focus">Focus</button>
+    <button class="filter-tab" data-cat="stoicism">Stoicism</button>
+    <button class="filter-tab" data-cat="checklists">Checklists</button>
+  </div>
+
+  <div class="content-pad">
+    <div class="articles-grid" id="articles-grid"></div>
+  </div>
+
+</div>
+
+<script>
+const ARTICLES = [
+  {
+    id: 'sleep-truth',
+    cat: 'sleep',
+    tag: 'Sleep',
+    title: 'The Calm Truth About Sleep: What the Science Actually Says',
+    excerpt: 'Most sleep advice is wrong. We break down what peer-reviewed research actually shows about sleep cycles, timing, and quality — without the noise.',
+    date: 'May 2026',
+    readTime: '6 min read',
+    badge: null,
+    href: '/blog/sleep-truth.html'
+  },
+  {
+    id: 'anxiety-decoded',
+    cat: 'anxiety',
+    tag: 'Anxiety',
+    title: 'Anxiety Decoded: How Your Brain Creates Fear (And How to Work With It)',
+    excerpt: 'A neuroscience-grounded look at what anxiety actually is — and why most common coping strategies miss the point.',
+    date: 'May 2026',
+    readTime: '8 min read',
+    badge: null,
+    href: '/blog/anxiety-decoded.html'
+  },
+  {
+    id: 'stoic-morning',
+    cat: 'stoicism',
+    tag: 'Stoicism',
+    title: 'Marcus Aurelius Had a Morning Routine. Here\'s What It Looked Like.',
+    excerpt: 'The emperor\'s journals reveal a surprisingly practical daily practice — one that holds up remarkably well against modern psychology.',
+    date: 'May 2026',
+    readTime: '5 min read',
+    badge: null,
+    href: '/blog/stoic-morning.html'
+  },
+  {
+    id: 'focus-myth',
+    cat: 'focus',
+    tag: 'Focus',
+    title: 'The Focus Myth: Why Discipline Is Not the Problem',
+    excerpt: 'You don\'t have a willpower problem. You have an environment problem. The research on attention is clear — and it\'s not what productivity gurus sell you.',
+    date: 'May 2026',
+    readTime: '7 min read',
+    badge: null,
+    href: '/blog/focus-myth.html'
+  },
+  {
+    id: 'sleep-checklist',
+    cat: 'checklists',
+    tag: 'Checklist',
+    title: 'The Evidence-Based Sleep Checklist (PDF)',
+    excerpt: 'A one-page checklist built from sleep science research. What to do 2 hours, 1 hour, and 30 minutes before bed — and what to stop doing.',
+    date: 'Free download',
+    readTime: 'PDF · 1 page',
+    badge: 'free',
+    href: '/checklists/sleep-checklist.pdf'
+  },
+  {
+    id: 'anxiety-checklist',
+    cat: 'checklists',
+    tag: 'Checklist',
+    title: 'The Anxiety Reset Checklist (PDF)',
+    excerpt: 'A grounding checklist for acute anxiety moments, built around validated CBT and somatic techniques. No fluff, no filler.',
+    date: 'Free download',
+    readTime: 'PDF · 1 page',
+    badge: 'free',
+    href: '/checklists/anxiety-checklist.pdf'
+  },
+];
+
+let currentCat = 'all';
+
+function renderArticles(cat) {
+  const grid = document.getElementById('articles-grid');
+  const filtered = cat === 'all' ? ARTICLES : ARTICLES.filter(a => a.cat === cat);
+  grid.innerHTML = '';
+  filtered.forEach(a => {
+    const card = document.createElement('div');
+    card.className = 'article-card';
+    card.innerHTML = `
+      <div class="article-card-body">
+        ${a.badge ? `<span class="article-badge ${a.badge}">${a.badge === 'free' ? 'Free' : a.badge}</span>` : ''}
+        <span class="article-tag">${a.tag}</span>
+        <div class="article-title">${a.title}</div>
+        <div class="article-excerpt">${a.excerpt}</div>
+      </div>
+      <div class="article-card-footer">
+        <span class="article-meta">${a.date} · ${a.readTime}</span>
+        <span class="article-arrow">→</span>
+      </div>`;
+    card.addEventListener('click', () => { window.location.href = a.href; });
+    grid.appendChild(card);
+  });
+}
+
+// Filter tabs
+document.querySelectorAll('.filter-tab').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.filter-tab').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    currentCat = btn.dataset.cat;
+    renderArticles(currentCat);
+    setNavActive(currentCat);
+  });
+});
+
+// Nav items
+document.querySelectorAll('.nav-item[data-cat]').forEach(item => {
+  item.addEventListener('click', e => {
+    e.preventDefault();
+    const cat = item.dataset.cat;
+    currentCat = cat;
+    renderArticles(cat);
+    setNavActive(cat);
+    document.querySelectorAll('.filter-tab').forEach(b => {
+      b.classList.toggle('active', b.dataset.cat === cat);
+    });
+  });
+});
+
+function setNavActive(cat) {
+  document.querySelectorAll('.nav-item[data-cat]').forEach(item => {
+    item.classList.toggle('active', item.dataset.cat === cat);
+  });
+}
+
+// Hash routing
+function resolveHash() {
+  const hash = window.location.hash.replace('#','');
+  if (hash && ['all','sleep','anxiety','focus','stoicism','checklists'].includes(hash)) {
+    currentCat = hash;
+  }
+  renderArticles(currentCat);
+  setNavActive(currentCat);
+  document.querySelectorAll('.filter-tab').forEach(b => {
+    b.classList.toggle('active', b.dataset.cat === currentCat);
+  });
+}
+resolveHash();
+</script>
+</body>
+</html>
