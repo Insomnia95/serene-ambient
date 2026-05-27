@@ -20,12 +20,12 @@ body { font-family:'Montserrat',sans-serif; background:#f5f5f3; color:#1a1a1a; -
 }
 .logo { font-size:15px; font-weight:400; letter-spacing:.3em; color:#fff; text-decoration:none; }
 .header-nav { display:flex; gap:24px; align-items:center; }
-.header-nav a { font-size:10px; font-weight:400; letter-spacing:.12em; text-transform:uppercase; color:rgba(255,255,255,.45); text-decoration:none; transition:color .15s; }
+.header-nav a { font-size:12px; font-weight:400; letter-spacing:.08em; text-transform:uppercase; color:rgba(255,255,255,.5); text-decoration:none; transition:color .15s; }
 .header-nav a:hover { color:#fff; }
-#auth-btn { background:#fff; color:#111; padding:8px 16px; font-size:10px; font-weight:500; letter-spacing:.1em; text-transform:uppercase; border:none; cursor:pointer; font-family:'Montserrat',sans-serif; transition:background .15s; }
+#auth-btn { background:#fff; color:#111; padding:9px 18px; font-size:11px; font-weight:500; letter-spacing:.08em; text-transform:uppercase; border:none; cursor:pointer; font-family:'Montserrat',sans-serif; transition:background .15s; }
 #auth-btn:hover { background:#e8e8e8; }
 .header-sub { padding:14px 0; display:flex; align-items:center; justify-content:space-between; }
-.header-sub-title { font-size:13px; font-weight:300; letter-spacing:.04em; color:rgba(255,255,255,.5); }
+.header-sub-title { font-size:14px; font-weight:300; letter-spacing:.02em; color:rgba(255,255,255,.5); }
 .header-sub-title strong { color:rgba(255,255,255,.85); font-weight:400; }
 
 /* ── LAYOUT ── */
@@ -36,25 +36,25 @@ body { font-family:'Montserrat',sans-serif; background:#f5f5f3; color:#1a1a1a; -
 #sidebar { display:flex; flex-direction:column; gap:4px; }
 .cat-btn {
   display:flex; align-items:center; justify-content:space-between;
-  padding:10px 14px; border:none; background:#fff; border:1px solid #e8e8e6;
-  font-family:'Montserrat',sans-serif; font-size:11px; font-weight:400; letter-spacing:.02em;
+  padding:11px 14px; border:none; background:#fff; border:1px solid #e8e8e6;
+  font-family:'Montserrat',sans-serif; font-size:13px; font-weight:400; letter-spacing:.01em;
   color:#555; cursor:pointer; text-align:left; transition:all .13s; margin-bottom:2px;
 }
 .cat-btn:hover { background:#f0f0ee; color:#1a1a1a; }
 .cat-btn.active { background:#1a1a1a; color:#fff; border-color:#1a1a1a; }
-.cat-btn .cat-count { font-size:9px; opacity:.5; }
-.sidebar-label { font-size:9px; font-weight:500; letter-spacing:.18em; text-transform:uppercase; color:#999; padding:4px 14px 8px; }
+.cat-btn .cat-count { font-size:11px; opacity:.5; }
+.sidebar-label { font-size:11px; font-weight:500; letter-spacing:.14em; text-transform:uppercase; color:#999; padding:4px 14px 10px; }
 
 /* ── FORUM MAIN ── */
 #forum-col { display:flex; flex-direction:column; gap:16px; }
 .forum-toolbar {
   display:flex; align-items:center; justify-content:space-between; gap:12px; flex-wrap:wrap;
 }
-.forum-title { font-size:10px; font-weight:500; letter-spacing:.18em; text-transform:uppercase; color:#999; }
+.forum-title { font-size:12px; font-weight:500; letter-spacing:.12em; text-transform:uppercase; color:#999; }
 #new-thread-btn {
   font-family:'Montserrat',sans-serif;
-  font-size:10px; font-weight:500; letter-spacing:.1em; text-transform:uppercase;
-  background:#1a1a1a; color:#fff; border:none; padding:10px 20px; cursor:pointer;
+  font-size:12px; font-weight:500; letter-spacing:.08em; text-transform:uppercase;
+  background:#1a1a1a; color:#fff; border:none; padding:11px 22px; cursor:pointer;
   transition:background .15s;
 }
 #new-thread-btn:hover { background:#333; }
@@ -67,50 +67,50 @@ body { font-family:'Montserrat',sans-serif; background:#f5f5f3; color:#1a1a1a; -
   display:grid; grid-template-columns:1fr auto; gap:12px; align-items:center;
 }
 .thread-card:hover { border-color:#bbb; box-shadow:0 2px 8px rgba(0,0,0,.05); }
-.thread-cat-tag { font-size:8px; font-weight:500; letter-spacing:.18em; text-transform:uppercase; color:#999; margin-bottom:6px; }
-.thread-title { font-size:14px; font-weight:400; letter-spacing:-.01em; color:#1a1a1a; line-height:1.4; margin-bottom:6px; }
-.thread-meta { font-size:10px; font-weight:300; letter-spacing:.04em; color:#bbb; display:flex; gap:12px; }
+.thread-cat-tag { font-size:10px; font-weight:500; letter-spacing:.14em; text-transform:uppercase; color:#999; margin-bottom:7px; }
+.thread-title { font-size:16px; font-weight:400; letter-spacing:-.01em; color:#1a1a1a; line-height:1.4; margin-bottom:8px; }
+.thread-meta { font-size:12px; font-weight:400; letter-spacing:.02em; color:#bbb; display:flex; gap:12px; }
 .thread-stats { display:flex; flex-direction:column; align-items:flex-end; gap:4px; flex-shrink:0; }
-.thread-reply-count { font-size:11px; font-weight:300; color:#bbb; }
-.thread-reply-label { font-size:8px; letter-spacing:.1em; text-transform:uppercase; color:#ccc; }
-.thread-pinned { font-size:8px; font-weight:500; letter-spacing:.12em; text-transform:uppercase; background:#f5f5f3; color:#888; padding:3px 8px; border:1px solid #e8e8e6; }
-.empty-state { text-align:center; padding:48px 20px; color:#bbb; font-size:12px; font-weight:300; letter-spacing:.04em; line-height:1.8; }
+.thread-reply-count { font-size:14px; font-weight:400; color:#bbb; }
+.thread-reply-label { font-size:10px; letter-spacing:.08em; text-transform:uppercase; color:#ccc; }
+.thread-pinned { font-size:10px; font-weight:500; letter-spacing:.08em; text-transform:uppercase; background:#f5f5f3; color:#888; padding:3px 8px; border:1px solid #e8e8e6; }
+.empty-state { text-align:center; padding:48px 20px; color:#bbb; font-size:14px; font-weight:400; letter-spacing:.01em; line-height:1.8; }
 
 /* ── THREAD VIEW ── */
 #thread-view { display:none; flex-direction:column; gap:16px; }
-.thread-back { font-size:10px; font-weight:400; letter-spacing:.1em; text-transform:uppercase; color:#999; background:none; border:none; cursor:pointer; font-family:'Montserrat',sans-serif; padding:0; transition:color .15s; }
+.thread-back { font-size:12px; font-weight:400; letter-spacing:.08em; text-transform:uppercase; color:#999; background:none; border:none; cursor:pointer; font-family:'Montserrat',sans-serif; padding:0; transition:color .15s; }
 .thread-back:hover { color:#1a1a1a; }
 .thread-header { background:#fff; border:1px solid #e8e8e6; padding:24px 24px 20px; }
-.thread-header-cat { font-size:9px; font-weight:500; letter-spacing:.18em; text-transform:uppercase; color:#999; margin-bottom:8px; }
-.thread-header-title { font-size:20px; font-weight:400; letter-spacing:-.01em; color:#1a1a1a; line-height:1.35; margin-bottom:10px; }
-.thread-header-meta { font-size:10px; font-weight:300; letter-spacing:.04em; color:#bbb; }
+.thread-header-cat { font-size:11px; font-weight:500; letter-spacing:.14em; text-transform:uppercase; color:#999; margin-bottom:8px; }
+.thread-header-title { font-size:22px; font-weight:400; letter-spacing:-.01em; color:#1a1a1a; line-height:1.35; margin-bottom:10px; }
+.thread-header-meta { font-size:12px; font-weight:400; letter-spacing:.02em; color:#bbb; }
 
 .posts-list { display:flex; flex-direction:column; gap:2px; }
 .post-card { background:#fff; border:1px solid #e8e8e6; padding:20px 24px; }
 .post-card.op { border-left:3px solid #1a1a1a; }
-.post-author { font-size:10px; font-weight:500; letter-spacing:.08em; color:#555; margin-bottom:4px; display:flex; align-items:center; gap:10px; }
-.post-author-tag { font-size:8px; font-weight:400; letter-spacing:.12em; text-transform:uppercase; color:#bbb; background:#f5f5f3; padding:2px 7px; border:1px solid #e8e8e6; }
-.post-time { font-size:9px; font-weight:300; letter-spacing:.06em; color:#ccc; }
-.post-body { font-size:13px; font-weight:300; letter-spacing:.01em; color:#333; line-height:1.8; margin-top:8px; }
+.post-author { font-size:13px; font-weight:500; letter-spacing:.04em; color:#333; margin-bottom:4px; display:flex; align-items:center; gap:10px; }
+.post-author-tag { font-size:10px; font-weight:400; letter-spacing:.08em; text-transform:uppercase; color:#bbb; background:#f5f5f3; padding:2px 7px; border:1px solid #e8e8e6; }
+.post-time { font-size:11px; font-weight:400; letter-spacing:.02em; color:#ccc; }
+.post-body { font-size:14px; font-weight:400; letter-spacing:.01em; color:#2a2a2a; line-height:1.85; margin-top:10px; }
 
 /* ── REPLY FORM ── */
 .reply-box { background:#fff; border:1px solid #e8e8e6; padding:20px 24px; }
-.reply-box-title { font-size:10px; font-weight:500; letter-spacing:.14em; text-transform:uppercase; color:#999; margin-bottom:14px; }
+.reply-box-title { font-size:12px; font-weight:500; letter-spacing:.1em; text-transform:uppercase; color:#999; margin-bottom:14px; }
 .reply-textarea {
-  width:100%; padding:12px 14px; min-height:100px; resize:vertical;
-  font-family:'Montserrat',sans-serif; font-size:12px; font-weight:300; letter-spacing:.02em;
+  width:100%; padding:13px 14px; min-height:100px; resize:vertical;
+  font-family:'Montserrat',sans-serif; font-size:14px; font-weight:400; letter-spacing:.01em;
   border:1px solid #e8e8e6; background:#f9f9f7; color:#1a1a1a; outline:none;
   transition:border-color .15s;
 }
 .reply-textarea:focus { border-color:#aaa; background:#fff; }
 .reply-submit {
   margin-top:10px; font-family:'Montserrat',sans-serif;
-  font-size:10px; font-weight:500; letter-spacing:.1em; text-transform:uppercase;
-  background:#1a1a1a; color:#fff; border:none; padding:11px 22px; cursor:pointer;
+  font-size:12px; font-weight:500; letter-spacing:.08em; text-transform:uppercase;
+  background:#1a1a1a; color:#fff; border:none; padding:12px 24px; cursor:pointer;
   transition:background .15s;
 }
 .reply-submit:hover { background:#333; }
-.login-prompt { font-size:12px; font-weight:300; color:#888; padding:16px 0; }
+.login-prompt { font-size:14px; font-weight:400; color:#888; padding:16px 0; }
 .login-prompt a { color:#1a1a1a; cursor:pointer; text-decoration:underline; }
 
 /* ── MODALS ── */
@@ -125,29 +125,29 @@ body { font-family:'Montserrat',sans-serif; background:#f5f5f3; color:#1a1a1a; -
   transform:translateY(12px); transition:transform .2s;
 }
 .modal-bg.open .modal { transform:none; }
-.modal-title { font-size:16px; font-weight:400; letter-spacing:-.01em; color:#1a1a1a; margin-bottom:6px; }
-.modal-sub { font-size:11px; font-weight:300; color:#888; letter-spacing:.02em; margin-bottom:24px; line-height:1.6; }
-.modal-close { position:absolute; top:16px; right:16px; background:none; border:none; font-size:18px; cursor:pointer; color:#bbb; }
+.modal-title { font-size:20px; font-weight:400; letter-spacing:-.01em; color:#1a1a1a; margin-bottom:6px; }
+.modal-sub { font-size:13px; font-weight:400; color:#888; letter-spacing:.01em; margin-bottom:24px; line-height:1.6; }
+.modal-close { position:absolute; top:16px; right:16px; background:none; border:none; font-size:20px; cursor:pointer; color:#bbb; }
 .modal { position:relative; }
 .form-field {
-  width:100%; padding:12px 14px; margin-bottom:10px;
-  font-family:'Montserrat',sans-serif; font-size:12px; font-weight:300;
+  width:100%; padding:13px 14px; margin-bottom:10px;
+  font-family:'Montserrat',sans-serif; font-size:14px; font-weight:400;
   border:1px solid #e8e8e6; background:#fafaf8; color:#1a1a1a; outline:none;
   transition:border-color .15s;
 }
 .form-field:focus { border-color:#999; background:#fff; }
-.form-label { font-size:9px; font-weight:500; letter-spacing:.14em; text-transform:uppercase; color:#999; display:block; margin-bottom:6px; margin-top:4px; }
+.form-label { font-size:11px; font-weight:500; letter-spacing:.1em; text-transform:uppercase; color:#999; display:block; margin-bottom:6px; margin-top:4px; }
 .form-btn {
-  width:100%; padding:13px; margin-top:6px;
+  width:100%; padding:14px; margin-top:6px;
   font-family:'Montserrat',sans-serif;
-  font-size:10px; font-weight:500; letter-spacing:.12em; text-transform:uppercase;
+  font-size:12px; font-weight:500; letter-spacing:.1em; text-transform:uppercase;
   background:#1a1a1a; color:#fff; border:none; cursor:pointer;
   transition:background .15s;
 }
 .form-btn:hover { background:#333; }
-.modal-switch { font-size:11px; font-weight:300; color:#888; text-align:center; margin-top:16px; }
+.modal-switch { font-size:13px; font-weight:400; color:#888; text-align:center; margin-top:16px; }
 .modal-switch a { color:#1a1a1a; cursor:pointer; text-decoration:underline; }
-.form-error { font-size:10px; font-weight:400; color:#c0392b; letter-spacing:.04em; margin-bottom:8px; display:none; }
+.form-error { font-size:12px; font-weight:400; color:#c0392b; letter-spacing:.02em; margin-bottom:8px; display:none; }
 
 /* ── NEW THREAD MODAL ── */
 #new-thread-modal .modal { max-width:560px; }
