@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Deep Work: Cal Newport's Framework, and What the Research Adds — Calm Veritas</title>
+<meta name="description" content="Newport's concept of cognitively demanding, distraction-free work aligns tightly with neuroscience research on attention, but the implementation details matter more than the philosophy.">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+body { font-family:'Montserrat',sans-serif; background:#f5f5f3; color:#1a1a1a; -webkit-font-smoothing:antialiased; }
+#header { background:#111; padding:0 40px; }
+.header-top { display:flex; align-items:center; justify-content:space-between; padding:20px 0; border-bottom:1px solid rgba(255,255,255,.08); }
+.logo { text-decoration:none; display:flex; align-items:center; }
+.logo img { height:48px; display:block; }
+.header-nav { display:flex; gap:24px; align-items:center; }
+.header-nav a { font-size:12px; font-weight:400; letter-spacing:.08em; text-transform:uppercase; color:rgba(255,255,255,.5); text-decoration:none; transition:color .15s; }
+.header-nav a:hover { color:#fff; }
+article { max-width:720px; margin:56px auto; padding:0 40px 80px; }
+.art-tag { font-size:10px; font-weight:500; letter-spacing:.16em; text-transform:uppercase; color:#999; margin-bottom:14px; }
+h1 { font-size:32px; font-weight:400; letter-spacing:-.02em; line-height:1.25; color:#1a1a1a; margin-bottom:14px; }
+.art-meta { font-size:11px; font-weight:300; letter-spacing:.06em; color:#bbb; margin-bottom:40px; text-transform:uppercase; }
+p { font-size:15px; font-weight:300; letter-spacing:.02em; line-height:1.9; color:#333; margin-bottom:22px; }
+h2 { font-size:18px; font-weight:500; letter-spacing:-.01em; color:#1a1a1a; margin:40px 0 14px; }
+h3 { font-size:15px; font-weight:500; letter-spacing:.01em; color:#444; margin:28px 0 10px; }
+.aff-link { color:#1a1a1a; border-bottom:1px solid #ccc; text-decoration:none; }
+.aff-link:hover { border-bottom-color:#1a1a1a; }
+.products { background:#fff; border:1px solid #e8e8e6; padding:28px 32px; margin:40px 0; }
+.products-title { font-size:11px; font-weight:500; letter-spacing:.14em; text-transform:uppercase; color:#999; margin-bottom:20px; }
+.product-item { display:flex; align-items:flex-start; gap:16px; padding:14px 0; border-bottom:1px solid #f0f0ee; }
+.product-item:last-child { border-bottom:none; padding-bottom:0; }
+.product-num { font-size:11px; font-weight:500; color:#bbb; flex-shrink:0; padding-top:2px; }
+.product-name { font-size:14px; font-weight:400; color:#1a1a1a; margin-bottom:4px; }
+.product-desc { font-size:12px; font-weight:300; color:#888; line-height:1.6; }
+.product-link { display:inline-block; margin-top:8px; font-size:11px; font-weight:500; letter-spacing:.06em; text-transform:uppercase; color:#1a1a1a; border-bottom:1px solid #1a1a1a; text-decoration:none; }
+.disclosure { font-size:11px; font-weight:300; color:#bbb; letter-spacing:.02em; margin-top:8px; }
+.back-link { display:inline-block; font-size:11px; font-weight:400; letter-spacing:.1em; text-transform:uppercase; color:#999; text-decoration:none; margin-bottom:32px; }
+.back-link:hover { color:#1a1a1a; }
+footer { text-align:center; padding:24px; border-top:1px solid #e8e8e6; font-size:9px; font-weight:300; letter-spacing:.08em; color:#bbb; }
+footer a { color:#888; text-decoration:none; margin:0 8px; }
+</style>
+</head>
+<body>
+<header id="header">
+  <div class="header-top">
+    <a class="logo" href="/"><img src="/logo-white.png" alt="Calm Veritas"></a>
+    <nav class="header-nav">
+      <a href="/">Home</a>
+      <a href="/blog/">Blog</a>
+      <a href="/downloads/">Downloads</a>
+      <a href="/forum.html">Community</a>
+    </nav>
+  </div>
+</header>
+<article>
+  <a class="back-link" href="/blog/">← Back to blog</a>
+  <div class="art-tag">Focus</div>
+  <h1>Deep Work: Cal Newport's Framework, and What the Research Adds</h1>
+  <div class="art-meta">May 24, 2026 · 8 min read</div>
+
+<p>Cal Newport's 2016 book <em>Deep Work</em> described the ability to perform cognitively demanding tasks without distraction as "the superpower of the 21st century." The argument resonated because it gave language to something people were already feeling: the increasing difficulty of sustained concentration in an environment engineered to fragment attention.</p>
+
+<p>But there's a gap between Newport's framework and the neuroscience literature — worth understanding if you want to actually implement this, not just appreciate the concept.</p>
+
+<h2>What Attention Research Actually Shows</h2>
+<p>The prefrontal cortex — the region most associated with complex reasoning, planning, and focused attention — has a metabolic cost. Glucose and oxygenation drop during sustained demanding cognitive work. This is partly why focus is time-limited: the brain is literally running out of locally available energy.</p>
+
+<p>The most robust finding from attention research is that cognitive performance peaks approximately 2–4 hours after waking, for most chronotypes. This is when working memory capacity, executive function, and the ability to suppress irrelevant information are at their daily maximum. Most people spend this window on email.</p>
+
+<p>Task-switching — even brief interruptions — carries a "switching cost" that can persist for 20 to 25 minutes. A study from UC Irvine found that after an interruption, it takes an average of 23 minutes and 15 seconds to return to the original task at full depth. A single notification has a 23-minute cost on your focus, even if you respond to it in 30 seconds.</p>
+
+<h2>The Myelin Argument</h2>
+<p>Newport draws on research about myelin — the white matter that wraps neural circuits and speeds signal transmission — to argue that deep practice literally builds the physical substrate of skill. The mechanism is real: myelination increases with focused, effortful practice and correlates with expertise development. But the implication is that deep work isn't just about output in the moment — it's about structurally building your cognitive capacity over time.</p>
+
+<h2>Implementation: What Actually Works</h2>
+<p>The most important variable in deep work is a consistent start time, not duration. Research on habit formation shows that temporal cues (the same time, same place) are the most powerful triggers for automatic behavior. A 9am start to focused work, five days a week for 30 days, is more effective than irregular three-hour sessions.</p>
+
+<p>Counterintuitively, pre-committing to an end time often produces more output than open-ended sessions. Parkinson's Law — that work expands to fill available time — operates in reverse: a constrained window forces prioritization and eliminates perfectionism-driven stalling.</p>
+
+<p>For physical environment: research on environmental psychology consistently shows that low-level ambient noise (around 70 decibels, like a coffee shop) improves creative performance compared to silence, but that unpredictable noise (notifications, conversations) significantly degrades it. The distinction is <em>consistent</em> ambient sound vs. <em>variable</em> sound. High-quality noise-canceling headphones playing consistent ambient audio are not a luxury for deep work — they're infrastructure.</p>
+
+<div class="products">
+  <div class="products-title">Referenced & Recommended</div>
+  
+    <div class="product-item">
+      <div class="product-num">01</div>
+      <div>
+        <div class="product-name">Deep Work — Cal Newport</div>
+        <div class="product-desc">The foundational text. Most useful for the framework and the case studies — read the first half carefully, skim the second. Then build your own protocol.</div>
+        <a class="product-link" href="https://www.amazon.com/dp/1455586692?tag=calmveritas-20" target="_blank" rel="noopener sponsored">View on Amazon →</a>
+      </div>
+    </div>
+    <div class="product-item">
+      <div class="product-num">02</div>
+      <div>
+        <div class="product-name">Sony WH-1000XM5 Noise Canceling Headphones</div>
+        <div class="product-desc">Best-in-class active noise cancellation. The physical ability to create consistent ambient sound is one of the highest-ROI investments for focused work environments.</div>
+        <a class="product-link" href="https://www.amazon.com/dp/B09JQL3NWT?tag=calmveritas-20" target="_blank" rel="noopener sponsored">View on Amazon →</a>
+      </div>
+    </div>
+    <div class="product-item">
+      <div class="product-num">03</div>
+      <div>
+        <div class="product-name">Time Timer MOD — Visual Timer</div>
+        <div class="product-desc">Physical countdown timer with a visual shrinking red disk. Analog time pressure is more psychologically effective than a digital clock for focus sessions.</div>
+        <a class="product-link" href="https://www.amazon.com/dp/B07YVY5MQG?tag=calmveritas-20" target="_blank" rel="noopener sponsored">View on Amazon →</a>
+      </div>
+    </div>
+  <p class="disclosure" style="margin-top:16px;">These are affiliate links — if you purchase, we earn a small commission at no cost to you. We only list products we've researched and believe in. <a href="/disclosure.html" style="color:#bbb">Read our disclosure.</a></p>
+</div></article>
+<footer>
+  <a href="/">Home</a> · <a href="/blog/">Blog</a> · <a href="/downloads/">Downloads</a> · <a href="/disclosure.html">Disclosure</a>
+  <div style="margin-top:8px;">© 2026 Calm Veritas · No fluff. Just truth.</div>
+</footer>
+</body>
+</html>
