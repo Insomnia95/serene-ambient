@@ -4,91 +4,36 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Blog — Calm Veritas</title>
-<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌊</text></svg>">
-<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@200;300;400;500&display=swap" rel="stylesheet">
+<meta name="description" content="Evidence-based writing on sleep, anxiety, focus, stoicism, and health. No fluff.">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
 *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
-html, body {
-  width:100%; min-height:100%;
-  font-family:'Montserrat', sans-serif;
-  background:#efefef; color:#111;
-}
-body { display:flex; }
+body { font-family:'Montserrat',sans-serif; background:#f5f5f3; color:#1a1a1a; -webkit-font-smoothing:antialiased; }
 
-/* ── LEFT NAV ─────────────────────────── */
-#site-nav {
-  width:186px; flex-shrink:0;
-  background:#fff; border-right:1px solid #e8e8e8;
-  display:flex; flex-direction:column;
-  z-index:10; position:sticky; top:0; height:100vh;
+/* ── HEADER ─────────────────────────────── */
+#header { background:#111; padding:0 40px; }
+.header-top {
+  display:flex; align-items:center; justify-content:space-between;
+  padding:22px 0 18px; border-bottom:1px solid rgba(255,255,255,.08);
 }
-.nav-logo {
-  padding:16px 15px 13px;
-  border-bottom:1px solid #f0f0f0;
-  cursor:pointer; flex-shrink:0; text-decoration:none; display:block;
+.logo { text-decoration:none; display:flex; align-items:center; }
+.logo img { height:52px; display:block; }
+.header-nav { display:flex; gap:32px; align-items:center; }
+.header-nav a {
+  font-size:13px; font-weight:400; letter-spacing:.12em;
+  text-transform:uppercase; color:rgba(255,255,255,.5);
+  text-decoration:none; transition:color .15s;
 }
-.nav-logo:hover .nav-logo-text { opacity:.7; }
-.nav-logo-text {
-  font-size:15px; font-weight:200;
-  letter-spacing:.42em; text-indent:.42em;
-  transition:opacity .2s; color:#111;
-}
-.nav-logo-sub {
-  font-size:7.5px; font-weight:300;
-  letter-spacing:.2em; color:#c0c0c0;
-  margin-top:3px; text-transform:uppercase;
-}
+.header-nav a:hover, .header-nav a.active { color:#fff; }
 
-.nav-section { flex:1; overflow-y:auto; padding:6px 0; }
-
-.nav-item {
-  display:flex; align-items:center;
-  padding:6px 13px; cursor:pointer;
-  font-size:11px; font-weight:400; letter-spacing:.04em;
-  color:#444; transition:background .14s;
-  text-decoration:none;
-}
-.nav-item:hover { background:#f6f6f6; }
-.nav-item.active { color:#111; background:#f3f3f3; font-weight:500; }
-.nav-item-emoji { font-size:12px; margin-right:7px; }
-
-.nav-divider { height:1px; background:#f0f0f0; margin:6px 0; }
-
-.nav-back {
-  border-top:1px solid #f0f0f0; padding:11px 13px;
-  display:flex; align-items:center; gap:7px;
-  text-decoration:none; flex-shrink:0;
-}
-.nav-back:hover { background:#f6f6f6; }
-.nav-back-text {
-  font-size:8px; font-weight:300; letter-spacing:.14em;
-  color:#bbb; text-transform:uppercase;
-}
-
-/* ── MAIN ─────────────────────────────── */
-#main { flex:1; min-height:100vh; }
-
-.page-header {
-  background:#fff; border-bottom:1px solid #e8e8e8;
-  padding:18px 24px 14px; position:sticky; top:0; z-index:5;
-}
-.page-header-title {
-  font-size:clamp(18px,2vw,28px); font-weight:200;
-  letter-spacing:.3em; text-indent:.3em;
-}
-.page-header-sub {
-  margin-top:5px; font-size:8.5px; font-weight:300;
-  letter-spacing:.2em; color:#bbb; text-transform:uppercase;
-}
-
-/* ── FILTER TABS ──────────────────────── */
+/* ── FILTER BAR ─────────────────────────── */
 .filter-bar {
-  background:#fff; border-bottom:1px solid #ebebeb;
-  padding:0 24px; display:flex; gap:0; overflow-x:auto;
+  background:#fff; border-bottom:1px solid #e8e8e6;
+  padding:0 40px; display:flex; gap:0; overflow-x:auto; position:sticky; top:0; z-index:5;
 }
 .filter-bar::-webkit-scrollbar { display:none; }
 .filter-tab {
-  padding:11px 16px; font-size:9px; font-weight:300;
+  padding:14px 18px; font-size:10px; font-weight:400;
   letter-spacing:.14em; color:#aaa; text-transform:uppercase;
   cursor:pointer; border-bottom:2px solid transparent;
   transition:color .18s, border-color .18s; white-space:nowrap;
@@ -98,219 +43,180 @@ body { display:flex; }
 .filter-tab:hover { color:#555; }
 .filter-tab.active { color:#111; border-bottom-color:#111; }
 
-/* ── ARTICLES GRID ────────────────────── */
-.content-pad { padding:20px 24px; }
-.articles-grid {
-  display:grid; gap:14px;
-  grid-template-columns:repeat(auto-fill, minmax(280px,1fr));
+/* ── MAIN ───────────────────────────────── */
+#main { max-width:1200px; margin:0 auto; padding:32px 40px 80px; }
+
+.section-head {
+  font-size:13px; font-weight:500; letter-spacing:.18em;
+  text-transform:uppercase; color:#999; margin-bottom:20px;
 }
 
-/* ── ARTICLE CARD ─────────────────────── */
+/* ── ARTICLE CARDS ──────────────────────── */
+.articles-grid {
+  display:grid; gap:2px;
+  grid-template-columns:1fr;
+}
+
 .article-card {
-  background:#fff; border:1px solid #e8e8e8;
-  cursor:pointer; transition:box-shadow .22s, transform .2s;
-  display:flex; flex-direction:column;
+  background:#fff; text-decoration:none; color:inherit;
+  display:grid; grid-template-columns:1fr auto;
+  align-items:start; gap:16px;
+  padding:24px 28px;
+  border:1px solid #e8e8e6;
+  transition:border-color .15s, box-shadow .15s;
 }
 .article-card:hover {
-  box-shadow:0 4px 18px rgba(0,0,0,.09);
-  transform:translateY(-2px);
+  border-color:#bbb;
+  box-shadow:0 2px 12px rgba(0,0,0,.06);
 }
-.article-card-body { padding:18px 18px 14px; flex:1; }
+.article-card.featured {
+  grid-template-columns:1fr;
+  padding:28px 28px 24px;
+}
+.article-card.hidden { display:none; }
+
 .article-tag {
-  font-size:7.5px; font-weight:400; letter-spacing:.18em;
-  text-transform:uppercase; color:#bbb; margin-bottom:10px;
-  display:block;
+  font-size:11px; font-weight:500; letter-spacing:.16em;
+  text-transform:uppercase; color:#999;
+  margin-bottom:8px; display:block;
 }
 .article-title {
-  font-size:14px; font-weight:400; letter-spacing:.01em;
-  line-height:1.5; color:#111; margin-bottom:8px;
+  font-size:16px; font-weight:400; line-height:1.45;
+  letter-spacing:-.01em; color:#1a1a1a; margin-bottom:8px;
 }
+.article-card.featured .article-title { font-size:20px; }
 .article-excerpt {
-  font-size:9px; font-weight:300; letter-spacing:.03em;
-  color:#888; line-height:1.7;
-}
-.article-card-footer {
-  padding:10px 18px 14px;
-  display:flex; align-items:center; justify-content:space-between;
-  border-top:1px solid #f5f5f5; margin-top:8px;
+  font-size:12px; font-weight:400; letter-spacing:.01em;
+  color:#666; line-height:1.75; margin-bottom:14px;
 }
 .article-meta {
-  font-size:7.5px; font-weight:300; letter-spacing:.1em;
-  color:#ccc; text-transform:uppercase;
+  font-size:12px; font-weight:300; letter-spacing:.06em;
+  color:#bbb; display:flex; align-items:center; gap:12px;
 }
 .article-arrow {
-  font-size:11px; color:#ccc; transition:color .18s, transform .18s;
+  font-size:16px; color:#ccc; flex-shrink:0; align-self:center;
+  transition:color .15s, transform .15s;
 }
-.article-card:hover .article-arrow { color:#111; transform:translateX(3px); }
+.article-card:hover .article-arrow { color:#1a1a1a; transform:translateX(3px); }
 
-/* ── CHECKLIST BADGE ──────────────────── */
+/* ── BADGE (PDF) ────────────────────────── */
 .article-badge {
-  display:inline-block; font-size:7px; font-weight:400;
+  display:inline-block; font-size:8px; font-weight:500;
   letter-spacing:.12em; text-transform:uppercase;
-  background:#f5f5f5; color:#999; padding:2px 7px;
-  margin-bottom:10px; margin-right:6px;
+  background:#1a1a1a; color:#fff;
+  padding:2px 7px; margin-bottom:10px;
 }
-.article-badge.free { background:#111; color:#fff; }
 
-/* ── RESPONSIVE ───────────────────────── */
-@media (max-width:700px) {
-  #site-nav { width:150px; }
+/* ── FOOTER ─────────────────────────────── */
+footer {
+  text-align:center; padding:24px 40px;
+  border-top:1px solid #e8e8e6;
+  font-size:9px; font-weight:300; letter-spacing:.08em; color:#bbb;
 }
-@media (max-width:520px) {
-  #site-nav { display:none; }
+footer a { color:#888; text-decoration:none; margin:0 8px; }
+
+@media (max-width:700px) {
+  #header { padding:0 20px; }
+  .filter-bar { padding:0 20px; }
+  #main { padding:24px 20px 60px; }
+  .article-card { grid-template-columns:1fr; }
+  .article-arrow { display:none; }
 }
 </style>
 </head>
 <body>
 
-<!-- ── LEFT NAV ──────────────────────────── -->
-<nav id="site-nav">
-  <a class="nav-logo" href="/">
-    <div class="nav-logo-text">Calm Veritas</div>
-    <div class="nav-logo-sub">no fluff. just truth.</div>
-  </a>
-
-  <div class="nav-section">
-    <a class="nav-item active" data-cat="all" href="#all">
-      <span class="nav-item-emoji">📖</span> All
-    </a>
-    <a class="nav-item" data-cat="sleep" href="#sleep">
-      <span class="nav-item-emoji">🌙</span> Sleep
-    </a>
-    <a class="nav-item" data-cat="anxiety" href="#anxiety">
-      <span class="nav-item-emoji">🧠</span> Anxiety
-    </a>
-    <a class="nav-item" data-cat="focus" href="#focus">
-      <span class="nav-item-emoji">🎯</span> Focus
-    </a>
-    <a class="nav-item" data-cat="stoicism" href="#stoicism">
-      <span class="nav-item-emoji">🏛</span> Stoicism
-    </a>
-
-    <div class="nav-divider"></div>
-
-    <a class="nav-item" data-cat="checklists" href="#checklists">
-      <span class="nav-item-emoji">✅</span> Checklists
-    </a>
+<!-- ── HEADER ───────────────────────────── -->
+<header id="header">
+  <div class="header-top">
+    <a class="logo" href="/"><img src="/logo-white.png" alt="Calm Veritas"></a>
+    <nav class="header-nav">
+      <a href="/" >Home</a>
+      <a href="/blog/" class="active">Blog</a>
+      <a href="/downloads/">Downloads</a>
+      <a href="/forum.html">Community</a>
+    </nav>
   </div>
+</header>
 
-  <a class="nav-back" href="/">
-    <span style="font-size:11px;color:#ccc">←</span>
-    <span class="nav-back-text">ambient scenes</span>
-  </a>
-</nav>
-
-<!-- ── MAIN ──────────────────────────────── -->
-<div id="main">
-
-  <div class="page-header">
-    <div class="page-header-title">Blog</div>
-    <div class="page-header-sub">evidence-based calm · no fluff</div>
-  </div>
-
-  <div class="filter-bar">
-    <button class="filter-tab active" data-cat="all">All</button>
-    <button class="filter-tab" data-cat="sleep">Sleep</button>
-    <button class="filter-tab" data-cat="anxiety">Anxiety</button>
-    <button class="filter-tab" data-cat="focus">Focus</button>
-    <button class="filter-tab" data-cat="stoicism">Stoicism</button>
-    <button class="filter-tab" data-cat="health">Health</button>
-    <button class="filter-tab" data-cat="books">Books</button>
-    <button class="filter-tab" data-cat="checklists">Downloads</button>
-  </div>
-
-  <div class="content-pad">
-    <div class="articles-grid" id="articles-grid"></div>
-  </div>
-
+<!-- ── FILTER TABS ───────────────────────── -->
+<div class="filter-bar">
+  <button class="filter-tab active" data-cat="all">All</button>
+  <button class="filter-tab" data-cat="sleep">Sleep</button>
+  <button class="filter-tab" data-cat="anxiety">Anxiety</button>
+  <button class="filter-tab" data-cat="focus">Focus</button>
+  <button class="filter-tab" data-cat="stoicism">Stoicism</button>
+  <button class="filter-tab" data-cat="health">Health</button>
+  <button class="filter-tab" data-cat="books">Books</button>
+  <button class="filter-tab" data-cat="checklists">Downloads</button>
 </div>
+
+<!-- ── MAIN ─────────────────────────────── -->
+<div id="main">
+  <div class="section-head" id="section-label">All articles</div>
+  <div class="articles-grid" id="articles-grid"></div>
+</div>
+
+<footer>
+  <a href="/">Home</a> · <a href="/blog/">Blog</a> · <a href="/downloads/">Downloads</a> · <a href="/forum.html">Community</a> · <a href="/disclosure.html">Disclosure</a>
+  <div style="margin-top:8px;">© 2026 Calm Veritas · No fluff. Just truth.</div>
+</footer>
 
 <script>
 const ARTICLES = [
-  { id:'sleep-cycles', cat:'sleep', tag:'Sleep', title:'The Science Behind Sleep Cycles (And Why 8 Hours Isn\'t Always Enough)', excerpt:'Your sleep quality depends less on total hours and more on how many complete 90-minute cycles you finish. Here\'s how to optimize for cycles, not clocks.', date:'May 20, 2026', readTime:'7 min read', badge:null, href:'/blog/sleep-cycles-science.html' },
-  { id:'box-breathing', cat:'anxiety', tag:'Anxiety', title:'Box Breathing: The Evidence Behind the Navy SEAL Technique', excerpt:'A structured breathing protocol used by special operations forces, now backed by peer-reviewed research on anxiety and heart rate variability.', date:'May 21, 2026', readTime:'6 min read', badge:null, href:'/blog/box-breathing-anxiety.html' },
-  { id:'magnesium', cat:'health', tag:'Health', title:'Magnesium Glycinate: What the Research Actually Says', excerpt:'An evidence-based breakdown of the most bioavailable magnesium form, its role in sleep, anxiety, and muscle function, and what dose actually works.', date:'May 22, 2026', readTime:'8 min read', badge:null, href:'/blog/magnesium-glycinate-guide.html' },
-  { id:'marcus-aurelius', cat:'stoicism', tag:'Stoicism', title:'Marcus Aurelius on Mornings: The Stoic Protocol That Still Works', excerpt:'The Roman emperor\'s morning ritual from the Meditations isn\'t mysticism — it\'s a cognitive preparation system that maps directly onto modern evidence.', date:'May 23, 2026', readTime:'7 min read', badge:null, href:'/blog/marcus-aurelius-morning-practice.html' },
-  { id:'deep-work', cat:'focus', tag:'Focus', title:'Deep Work: Cal Newport\'s Framework, and What the Research Adds', excerpt:'Newport\'s concept of cognitively demanding, distraction-free work aligns tightly with neuroscience research on attention — but implementation details matter.', date:'May 24, 2026', readTime:'8 min read', badge:null, href:'/blog/deep-work-focus-protocol.html' },
-  { id:'vitamin-d', cat:'health', tag:'Health', title:'Vitamin D: The Deficiency Most People Don\'t Know They Have', excerpt:'Over 40% of American adults are deficient in vitamin D. Here\'s what the research says about dosing, testing, and why the standard RDA is almost certainly too low.', date:'May 25, 2026', readTime:'7 min read', badge:null, href:'/blog/vitamin-d-guide.html' },
-  { id:'why-we-sleep', cat:'books', tag:'Books', title:'Why We Sleep by Matthew Walker: The Science, the Controversy, and What Holds Up', excerpt:'Walker\'s landmark book changed how millions think about sleep. We separate the solid science from the overclaims — and explain why it\'s still essential reading.', date:'May 26, 2026', readTime:'9 min read', badge:null, href:'/blog/why-we-sleep-review.html' },
-  { id:'cold-exposure', cat:'health', tag:'Health', title:'Cold Exposure: Separating the Evidence from the Hype', excerpt:'Cold showers, ice baths, and cold water immersion have gained enormous cultural momentum. Here\'s what the peer-reviewed research actually supports.', date:'May 27, 2026', readTime:'8 min read', badge:null, href:'/blog/cold-exposure-recovery.html' },
-  { id:'sleep-checklist', cat:'checklists', tag:'Checklist', title:'Sleep Hygiene Checklist (PDF)', excerpt:'A printable one-page checklist built from sleep science. Environment, timing, and evening protocol variables that research consistently links to sleep quality.', date:'PDF download', readTime:'PDF · 1 page', badge:'pdf', href:'/checklists/sleep-hygiene-checklist.pdf' },
-  { id:'anxiety-checklist', cat:'checklists', tag:'Checklist', title:'Anxiety Reset Protocol (PDF)', excerpt:'Immediate-use tools and daily maintenance habits. Acute interventions on one side, long-term practices on the other. Evidence-cited.', date:'PDF download', readTime:'PDF · 1 page', badge:'pdf', href:'/checklists/anxiety-protocol.pdf' },
-  { id:'stoic-journal', cat:'checklists', tag:'Guide', title:'Stoic Morning Journal (PDF)', excerpt:'Marcus Aurelius\'s daily practice adapted for modern use. Pre-mortem, memento mori reflection, and a four-virtue evening review. 5-minute protocol.', date:'PDF download', readTime:'PDF · 2 pages', badge:'pdf', href:'/checklists/morning-stoic-journal.pdf' },
-  { id:'focus-guide', cat:'checklists', tag:'Guide', title:'Deep Focus Protocol (PDF)', excerpt:'Environment setup, session structure, and weekly review system for deep work. Based on Newport\'s framework with neuroscience research added.', date:'PDF download', readTime:'PDF · 2 pages', badge:'pdf', href:'/checklists/focus-deep-work-guide.pdf' },
-  { id:'supplement-guide', cat:'checklists', tag:'Guide', title:'Evidence-Based Supplement Guide (PDF)', excerpt:'Three tiers of supplements ranked by evidence quality. Dosing, timing, and what to look for on labels. No brand bias.', date:'PDF download', readTime:'PDF · 2 pages', badge:'pdf', href:'/checklists/supplement-stack-guide.pdf' },
+  { id:'sleep-cycles', cat:'sleep', tag:'Sleep', featured:true, title:'The Science Behind Sleep Cycles (And Why 8 Hours Isn\'t Always Enough)', excerpt:'Your sleep quality depends less on total hours and more on how many complete 90-minute cycles you finish. Here\'s how to optimize for cycles, not clocks.', date:'May 20, 2026', readTime:'7 min read', badge:null, href:'/blog/sleep-cycles-science' },
+  { id:'box-breathing', cat:'anxiety', tag:'Anxiety', featured:false, title:'Box Breathing: The Evidence Behind the Navy SEAL Technique', excerpt:'A structured breathing protocol used by special operations forces, now backed by peer-reviewed research on anxiety and heart rate variability.', date:'May 21, 2026', readTime:'6 min read', badge:null, href:'/blog/box-breathing-anxiety' },
+  { id:'magnesium', cat:'health', tag:'Health', featured:true, title:'Magnesium Glycinate: What the Research Actually Says', excerpt:'An evidence-based breakdown of the most bioavailable magnesium form, its role in sleep, anxiety, and muscle function, and what dose actually works.', date:'May 22, 2026', readTime:'8 min read', badge:null, href:'/blog/magnesium-glycinate-guide' },
+  { id:'marcus-aurelius', cat:'stoicism', tag:'Stoicism', featured:false, title:'Marcus Aurelius on Mornings: The Stoic Protocol That Still Works', excerpt:'The Roman emperor\'s morning ritual from the Meditations isn\'t mysticism — it\'s a cognitive preparation system that maps directly onto modern evidence.', date:'May 23, 2026', readTime:'7 min read', badge:null, href:'/blog/marcus-aurelius-morning-practice' },
+  { id:'deep-work', cat:'focus', tag:'Focus', featured:false, title:'Deep Work: Cal Newport\'s Framework, and What the Research Adds', excerpt:'Newport\'s concept of cognitively demanding, distraction-free work aligns tightly with neuroscience research on attention — but implementation details matter.', date:'May 24, 2026', readTime:'8 min read', badge:null, href:'/blog/deep-work-focus-protocol' },
+  { id:'vitamin-d', cat:'health', tag:'Health', featured:false, title:'Vitamin D: The Deficiency Most People Don\'t Know They Have', excerpt:'Over 40% of American adults are deficient in vitamin D. Here\'s what the research says about dosing, testing, and why the standard RDA is almost certainly too low.', date:'May 25, 2026', readTime:'7 min read', badge:null, href:'/blog/vitamin-d-guide' },
+  { id:'why-we-sleep', cat:'books', tag:'Books', featured:true, title:'Why We Sleep by Matthew Walker: The Science, the Controversy, and What Holds Up', excerpt:'Walker\'s landmark book changed how millions think about sleep. We separate the solid science from the overclaims — and explain why it\'s still essential reading.', date:'May 26, 2026', readTime:'9 min read', badge:null, href:'/blog/why-we-sleep-review' },
+  { id:'cold-exposure', cat:'health', tag:'Health', featured:false, title:'Cold Exposure: Separating the Evidence from the Hype', excerpt:'Cold showers, ice baths, and cold water immersion have gained enormous cultural momentum. Here\'s what the peer-reviewed research actually supports.', date:'May 27, 2026', readTime:'8 min read', badge:null, href:'/blog/cold-exposure-recovery' },
+  { id:'sleep-checklist', cat:'checklists', tag:'Checklist', featured:false, title:'Sleep Hygiene Checklist (PDF)', excerpt:'A printable one-page checklist built from sleep science. Environment, timing, and evening protocol variables that research consistently links to sleep quality.', date:'PDF download', readTime:'1 page', badge:'pdf', href:'/checklists/sleep-hygiene-checklist.pdf' },
+  { id:'anxiety-checklist', cat:'checklists', tag:'Checklist', featured:false, title:'Anxiety Reset Protocol (PDF)', excerpt:'Immediate-use tools and daily maintenance habits. Acute interventions on one side, long-term practices on the other. Evidence-cited.', date:'PDF download', readTime:'1 page', badge:'pdf', href:'/checklists/anxiety-protocol.pdf' },
+  { id:'stoic-journal', cat:'checklists', tag:'Guide', featured:false, title:'Stoic Morning Journal (PDF)', excerpt:'Marcus Aurelius\'s daily practice adapted for modern use. Pre-mortem, memento mori reflection, and a four-virtue evening review. 5-minute protocol.', date:'PDF download', readTime:'2 pages', badge:'pdf', href:'/checklists/morning-stoic-journal.pdf' },
+  { id:'focus-guide', cat:'checklists', tag:'Guide', featured:false, title:'Deep Focus Protocol (PDF)', excerpt:'Environment setup, session structure, and weekly review system for deep work. Based on Newport\'s framework with neuroscience research added.', date:'PDF download', readTime:'2 pages', badge:'pdf', href:'/checklists/focus-deep-work-guide.pdf' },
+  { id:'supplement-guide', cat:'checklists', tag:'Guide', featured:false, title:'Evidence-Based Supplement Guide (PDF)', excerpt:'Three tiers of supplements ranked by evidence quality. Dosing, timing, and what to look for on labels. No brand bias.', date:'PDF download', readTime:'2 pages', badge:'pdf', href:'/checklists/supplement-stack-guide.pdf' },
 ];
 
+const LABELS = { all:'All articles', sleep:'Sleep', anxiety:'Anxiety', focus:'Focus', stoicism:'Stoicism', health:'Health', books:'Books', checklists:'Downloads' };
 let currentCat = 'all';
 
 function renderArticles(cat) {
   const grid = document.getElementById('articles-grid');
   const filtered = cat === 'all' ? ARTICLES : ARTICLES.filter(a => a.cat === cat);
+  document.getElementById('section-label').textContent = LABELS[cat] || 'All articles';
   grid.innerHTML = '';
   filtered.forEach(a => {
-    const card = document.createElement('div');
-    card.className = 'article-card';
+    const card = document.createElement('a');
+    card.className = 'article-card' + (a.featured ? ' featured' : '');
+    card.href = a.href;
     card.innerHTML = `
-      <div class="article-card-body">
-        ${a.badge ? `<span class="article-badge ${a.badge}">${a.badge === 'free' ? 'Free' : a.badge}</span>` : ''}
-        <span class="article-tag">${a.tag}</span>
+      <div>
+        ${a.badge ? `<span class="article-badge">${a.badge.toUpperCase()}</span>` : ''}
+        <span class="article-tag">${a.tag}${a.featured ? ' · Featured' : ''}</span>
         <div class="article-title">${a.title}</div>
         <div class="article-excerpt">${a.excerpt}</div>
+        <div class="article-meta"><span>${a.date}</span><span>${a.readTime}</span></div>
       </div>
-      <div class="article-card-footer">
-        <span class="article-meta">${a.date} · ${a.readTime}</span>
-        <span class="article-arrow">→</span>
-      </div>`;
-    card.addEventListener('click', () => { window.location.href = a.href; });
+      ${!a.featured ? '<span class="article-arrow">→</span>' : ''}`;
     grid.appendChild(card);
   });
 }
 
-// Filter tabs
 document.querySelectorAll('.filter-tab').forEach(btn => {
   btn.addEventListener('click', () => {
     document.querySelectorAll('.filter-tab').forEach(b => b.classList.remove('active'));
     btn.classList.add('active');
     currentCat = btn.dataset.cat;
     renderArticles(currentCat);
-    setNavActive(currentCat);
   });
 });
-
-// Nav items
-document.querySelectorAll('.nav-item[data-cat]').forEach(item => {
-  item.addEventListener('click', e => {
-    e.preventDefault();
-    const cat = item.dataset.cat;
-    currentCat = cat;
-    renderArticles(cat);
-    setNavActive(cat);
-    document.querySelectorAll('.filter-tab').forEach(b => {
-      b.classList.toggle('active', b.dataset.cat === cat);
-    });
-  });
-});
-
-function setNavActive(cat) {
-  document.querySelectorAll('.nav-item[data-cat]').forEach(item => {
-    item.classList.toggle('active', item.dataset.cat === cat);
-  });
-}
 
 // Hash routing
-function resolveHash() {
-  const hash = window.location.hash.replace('#','');
-  if (hash && ['all','sleep','anxiety','focus','stoicism','checklists'].includes(hash)) {
-    currentCat = hash;
-  }
-  renderArticles(currentCat);
-  setNavActive(currentCat);
-  document.querySelectorAll('.filter-tab').forEach(b => {
-    b.classList.toggle('active', b.dataset.cat === currentCat);
-  });
-}
-resolveHash();
+const hash = window.location.hash.replace('#','');
+if (hash && LABELS[hash]) { currentCat = hash; document.querySelectorAll('.filter-tab').forEach(b => b.classList.toggle('active', b.dataset.cat === hash)); }
+renderArticles(currentCat);
 </script>
 </body>
 </html>
