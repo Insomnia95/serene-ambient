@@ -360,7 +360,7 @@ body {
 
   <!-- ARTICLES COLUMN -->
   <div id="articles-col">
-    <div class="section-head">Latest articles</div>
+    <div class="section-head" id="section-label">Latest articles</div>
     <div class="articles-list" id="articles-list">
 
       <a class="article-card featured fade-in" data-topic="sleep" href="/blog/sleep-cycles-science">
@@ -561,18 +561,10 @@ body {
       </a>
     </div>
 
-    <!-- TOPICS -->
+    <!-- TOPICS — rendered dynamically from articles-data.js -->
     <div class="topics-box fade-in">
       <div class="box-label">Browse by topic</div>
-      <div class="topic-list">
-        <button class="topic-link active" data-topic="all">All articles <span class="topic-count">13</span></button>
-        <button class="topic-link" data-topic="sleep">🌙 Sleep <span class="topic-count">2</span></button>
-        <button class="topic-link" data-topic="anxiety">🧠 Anxiety <span class="topic-count">2</span></button>
-        <button class="topic-link" data-topic="focus">🎯 Focus <span class="topic-count">2</span></button>
-        <button class="topic-link" data-topic="stoicism">🏛 Stoicism <span class="topic-count">2</span></button>
-        <button class="topic-link" data-topic="health">💊 Health <span class="topic-count">3</span></button>
-        <button class="topic-link" data-topic="books">📚 Books <span class="topic-count">2</span></button>
-      </div>
+      <div class="topic-list" id="topic-list"></div>
     </div>
 
   </aside>
@@ -627,22 +619,86 @@ body {
 .disclosure-text a:hover { color:rgba(255,255,255,.6); }
 </style>
 
+<script src="/articles-data.js"></script>
 <script>
-/* FILTER */
+/* ── RENDER ARTICLES from articles-data.js ── */
+const TOPIC_LABELS = {
+  all: 'All topics',
+  sleep: '🌙 Sleep',
+  anxiety: '🧠 Anxiety',
+  focus: '🎯 Focus',
+  stoicism: '🏛 Stoicism',
+  health: '💊 Health',
+  books: '📚 Books',
+};
+
+function renderHomepageArticles(topic) {
+  const list = document.getElementById('articles-list');
+  const label = document.getElementById('section-label');
+  const filtered = topic === 'all' ? ARTICLES : ARTICLES.filter(a => a.cat === topic);
+  label.textContent = topic === 'all' ? 'Latest articles' : (TOPIC_LABELS[topic] || 'Articles');
+  list.innerHTML = '';
+  filtered.forEach(a => {
+    const card = document.createElement('a');
+    card.className = 'article-card fade-in' + (a.featured ? ' featured' : '');
+    card.setAttribute('data-topic', a.cat);
+    card.href = a.href;
+    const tagText = a.tag + (a.featured ? ' · Featured' : '');
+    card.innerHTML = `
+      <div>
+        <span class="article-tag">${tagText}</span>
+        <div class="article-title">${a.title}</div>
+        <div class="article-excerpt">${a.excerpt}</div>
+        <div class="article-meta"><span>${a.date}</span><span>${a.readTime}</span></div>
+      </div>
+      ${!a.featured ? '<span class="article-arrow">→</span>' : ''}`;
+    list.appendChild(card);
+  });
+  observeFadeIns();
+}
+
+function renderTopicCounts() {
+  const topicList = document.getElementById('topic-list');
+  if (!topicList) return;
+  const cats = ['all', 'sleep', 'anxiety', 'focus', 'stoicism', 'health', 'books'];
+  topicList.innerHTML = '';
+  cats.forEach(cat => {
+    const count = cat === 'all' ? ARTICLES.length : ARTICLES.filter(a => a.cat === cat).length;
+    const btn = document.createElement('button');
+    btn.className = 'topic-link' + (cat === 'all' ? ' active' : '');
+    btn.dataset.topic = cat;
+    btn.innerHTML = `${TOPIC_LABELS[cat]} <span class="topic-count">${count}</span>`;
+    btn.addEventListener('click', () => setTopic(cat));
+    topicList.appendChild(btn);
+  });
+}
+
 function setTopic(topic) {
   document.querySelectorAll('.pill, .topic-link').forEach(b => {
     b.classList.toggle('active', b.dataset.topic === topic);
   });
-  document.querySelectorAll('.article-card[data-topic]').forEach(card => {
-    card.classList.toggle('hidden', topic !== 'all' && card.dataset.topic !== topic);
-  });
+  renderHomepageArticles(topic);
 }
 
-document.querySelectorAll('.pill, .topic-link').forEach(btn => {
+document.querySelectorAll('.pill').forEach(btn => {
   btn.addEventListener('click', () => setTopic(btn.dataset.topic));
 });
 
-/* EMAIL */
+/* ── FADE IN ── */
+const obs = new IntersectionObserver(entries => {
+  entries.forEach((en, i) => {
+    if (en.isIntersecting) {
+      setTimeout(() => en.target.classList.add('visible'), i * 60);
+      obs.unobserve(en.target);
+    }
+  });
+}, { threshold: 0.06 });
+
+function observeFadeIns() {
+  document.querySelectorAll('.fade-in:not(.visible)').forEach(el => obs.observe(el));
+}
+
+/* ── EMAIL ── */
 function handleSub(e) {
   e.preventDefault();
   document.getElementById('sb-input').value = '';
@@ -658,16 +714,12 @@ function handleSubFull(e) {
   msg.style.color = 'rgba(255,255,255,.5)';
 }
 
-/* FADE IN */
-const obs = new IntersectionObserver(entries => {
-  entries.forEach((en, i) => {
-    if (en.isIntersecting) {
-      setTimeout(() => en.target.classList.add('visible'), i * 60);
-      obs.unobserve(en.target);
-    }
-  });
-}, { threshold: 0.06 });
-document.querySelectorAll('.fade-in').forEach(el => obs.observe(el));
+/* ── INIT ── */
+// Remove the static hardcoded cards that were in HTML before this script
+document.getElementById('articles-list').innerHTML = '';
+renderHomepageArticles('all');
+renderTopicCounts();
+observeFadeIns();
 </script>
 </body>
 </html>
