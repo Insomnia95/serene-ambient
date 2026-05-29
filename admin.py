@@ -36,6 +36,8 @@ def save_cfg(cfg):
 
 # ── Articles data ────────────────────────────────────────────────────────
 
+NODE_BIN = '/usr/local/bin/node'  # полный путь — работает и в launchd, и в терминале
+
 def read_data():
     script = (
         "const fs=require('fs');"
@@ -43,7 +45,7 @@ def read_data():
         "const fn=new Function(code+';return {ARTICLES,CHECKLISTS};');"
         "process.stdout.write(JSON.stringify(fn()));"
     )
-    r = subprocess.run(['node', '-e', script], capture_output=True, text=True)
+    r = subprocess.run([NODE_BIN, '-e', script], capture_output=True, text=True)
     if r.returncode != 0:
         raise RuntimeError(r.stderr.strip())
     d = json.loads(r.stdout)
