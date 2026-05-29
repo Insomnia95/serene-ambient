@@ -1,6 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-DJE2HJVD6N"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-DJE2HJVD6N');
+</script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Calm Veritas — Evidence-Based Wellness</title>
@@ -351,6 +359,7 @@ body {
       <button class="pill" data-topic="stoicism">🏛 Stoicism</button>
       <button class="pill" data-topic="health">💊 Health</button>
       <button class="pill" data-topic="books">📚 Books</button>
+      <button class="pill" data-topic="sport">🏋️ Sport</button>
     </div>
   </div>
 </header>
@@ -630,6 +639,7 @@ const TOPIC_LABELS = {
   stoicism: '🏛 Stoicism',
   health: '💊 Health',
   books: '📚 Books',
+  sport: '🏋️ Sport',
 };
 
 function renderHomepageArticles(topic) {
@@ -660,7 +670,7 @@ function renderHomepageArticles(topic) {
 function renderTopicCounts() {
   const topicList = document.getElementById('topic-list');
   if (!topicList) return;
-  const cats = ['all', 'sleep', 'anxiety', 'focus', 'stoicism', 'health', 'books'];
+  const cats = ['all', 'sleep', 'anxiety', 'focus', 'stoicism', 'health', 'books', 'sport'];
   topicList.innerHTML = '';
   cats.forEach(cat => {
     const count = cat === 'all' ? ARTICLES.length : ARTICLES.filter(a => a.cat === cat).length;

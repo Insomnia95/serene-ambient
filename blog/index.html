@@ -1,6 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-DJE2HJVD6N"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-DJE2HJVD6N');
+</script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Blog — Calm Veritas</title>
@@ -148,6 +156,7 @@ footer a { color:#888; text-decoration:none; margin:0 8px; }
   <button class="filter-tab" data-cat="stoicism">Stoicism</button>
   <button class="filter-tab" data-cat="health">Health</button>
   <button class="filter-tab" data-cat="books">Books</button>
+  <button class="filter-tab" data-cat="sport">Sport</button>
   <button class="filter-tab" data-cat="checklists">Downloads</button>
 </div>
 
@@ -169,7 +178,7 @@ const ALL_BLOG_ITEMS = ARTICLES.concat(CHECKLISTS.map(c => ({
   ...c, cat:'checklists', featured:false, badge:'pdf', date:'PDF download'
 })));
 
-const LABELS = { all:'All articles', sleep:'Sleep', anxiety:'Anxiety', focus:'Focus', stoicism:'Stoicism', health:'Health', books:'Books', checklists:'Downloads' };
+const LABELS = { all:'All articles', sleep:'Sleep', anxiety:'Anxiety', focus:'Focus', stoicism:'Stoicism', health:'Health', books:'Books', sport:'Sport', checklists:'Downloads' };
 let currentCat = 'all';
 
 function renderArticles(cat) {
