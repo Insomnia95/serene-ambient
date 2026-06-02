@@ -71,9 +71,9 @@ body { font-family:'Montserrat',sans-serif; background:#f5f5f3; color:#1a1a1a; -
 
 .article-card {
   background:#fff; text-decoration:none; color:inherit;
-  display:grid; grid-template-columns:1fr auto;
-  align-items:start; gap:16px;
-  padding:24px 28px;
+  display:grid; grid-template-columns:80px 1fr auto;
+  align-items:start; gap:20px;
+  padding:20px 28px;
   border:1px solid #e8e8e6;
   transition:border-color .15s, box-shadow .15s;
 }
@@ -85,7 +85,15 @@ body { font-family:'Montserrat',sans-serif; background:#f5f5f3; color:#1a1a1a; -
   grid-template-columns:1fr;
   padding:28px 28px 24px;
 }
+.article-card.no-img {
+  grid-template-columns:1fr auto;
+}
 .article-card.hidden { display:none; }
+.card-thumb {
+  width:80px; height:106px; object-fit:cover;
+  display:block; flex-shrink:0;
+}
+.article-card.featured .card-thumb { display:none; }
 
 .article-tag {
   font-size:11px; font-weight:500; letter-spacing:.16em;
@@ -213,9 +221,10 @@ function renderArticles(cat) {
   grid.innerHTML = '';
   filtered.forEach(a => {
     const card = document.createElement('a');
-    card.className = 'article-card' + (a.featured ? ' featured' : '');
+    card.className = 'article-card' + (a.featured ? ' featured' : '') + (!a.img ? ' no-img' : '');
     card.href = a.href;
     card.innerHTML = `
+      ${a.img && !a.featured ? `<img class="card-thumb" src="${a.img}" alt="${a.title}" loading="lazy">` : ''}
       <div>
         ${a.badge ? `<span class="article-badge">${a.badge.toUpperCase()}</span>` : ''}
         <span class="article-tag">${a.tag}${a.featured ? ' · Featured' : ''}</span>
