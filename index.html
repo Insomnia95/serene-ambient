@@ -343,6 +343,20 @@ body {
   .email-full-form { flex-direction:column; }
   .email-full-input { border-right:1px solid rgba(255,255,255,.14); }
 }
+
+.burger { display:none; flex-direction:column; gap:5px; cursor:pointer; padding:4px; background:none; border:none; }
+.burger span { display:block; width:22px; height:2px; background:rgba(255,255,255,.7); transition:all .25s; }
+.burger.open span:nth-child(1) { transform:translateY(7px) rotate(45deg); }
+.burger.open span:nth-child(2) { opacity:0; }
+.burger.open span:nth-child(3) { transform:translateY(-7px) rotate(-45deg); }
+@media (max-width:680px) {
+  #header { padding:0 20px !important; }
+  .burger { display:flex; }
+  .header-nav { display:none; flex-direction:column; gap:0; position:absolute; top:100%; left:0; right:0; background:#111; border-top:1px solid rgba(255,255,255,.08); z-index:100; }
+  .header-nav.open { display:flex; }
+  .header-nav a { padding:14px 20px; border-bottom:1px solid rgba(255,255,255,.06); font-size:12px; letter-spacing:.1em; }
+  #header { position:relative; }
+}
 </style>
 <link rel="canonical" href="https://www.calm-veritas.com/">
 <meta property="og:type" content="website">
@@ -372,7 +386,7 @@ body {
 <header id="header">
   <div class="header-top">
     <a class="logo" href="/"><img src="/logo-dark.png" alt="Calm Veritas" style="filter:invert(1);"></a>
-    <nav class="header-nav">
+    <nav class="header-nav" id="hn">
       <a href="/blog/" class="header-link">Blog</a>
       <a href="/downloads/">Downloads</a>
       <a href="/forum.html">Community</a>
