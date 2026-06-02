@@ -114,7 +114,6 @@ body {
   width:80px; height:106px; object-fit:cover;
   display:block; flex-shrink:0;
 }
-.article-card.featured .card-thumb { display:none; }
 .article-card.no-img {
   grid-template-columns:1fr auto;
 }
@@ -123,7 +122,7 @@ body {
   box-shadow:0 2px 12px rgba(0,0,0,.06);
 }
 .article-card.featured {
-  grid-template-columns:1fr;
+  grid-template-columns:80px 1fr;
   padding:28px 28px 24px;
   background:#fff;
 }
@@ -689,7 +688,7 @@ function renderHomepageArticles(topic) {
     card.href = a.href;
     const tagText = a.tag + (a.featured ? ' · Featured' : '');
     card.innerHTML = `
-      ${a.img && !a.featured ? `<img class="card-thumb" src="${a.img}" alt="${a.title}" loading="lazy">` : ''}
+      ${a.img ? `<img class="card-thumb" src="${a.img}" alt="${a.title}" loading="lazy">` : ''}
       <div>
         <span class="article-tag">${tagText}</span>
         <div class="article-title">${a.title}</div>
