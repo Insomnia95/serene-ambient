@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-DJE2HJVD6N"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-DJE2HJVD6N');
+</script>
+<meta charset="UTF-8">
+<link rel="icon" type="image/x-icon" href="/favicon.ico">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>The Zeigarnik Effect: Why Unfinished Tasks Hijack Your Attention — Calm Veritas</title>
+<meta name="description" content="An unfinished task takes up more mental space than a finished one — even after you stop working on it. The psychology behind intrusive thoughts about open loops, and what actually closes them.">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+body { font-family:'Montserrat',sans-serif; background:#f5f5f3; color:#1a1a1a; -webkit-font-smoothing:antialiased; }
+#header { background:#111; padding:0 40px; }
+.header-top { display:flex; align-items:center; justify-content:space-between; padding:20px 0; border-bottom:1px solid rgba(255,255,255,.08); }
+.logo { text-decoration:none; display:flex; align-items:center; }
+.logo img { height:48px; display:block; }
+.header-nav { display:flex; gap:24px; align-items:center; }
+.header-nav a { font-size:12px; font-weight:400; letter-spacing:.08em; text-transform:uppercase; color:rgba(255,255,255,.5); text-decoration:none; transition:color .15s; }
+.header-nav a:hover { color:#fff; }
+article { max-width:720px; margin:56px auto; padding:0 40px 80px; }
+.art-tag { font-size:10px; font-weight:500; letter-spacing:.16em; text-transform:uppercase; color:#999; margin-bottom:14px; }
+h1 { font-size:32px; font-weight:400; letter-spacing:-.02em; line-height:1.25; color:#1a1a1a; margin-bottom:14px; }
+.art-meta { font-size:11px; font-weight:300; letter-spacing:.06em; color:#bbb; margin-bottom:40px; text-transform:uppercase; }
+p { font-size:15px; font-weight:300; letter-spacing:.02em; line-height:1.9; color:#333; margin-bottom:22px; }
+h2 { font-size:18px; font-weight:500; letter-spacing:-.01em; color:#1a1a1a; margin:40px 0 14px; }
+h3 { font-size:15px; font-weight:500; letter-spacing:.01em; color:#444; margin:28px 0 10px; }
+.aff-link { color:#1a1a1a; border-bottom:1px solid #ccc; text-decoration:none; }
+.aff-link:hover { border-bottom-color:#1a1a1a; }
+.products { background:#fff; border:1px solid #e8e8e6; padding:28px 32px; margin:40px 0; }
+.products-title { font-size:11px; font-weight:500; letter-spacing:.14em; text-transform:uppercase; color:#999; margin-bottom:20px; }
+.product-item { display:flex; align-items:flex-start; gap:16px; padding:14px 0; border-bottom:1px solid #f0f0ee; }
+.product-item:last-child { border-bottom:none; padding-bottom:0; }
+.product-num { font-size:11px; font-weight:500; color:#bbb; flex-shrink:0; padding-top:2px; }
+.product-name { font-size:14px; font-weight:400; color:#1a1a1a; margin-bottom:4px; }
+.product-desc { font-size:12px; font-weight:300; color:#888; line-height:1.6; }
+.product-link { display:inline-block; margin-top:8px; font-size:11px; font-weight:500; letter-spacing:.06em; text-transform:uppercase; color:#1a1a1a; border-bottom:1px solid #1a1a1a; text-decoration:none; }
+.disclosure { font-size:11px; font-weight:300; color:#bbb; letter-spacing:.02em; margin-top:8px; }
+.back-link { display:inline-block; font-size:11px; font-weight:400; letter-spacing:.1em; text-transform:uppercase; color:#999; text-decoration:none; margin-bottom:32px; }
+.back-link:hover { color:#1a1a1a; }
+footer { text-align:center; padding:24px; border-top:1px solid #e8e8e6; font-size:9px; font-weight:300; letter-spacing:.08em; color:#bbb; }
+footer a { color:#888; text-decoration:none; margin:0 8px; }
+
+.burger { display:none; flex-direction:column; gap:5px; cursor:pointer; padding:4px; background:none; border:none; }
+.burger span { display:block; width:22px; height:2px; background:rgba(255,255,255,.7); transition:all .25s; }
+.burger.open span:nth-child(1) { transform:translateY(7px) rotate(45deg); }
+.burger.open span:nth-child(2) { opacity:0; }
+.burger.open span:nth-child(3) { transform:translateY(-7px) rotate(-45deg); }
+@media (max-width:680px) {
+  #header { padding:0 20px; }
+  .burger { display:flex; }
+  .header-nav { display:none; flex-direction:column; gap:0; position:absolute; top:100%; left:0; right:0; background:#111; border-top:1px solid rgba(255,255,255,.08); z-index:100; }
+  .header-nav.open { display:flex; }
+  .header-nav a { padding:14px 20px; border-bottom:1px solid rgba(255,255,255,.06); font-size:12px; letter-spacing:.1em; }
+  #header { position:relative; }
+}
+.share-bar { display:flex; align-items:center; gap:10px; margin:24px 0 32px; flex-wrap:wrap; }
+.share-label { font-size:10px; font-weight:500; letter-spacing:.14em; text-transform:uppercase; color:#bbb; margin-right:4px; }
+.share-btn { display:inline-flex; align-items:center; gap:6px; padding:7px 12px; border:1px solid #e0e0de; background:#fff; color:#555; text-decoration:none; font-size:11px; font-weight:400; letter-spacing:.04em; cursor:pointer; font-family:'Montserrat',sans-serif; transition:border-color .15s, color .15s; }
+.share-btn:hover { border-color:#999; color:#1a1a1a; }
+.share-copy .copy-done { display:none; }
+.share-copy.copied .copy-label { display:none; }
+.share-copy.copied .copy-done { display:inline; color:#1a1a1a; }
+</style>
+<link rel="canonical" href="https://www.calm-veritas.com/blog/zeigarnik-effect-unfinished-tasks">
+<meta property="og:type" content="article">
+<meta property="og:title" content="The Zeigarnik Effect: Why Unfinished Tasks Hijack Your Attention">
+<meta property="og:description" content="An unfinished task takes up more mental space than a finished one — even after you stop working on it. The psychology behind intrusive thoughts about open loops, and what actually closes them.">
+<meta property="og:url" content="https://www.calm-veritas.com/blog/zeigarnik-effect-unfinished-tasks">
+<meta property="og:image" content="https://www.calm-veritas.com/images/pin-zeigarnik-effect-unfinished-tasks.jpg">
+<meta property="og:site_name" content="Calm Veritas">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="The Zeigarnik Effect: Why Unfinished Tasks Hijack Your Attention">
+<meta name="twitter:description" content="An unfinished task takes up more mental space than a finished one — even after you stop working on it. The psychology behind intrusive thoughts about open loops, and what actually closes them.">
+<meta name="twitter:image" content="https://www.calm-veritas.com/images/pin-zeigarnik-effect-unfinished-tasks.jpg">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "The Zeigarnik Effect: Why Unfinished Tasks Hijack Your Attention",
+  "description": "An unfinished task takes up more mental space than a finished one — even after you stop working on it. The psychology behind intrusive thoughts about open loops, and what actually closes them.",
+  "url": "https://www.calm-veritas.com/blog/zeigarnik-effect-unfinished-tasks",
+  "datePublished": "2026-08-10",
+  "dateModified": "2026-08-10",
+  "author": {"@type": "Organization", "name": "Calm Veritas"},
+  "publisher": {
+    "@type": "Organization",
+    "name": "Calm Veritas",
+    "logo": {"@type": "ImageObject", "url": "https://www.calm-veritas.com/logo-dark.png"}
+  },
+  "image": "https://www.calm-veritas.com/images/pin-zeigarnik-effect-unfinished-tasks.jpg",
+  "mainEntityOfPage": {"@type": "WebPage", "@id": "https://www.calm-veritas.com/blog/zeigarnik-effect-unfinished-tasks"}
+}
+</script>
+<style>
+.art-img { margin:36px auto; max-width:360px; display:block; }
+.art-img img { width:100%; display:block; border-radius:2px; }
+
+@media(max-width:600px){article{padding:0 18px 60px;margin:32px auto;}h1{font-size:24px;}p{font-size:14px;}}
+</style>
+</head>
+<body>
+<header id="header">
+  <div class="header-top">
+    <a class="logo" href="/"><img src="/logo-dark.png" alt="Calm Veritas" style="filter:invert(1);"></a>
+    <nav class="header-nav" id="hn">
+      <a href="/">Home</a>
+      <a href="/blog/">Blog</a>
+      <a href="/downloads/">Downloads</a>
+      <a href="/forum.html">Community</a>
+    </nav>
+    <button class="burger" id="burger" aria-label="Menu" onclick="var n=document.getElementById('hn');var b=document.getElementById('burger');n.classList.toggle('open');b.classList.toggle('open');"><span></span><span></span><span></span></button>
+  </div>
+</header>
+<article>
+  <a class="back-link" href="/blog/">← Back to blog</a>
+  <div class="art-tag">Focus</div>
+  <h1>The Zeigarnik Effect: Why Unfinished Tasks Hijack Your Attention</h1>
+  <div class="art-meta">August 10, 2026 · 8 min read</div>
+<div class="share-bar">
+  <span class="share-label">Share</span>
+  <a class="share-btn" id="share-x" href="#" target="_blank" rel="noopener" aria-label="Share on X">
+    <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.744l7.737-8.835L1.254 2.25H8.08l4.253 5.622 5.911-5.622Zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+  </a>
+  <a class="share-btn" id="share-fb" href="#" target="_blank" rel="noopener" aria-label="Share on Facebook">
+    <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+  </a>
+  <a class="share-btn" id="share-pin" href="#" target="_blank" rel="noopener" aria-label="Share on Pinterest">
+    <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.373 0 0 5.373 0 12c0 5.084 3.163 9.426 7.627 11.174-.105-.949-.2-2.405.042-3.441.218-.937 1.407-5.965 1.407-5.965s-.359-.719-.359-1.782c0-1.668.967-2.914 2.171-2.914 1.023 0 1.518.769 1.518 1.69 0 1.029-.655 2.568-.994 3.995-.283 1.194.599 2.169 1.777 2.169 2.133 0 3.772-2.249 3.772-5.495 0-2.873-2.064-4.882-5.012-4.882-3.414 0-5.418 2.561-5.418 5.207 0 1.031.397 2.138.893 2.738a.36.36 0 0 1 .083.345l-.333 1.36c-.053.22-.174.267-.402.161-1.499-.698-2.436-2.889-2.436-4.649 0-3.785 2.75-7.262 7.929-7.262 4.163 0 7.398 2.967 7.398 6.931 0 4.136-2.607 7.464-6.227 7.464-1.216 0-2.359-.632-2.75-1.378l-.748 2.853c-.271 1.043-1.002 2.35-1.492 3.146C9.57 23.812 10.763 24 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0z"/></svg>
+  </a>
+  <button class="share-btn share-copy" id="share-copy" aria-label="Copy link" onclick="navigator.clipboard.writeText(window.location.href).then(()=>{this.classList.add('copied');setTimeout(()=>this.classList.remove('copied'),2000)})">
+    <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+    <span class="copy-label">Copy</span>
+    <span class="copy-done">Copied!</span>
+  </button>
+</div>
+<script>
+(function(){
+  var url = encodeURIComponent(window.location.href);
+  var title = encodeURIComponent(document.title.replace(' — Calm Veritas',''));
+  var img = encodeURIComponent(document.querySelector('meta[property="og:image"]')?.content || '');
+  document.getElementById('share-x').href = 'https://twitter.com/intent/tweet?url='+url+'&text='+title;
+  document.getElementById('share-fb').href = 'https://www.facebook.com/sharer/sharer.php?u='+url;
+  document.getElementById('share-pin').href = 'https://pinterest.com/pin/create/button/?url='+url+'&media='+img+'&description='+title;
+})();
+</script>
+
+<p>You close your laptop after a half-written email and it follows you into the shower. You finish a report and it's gone from your mind within the hour. The difference isn't importance — it's completion status. In 1927, Soviet psychologist Bluma Zeigarnik observed that waiters in a Vienna cafe could recall complex, unpaid orders in precise detail, but forgot them almost immediately once the bill was settled. She took the observation into the lab, and the effect that bears her name has been replicated, refined, and argued over for nearly a century since.</p>
+
+<h2>The Original Finding</h2>
+<p>Zeigarnik's 1927 study, published in Psychologische Forschung, had participants complete a series of simple tasks — puzzles, arithmetic problems — with roughly half interrupted before completion. When asked afterward to recall which tasks they'd worked on, participants remembered the interrupted, unfinished tasks about twice as often as the completed ones. Her explanation: completing a task releases a kind of cognitive tension associated with it, while an interrupted task leaves that tension — and the associated memory trace — active.</p>
+
+<h2>Why This Isn't Just a Memory Quirk</h2>
+<p>The practical relevance isn't recall, it's intrusion. Later research, notably a 2011 study by E.J. Masicampo and Roy Baumeister in the Journal of Personality and Social Psychology, found that unfinished goals generate intrusive thoughts that impair performance on subsequent, unrelated tasks — but only if the person hasn't made a specific plan for completing them. Simply writing down when, where, and how you'll finish an interrupted task was enough to eliminate the intrusive-thought effect in their experiments, even without actually doing the task.</p>
+
+<p>That distinction matters. The open loop isn't resolved by finishing the task — it's resolved by the mind registering that the task has been captured somewhere reliable and doesn't need to be actively held in working memory.</p>
+
+<figure class="art-img">
+  <img src="/images/pin-zeigarnik-effect-unfinished-tasks.jpg" alt="The Zeigarnik Effect: Why Unfinished Tasks Hijack Your Attention" loading="lazy">
+</figure>
+
+<h2>Why Modern Work Triggers It Constantly</h2>
+<p>Knowledge work is structurally built from interruptions. A 2005 study by Gloria Mark, Victor Gonzalez, and Justin Harris, presented at the ACM CHI conference, found that office workers were interrupted or switched tasks roughly every three minutes on average, and it took over twenty minutes on average to return to the original task after a significant interruption. Every one of those switches is a small Zeigarnik loop left open — which is a plausible mechanism for why a day full of context-switching feels exhausting even when no single task was difficult.</p>
+
+<p>This is the theoretical backbone behind David Allen's "Getting Things Done" methodology — Allen's core claim, that your mind is for having ideas rather than holding them, maps almost exactly onto Masicampo and Baumeister's finding that a captured plan neutralizes the intrusive thought. Allen's book, <a class="aff-link" href="https://www.amazon.com/dp/0143126563?tag=calmveritas-20" target="_blank" rel="noopener sponsored">Getting Things Done</a>, predates the 2011 study by nearly a decade, but the empirical support arrived after the practice was already popular.</p>
+
+<h2>Closing Loops Without Finishing Tasks</h2>
+<p>Three interventions have research or strong theoretical backing:</p>
+
+<h3>1. External capture</h3>
+<p>Write the task down the moment it's interrupted — not a mental note, an external one. A dedicated capture notebook removes the ambiguity of "did I actually record this or just think about recording it," which itself can become a low-grade open loop.</p>
+
+<h3>2. Specify the next action, not just the task</h3>
+<p>Masicampo and Baumeister's intervention wasn't "make a to-do list" — it was specifying when and how the task would be resumed. "Finish the report" doesn't close the loop as effectively as "Tuesday 9am, draft the report's second section."</p>
+
+<h3>3. Batch your interruptions deliberately</h3>
+<p>Since switching costs compound, working in single-task blocks with a visible countdown reduces the number of loops opened per day. A visible timer also externalizes the tension Zeigarnik described — the ticking clock, not your memory, is holding the "this needs to end" signal.</p>
+
+<h2>The Limits of the Effect</h2>
+<p>Replication has been mixed. Some later studies failed to reproduce the original memory-recall effect under different conditions, and researchers now generally treat the "unfinished tasks are remembered better" claim as context-dependent rather than universal. The intrusive-thought and planning-based resolution findings from Masicampo and Baumeister have held up more consistently and are the more actionable part of the research for everyday focus.</p>
+
+<div class="products">
+  <div class="products-title">Referenced & Recommended</div>
+  <div class="product-item">
+    <div class="product-num">01</div>
+    <div>
+      <div class="product-name">Getting Things Done — David Allen</div>
+      <div class="product-desc">The foundational text on capturing open loops externally. Its core method lines up closely with the later Zeigarnik-effect research on intrusive thoughts.</div>
+      <a class="product-link" href="https://www.amazon.com/dp/0143126563?tag=calmveritas-20" target="_blank" rel="noopener sponsored">View on Amazon →</a>
+    </div>
+  </div>
+  <div class="product-item">
+    <div class="product-num">02</div>
+    <div>
+      <div class="product-name">Leuchtturm1917 Hardcover Notebook</div>
+      <div class="product-desc">A dedicated, numbered-page notebook for external task capture — removes the ambiguity of whether an interrupted task was actually recorded.</div>
+      <a class="product-link" href="https://www.amazon.com/dp/B002TSIMW4?tag=calmveritas-20" target="_blank" rel="noopener sponsored">View on Amazon →</a>
+    </div>
+  </div>
+  <div class="product-item">
+    <div class="product-num">03</div>
+    <div>
+      <div class="product-name">Time Timer Original Visual Timer</div>
+      <div class="product-desc">A visible countdown externalizes the "this needs to end" signal, reducing the number of loops your working memory has to hold open at once.</div>
+      <a class="product-link" href="https://www.amazon.com/dp/B086F2XCL2?tag=calmveritas-20" target="_blank" rel="noopener sponsored">View on Amazon →</a>
+    </div>
+  </div>
+  <p class="disclosure" style="margin-top:16px;">These are affiliate links — if you purchase, we earn a small commission at no cost to you. We only list products we've researched and believe in. <a href="/disclosure.html" style="color:#bbb">Read our disclosure.</a></p>
+</div></article>
+<footer>
+  <a href="/">Home</a> · <a href="/blog/">Blog</a> · <a href="/downloads/">Downloads</a> · <a href="/disclosure.html">Disclosure</a> · <a href="/privacy-policy.html">Privacy</a>
+  <div style="margin-top:12px;display:flex;align-items:center;justify-content:center;gap:16px;">
+    <span>© 2026 Calm Veritas · No fluff. Just truth.</span>
+    <a href="https://www.youtube.com/@Calm-Veritas" target="_blank" rel="noopener" aria-label="YouTube" style="display:inline-flex;align-items:center;color:#bbb;text-decoration:none;transition:color .15s;" onmouseover="this.style.color='#FF0000'" onmouseout="this.style.color='#bbb'"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg></a>
+  </div>
+</footer>
+</body>
+</html>
