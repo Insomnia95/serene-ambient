@@ -44,7 +44,7 @@ export default async function handler(req, res) {
   const email = (body.email || '').toString().trim().slice(0, 200);
   const reason = (body.reason || 'General').toString().trim().slice(0, 60);
   const message = (body.message || '').toString().trim().slice(0, 5000);
-  const honeypot = (body.company || '').toString().trim();
+  const honeypot = (body.hp_confirm_2026 || '').toString().trim();
 
   // Honeypot: real visitors never see or fill this field. Silently accept
   // so bots don't learn their submission was rejected.

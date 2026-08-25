@@ -196,8 +196,8 @@ form { background:#fff; border:1px solid #e8e8e6; padding:32px; }
     </div>
     <!-- honeypot — hidden from real visitors, bots tend to fill every field -->
     <div class="field hp-field" aria-hidden="true">
-      <label for="cf-company">Company</label>
-      <input type="text" id="cf-company" name="company" tabindex="-1" autocomplete="off">
+      <label for="cf-hp-field">Leave this field blank</label>
+      <input type="text" id="cf-hp-field" name="hp_confirm_2026" tabindex="-1" autocomplete="off">
     </div>
     <button class="submit-btn" type="submit" id="cf-submit">Send message</button>
     <div class="form-msg" id="cf-msg"></div>
@@ -245,7 +245,7 @@ document.getElementById('contact-form').addEventListener('submit', async functio
     email: form.email.value.trim(),
     reason: form.reason.value,
     message: form.message.value.trim(),
-    company: form.company.value, // honeypot
+    hp_confirm_2026: form.hp_confirm_2026.value, // honeypot
   };
 
   if (!payload.name || !payload.email || !payload.message) {
