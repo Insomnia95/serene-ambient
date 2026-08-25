@@ -101,61 +101,76 @@ body {
   text-transform:uppercase; color:#999;
   margin-bottom:16px;
 }
-.articles-list { display:flex; flex-direction:column; gap:2px; }
 
+/* HERO */
+.hero-card {
+  display:block; background:#111; text-decoration:none; color:inherit;
+  position:relative; overflow:hidden; margin-bottom:40px; aspect-ratio:16/9;
+}
+.hero-card img { width:100%; height:100%; object-fit:cover; display:block; transition:transform .5s ease; }
+.hero-card:hover img { transform:scale(1.03); }
+.hero-overlay {
+  position:absolute; inset:0;
+  background:linear-gradient(0deg, rgba(0,0,0,.85) 0%, rgba(0,0,0,.4) 55%, rgba(0,0,0,.05) 100%);
+  display:flex; flex-direction:column; justify-content:flex-end;
+  padding:32px;
+}
+.hero-tag { font-size:12px; font-weight:500; letter-spacing:.18em; text-transform:uppercase; color:rgba(255,255,255,.6); margin-bottom:10px; }
+.hero-title { font-size:26px; font-weight:400; letter-spacing:-.01em; line-height:1.3; color:#fff; max-width:640px; margin-bottom:10px; }
+.hero-excerpt { font-size:13px; font-weight:300; color:rgba(255,255,255,.65); line-height:1.7; max-width:560px; margin-bottom:14px; }
+.hero-meta { font-size:12px; font-weight:400; letter-spacing:.06em; color:rgba(255,255,255,.4); display:flex; gap:12px; }
+
+/* TOPIC SECTIONS (default 'all' view groups articles by topic) */
+.topic-section { margin-bottom:44px; }
+.topic-section:last-child { margin-bottom:0; }
+.topic-section-head {
+  display:flex; align-items:baseline; justify-content:space-between; gap:12px;
+  margin-bottom:16px; padding-bottom:10px; border-bottom:1px solid #e8e8e6;
+}
+.topic-section-title {
+  font-size:13px; font-weight:500; letter-spacing:.16em; text-transform:uppercase; color:#1a1a1a;
+}
+.topic-section-more {
+  font-size:12px; font-weight:400; letter-spacing:.06em; text-transform:uppercase; color:#999;
+  text-decoration:none; border:none; background:none; cursor:pointer;
+  font-family:'Montserrat',sans-serif; white-space:nowrap; transition:color .15s;
+}
+.topic-section-more:hover { color:#1a1a1a; }
+
+/* ARTICLE GRID + CARD (gallery style) */
+.article-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(230px,1fr)); gap:18px; }
 .article-card {
   background:#fff; text-decoration:none; color:inherit;
-  display:grid; grid-template-columns:80px 1fr auto;
-  align-items:start; gap:20px;
-  padding:20px 28px;
-  border:1px solid #e8e8e6;
-  transition:border-color .15s, box-shadow .15s;
+  border:1px solid #e8e8e6; display:flex; flex-direction:column;
+  transition:border-color .15s, box-shadow .15s, transform .15s;
 }
-.card-thumb {
-  width:80px; height:106px; object-fit:cover;
-  display:block; flex-shrink:0;
+.article-card:hover { border-color:#bbb; box-shadow:0 4px 20px rgba(0,0,0,.07); transform:translateY(-2px); }
+.article-thumb-wrap { aspect-ratio:4/3; overflow:hidden; background:#eceae6; position:relative; }
+.article-thumb-wrap img { width:100%; height:100%; object-fit:cover; display:block; }
+.article-card.no-img .article-thumb-wrap { display:none; }
+.premium-flag {
+  position:absolute; top:10px; left:10px; display:flex; align-items:center; gap:5px;
+  font-size:9px; font-weight:500; letter-spacing:.1em; text-transform:uppercase;
+  background:#1a1a1a; color:#fff; padding:5px 9px;
 }
-.article-card.no-img {
-  grid-template-columns:1fr auto;
-}
-.article-card:hover {
-  border-color:#bbb;
-  box-shadow:0 2px 12px rgba(0,0,0,.06);
-}
-.article-card.featured {
-  grid-template-columns:80px 1fr;
-  padding:28px 28px 24px;
-  background:#fff;
-}
+.article-card-body { padding:18px 18px 16px; flex:1; display:flex; flex-direction:column; }
 .article-tag {
-  font-size:12px; font-weight:500; letter-spacing:.18em;
-  text-transform:uppercase; color:#999;
-  margin-bottom:8px; display:block;
+  font-size:11px; font-weight:500; letter-spacing:.14em;
+  text-transform:uppercase; color:#999; margin-bottom:8px;
 }
 .article-title {
-  font-size:16px; font-weight:400; line-height:1.45;
-  letter-spacing:-.01em; color:#1a1a1a;
-  margin-bottom:8px;
-}
-.article-card.featured .article-title {
-  font-size:20px; font-weight:400; line-height:1.4;
+  font-size:15px; font-weight:400; line-height:1.42;
+  letter-spacing:-.01em; color:#1a1a1a; margin-bottom:8px;
 }
 .article-excerpt {
-  font-size:12px; font-weight:400; letter-spacing:.01em;
-  color:#666; line-height:1.75;
-  margin-bottom:14px;
+  font-size:12px; font-weight:300; letter-spacing:.01em;
+  color:#777; line-height:1.7; margin-bottom:12px; flex:1;
+  display:-webkit-box; -webkit-line-clamp:3; -webkit-box-orient:vertical; overflow:hidden;
 }
 .article-meta {
-  font-size:13px; font-weight:400; letter-spacing:.06em;
-  color:#bbb;
-  display:flex; align-items:center; gap:12px;
+  font-size:11px; font-weight:400; letter-spacing:.05em;
+  color:#bbb; display:flex; align-items:center; gap:10px;
 }
-.article-arrow {
-  font-size:16px; color:#ccc; flex-shrink:0; align-self:center;
-  transition:color .15s, transform .15s;
-}
-.article-card:hover .article-arrow { color:#1a1a1a; transform:translateX(3px); }
-.article-card.hidden { display:none; }
 
 /* ── SIDEBAR ─────────────────────────────── */
 #sidebar { display:flex; flex-direction:column; gap:24px; }
@@ -343,11 +358,11 @@ body {
   #main { padding:16px 16px 40px; }
   #footer { padding:16px 20px; flex-direction:column; align-items:flex-start; gap:12px; }
   .footer-links { flex-wrap:wrap; gap:12px; }
-  .article-card { grid-template-columns:64px 1fr; padding:14px 16px; gap:12px; }
-  .card-thumb { width:64px; height:85px; }
-  .article-card.featured { grid-template-columns:64px 1fr; }
-  .article-card.no-img { grid-template-columns:1fr; }
-  .article-arrow { display:none; }
+  .hero-title { font-size:20px; }
+  .hero-card { aspect-ratio:4/3; margin-bottom:28px; }
+  .hero-overlay { padding:20px; }
+  .article-grid { grid-template-columns:repeat(auto-fill,minmax(160px,1fr)); gap:12px; }
+  .topic-section { margin-bottom:32px; }
   .header-desc { padding:14px 0 16px; }
   .header-pills { gap:6px; }
   .pill { font-size:11px; padding:4px 10px; }
@@ -402,6 +417,7 @@ body {
       <a href="/blog/" class="header-link">Blog</a>
       <a href="/downloads/">Downloads</a>
       <a href="/forum.html">Community</a>
+      <a href="/contact.html">Contact</a>
       <a href="#email-full" class="subscribe-btn">Subscribe</a>
     </nav>
     <button class="burger" id="burger" aria-label="Menu" onclick="var n=document.getElementById('hn');var b=document.getElementById('burger');n.classList.toggle('open');b.classList.toggle('open');"><span></span><span></span><span></span></button>
@@ -428,145 +444,8 @@ body {
 
   <!-- ARTICLES COLUMN -->
   <div id="articles-col">
-    <div class="section-head" id="section-label">Latest articles</div>
-    <div class="articles-list" id="articles-list">
-
-      <a class="article-card featured fade-in" data-topic="sleep" href="/blog/sleep-cycles-science">
-        <div>
-          <span class="article-tag">Sleep · Featured</span>
-          <div class="article-title">The Science Behind Sleep Cycles (And Why 8 Hours Isn't Always Enough)</div>
-          <div class="article-excerpt">Your sleep quality depends less on total hours and more on how many complete 90-minute cycles you finish. Here's how to optimize for cycles, not clocks.</div>
-          <div class="article-meta">
-            <span>May 20, 2026</span>
-            <span>7 min read</span>
-          </div>
-        </div>
-      </a>
-
-      <a class="article-card fade-in" data-topic="anxiety" href="/blog/box-breathing-anxiety">
-        <div>
-          <span class="article-tag">Anxiety</span>
-          <div class="article-title">Box Breathing: The Evidence Behind the Navy SEAL Technique</div>
-          <div class="article-excerpt">A structured breathing protocol used by special operations forces, now backed by peer-reviewed research on anxiety and heart rate variability.</div>
-          <div class="article-meta"><span>May 21, 2026</span><span>6 min read</span></div>
-        </div>
-        <span class="article-arrow">→</span>
-      </a>
-
-      <a class="article-card featured fade-in" data-topic="health" href="/blog/magnesium-glycinate-guide">
-        <div>
-          <span class="article-tag">Health · Featured</span>
-          <div class="article-title">Magnesium Glycinate: What the Research Actually Says</div>
-          <div class="article-excerpt">An evidence-based breakdown of the most bioavailable magnesium form, its role in sleep, anxiety, and muscle function, and what dose actually works.</div>
-          <div class="article-meta">
-            <span>May 22, 2026</span>
-            <span>8 min read</span>
-          </div>
-        </div>
-      </a>
-
-      <a class="article-card fade-in" data-topic="stoicism" href="/blog/marcus-aurelius-morning-practice">
-        <div>
-          <span class="article-tag">Stoicism</span>
-          <div class="article-title">Marcus Aurelius on Mornings: The Stoic Protocol That Still Works</div>
-          <div class="article-excerpt">The Roman emperor's morning ritual from the Meditations isn't mysticism — it's a cognitive preparation system that maps directly onto modern evidence.</div>
-          <div class="article-meta"><span>May 23, 2026</span><span>7 min read</span></div>
-        </div>
-        <span class="article-arrow">→</span>
-      </a>
-
-      <a class="article-card fade-in" data-topic="focus" href="/blog/deep-work-focus-protocol">
-        <div>
-          <span class="article-tag">Focus</span>
-          <div class="article-title">Deep Work: Cal Newport's Framework, and What the Research Adds</div>
-          <div class="article-excerpt">Newport's concept of cognitively demanding, distraction-free work aligns tightly with neuroscience research on attention — but implementation details matter.</div>
-          <div class="article-meta"><span>May 24, 2026</span><span>8 min read</span></div>
-        </div>
-        <span class="article-arrow">→</span>
-      </a>
-
-      <a class="article-card fade-in" data-topic="health" href="/blog/vitamin-d-guide">
-        <div>
-          <span class="article-tag">Health</span>
-          <div class="article-title">Vitamin D: The Deficiency Most People Don't Know They Have</div>
-          <div class="article-excerpt">Over 40% of American adults are deficient in vitamin D. Here's what the research says about dosing, testing, and why the standard RDA is almost certainly too low.</div>
-          <div class="article-meta"><span>May 25, 2026</span><span>7 min read</span></div>
-        </div>
-        <span class="article-arrow">→</span>
-      </a>
-
-      <a class="article-card featured fade-in" data-topic="books" href="/blog/why-we-sleep-review">
-        <div>
-          <span class="article-tag">Books · Review</span>
-          <div class="article-title">Why We Sleep by Matthew Walker: The Science, the Controversy, and What Holds Up</div>
-          <div class="article-excerpt">Walker's landmark book changed how millions think about sleep. We separate the solid science from the overclaims — and explain why it's still essential reading.</div>
-          <div class="article-meta">
-            <span>May 26, 2026</span><span>9 min read</span>
-          </div>
-        </div>
-      </a>
-
-      <a class="article-card fade-in" data-topic="health" href="/blog/cold-exposure-recovery">
-        <div>
-          <span class="article-tag">Health</span>
-          <div class="article-title">Cold Exposure: Separating the Evidence from the Hype</div>
-          <div class="article-excerpt">Cold showers, ice baths, and cold water immersion have gained enormous cultural momentum. Here's what the peer-reviewed research actually supports.</div>
-          <div class="article-meta"><span>May 27, 2026</span><span>8 min read</span></div>
-        </div>
-        <span class="article-arrow">→</span>
-      </a>
-
-      <a class="article-card fade-in" data-topic="sleep" href="/blog/adenosine-sleep-pressure">
-        <div>
-          <span class="article-tag">Sleep</span>
-          <div class="article-title">Adenosine and Sleep Pressure: The Chemistry That Makes You Tired</div>
-          <div class="article-excerpt">Every hour you stay awake, adenosine accumulates in your brain and builds sleep pressure. Understanding this mechanism explains why caffeine works — and why it eventually fails.</div>
-          <div class="article-meta"><span>May 28, 2026</span><span>7 min read</span></div>
-        </div>
-        <span class="article-arrow">→</span>
-      </a>
-
-      <a class="article-card fade-in" data-topic="anxiety" href="/blog/cortisol-chronic-stress">
-        <div>
-          <span class="article-tag">Anxiety</span>
-          <div class="article-title">Cortisol: The Physiology of Chronic Stress and How to Reset the System</div>
-          <div class="article-excerpt">Cortisol is not the enemy — dysregulated cortisol is. Here's what research shows about the HPA axis, chronic stress physiology, and evidence-based ways to restore balance.</div>
-          <div class="article-meta"><span>May 28, 2026</span><span>8 min read</span></div>
-        </div>
-        <span class="article-arrow">→</span>
-      </a>
-
-      <a class="article-card fade-in" data-topic="focus" href="/blog/pomodoro-focus-technique">
-        <div>
-          <span class="article-tag">Focus</span>
-          <div class="article-title">The Pomodoro Technique: What Neuroscience Says About Timed Work Intervals</div>
-          <div class="article-excerpt">Francesco Cirillo's 25-minute intervals have helped millions focus. But is the specific timing backed by science? We examine what attention research actually shows.</div>
-          <div class="article-meta"><span>May 28, 2026</span><span>7 min read</span></div>
-        </div>
-        <span class="article-arrow">→</span>
-      </a>
-
-      <a class="article-card fade-in" data-topic="stoicism" href="/blog/seneca-on-time">
-        <div>
-          <span class="article-tag">Stoicism</span>
-          <div class="article-title">Seneca on Time: The Ancient Warning That's More Urgent Than Ever</div>
-          <div class="article-excerpt">Two thousand years before the attention economy, Seneca identified exactly how lives are lost — not in dramatic failure but in imperceptible distraction. His Letters are a precision diagnosis.</div>
-          <div class="article-meta"><span>May 28, 2026</span><span>8 min read</span></div>
-        </div>
-        <span class="article-arrow">→</span>
-      </a>
-
-      <a class="article-card fade-in" data-topic="books" href="/blog/four-thousand-weeks-review">
-        <div>
-          <span class="article-tag">Books</span>
-          <div class="article-title">Four Thousand Weeks by Oliver Burkeman: A Rational Case for Embracing Limits</div>
-          <div class="article-excerpt">Burkeman argues that productivity culture's deepest error is treating finitude as a problem to solve. We examine the philosophy and research behind his counterintuitive argument.</div>
-          <div class="article-meta"><span>May 28, 2026</span><span>9 min read</span></div>
-        </div>
-        <span class="article-arrow">→</span>
-      </a>
-
-    </div>
+    <div id="hero-slot"></div>
+    <div id="gallery"></div>
   </div>
 
   <!-- SIDEBAR -->
@@ -653,42 +532,54 @@ body {
 </section>
 
 <!-- ── FOOTER ────────────────────────────── -->
-<footer id="footer">
-  <div class="footer-logo">Calm Veritas</div>
-  <div class="footer-links">
-    <a class="footer-link" href="/blog/">Blog</a>
-    <a class="footer-link" href="/downloads/">Downloads</a>
-    <a class="footer-link" href="/forum.html">Community</a>
-    <a class="footer-link" href="#email-full">Subscribe</a>
-    <a class="footer-link" href="/disclosure.html">Disclosure</a>
-    <a class="footer-link" href="/privacy-policy.html">Privacy</a>
+<footer id="site-footer">
+  <div class="footer-inner">
+    <div class="footer-col footer-brand">
+      <div class="footer-logo">Calm Veritas</div>
+      <p class="footer-blurb">Evidence-based writing on sleep, anxiety, focus, and stoic practice. No trends, no fluff — just what the research actually supports.</p>
+      <a class="footer-social" href="https://www.youtube.com/@Calm-Veritas" target="_blank" rel="noopener" aria-label="YouTube"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg></a>
+    </div>
+    <div class="footer-col">
+      <div class="footer-col-title">Explore</div>
+      <a href="/">Home</a>
+      <a href="/blog/">Blog</a>
+      <a href="/downloads/">Downloads</a>
+      <a href="/forum.html">Community</a>
+    </div>
+    <div class="footer-col">
+      <div class="footer-col-title">Company</div>
+      <a href="/contact.html">Contact &amp; Advertise</a>
+      <a href="/disclosure.html">Disclosure</a>
+      <a href="/privacy-policy.html">Privacy Policy</a>
+    </div>
   </div>
-  <div style="display:flex;align-items:center;gap:14px;">
-    <span class="footer-note">No fluff. Just truth.</span>
-    <a href="https://www.youtube.com/@Calm-Veritas" target="_blank" rel="noopener" aria-label="YouTube" style="display:inline-flex;align-items:center;color:#bbb;text-decoration:none;transition:color .15s;" onmouseover="this.style.color='#FF0000'" onmouseout="this.style.color='#bbb'"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg></a>
+  <div class="footer-bottom">
+    <span>© 2026 Calm Veritas · No fluff. Just truth.</span>
+    <span class="footer-affiliate">Some links on this site are affiliate links — <a href="/disclosure.html">full disclosure →</a></span>
   </div>
 </footer>
-<div id="footer-disclosure">
-  <div class="disclosure-text">
-    Some links on this site are affiliate links. If you buy something through them, we may earn a small commission — at no extra cost to you. We only link to products we'd genuinely recommend based on the evidence. <a href="/disclosure.html">Full disclosure →</a>
-  </div>
-</div>
 <style>
-#footer-disclosure {
-  background:#0e0e0e;
-  border-top:1px solid #1e1e1e;
-  padding:14px 40px;
-  text-align:center;
+/* ── SITE FOOTER (shared) ──────────────── */
+#site-footer { background:#111; padding:48px 40px 0; }
+.footer-inner { max-width:1200px; margin:0 auto; display:grid; grid-template-columns:2fr 1fr 1fr; gap:40px; padding-bottom:36px; border-bottom:1px solid rgba(255,255,255,.08); }
+.footer-brand { padding-right:20px; }
+.footer-logo { font-size:13px; font-weight:500; letter-spacing:.2em; text-transform:uppercase; color:#fff; margin-bottom:14px; }
+.footer-blurb { font-size:12px; font-weight:300; line-height:1.75; color:rgba(255,255,255,.4); max-width:320px; margin-bottom:16px; }
+.footer-social { display:inline-flex; align-items:center; color:rgba(255,255,255,.4); transition:color .15s; }
+.footer-social:hover { color:#FF0000; }
+.footer-col-title { font-size:11px; font-weight:500; letter-spacing:.14em; text-transform:uppercase; color:rgba(255,255,255,.3); margin-bottom:14px; }
+.footer-col a { display:block; font-size:13px; font-weight:300; color:rgba(255,255,255,.55); text-decoration:none; margin-bottom:10px; transition:color .15s; }
+.footer-col a:hover { color:#fff; }
+.footer-bottom { max-width:1200px; margin:0 auto; padding:20px 0; display:flex; align-items:center; justify-content:space-between; gap:16px; flex-wrap:wrap; }
+.footer-bottom span { font-size:11px; font-weight:300; letter-spacing:.04em; color:rgba(255,255,255,.25); }
+.footer-affiliate a { color:rgba(255,255,255,.4); text-decoration:none; border-bottom:1px solid rgba(255,255,255,.15); }
+.footer-affiliate a:hover { color:rgba(255,255,255,.7); }
+@media (max-width:680px) {
+  #site-footer { padding:32px 20px 0; }
+  .footer-inner { grid-template-columns:1fr; gap:26px; padding-bottom:24px; }
+  .footer-brand { padding-right:0; }
+  .footer-bottom { flex-direction:column; align-items:flex-start; gap:8px; padding:16px 0 24px; }
 }
-.disclosure-text {
-  font-size:12px; font-weight:400; letter-spacing:.06em;
-  color:rgba(255,255,255,.2); line-height:1.7;
-}
-.disclosure-text a {
-  color:rgba(255,255,255,.35); text-decoration:none;
-  border-bottom:1px solid rgba(255,255,255,.15);
-}
-.disclosure-text a:hover { color:rgba(255,255,255,.6); }
 </style>
 
 <script src="/articles-data.js"></script>
@@ -705,29 +596,81 @@ const TOPIC_LABELS = {
   sport: '🏋️ Sport',
 };
 
-function renderHomepageArticles(topic) {
-  const list = document.getElementById('articles-list');
-  const label = document.getElementById('section-label');
-  const filtered = topic === 'all' ? ARTICLES : ARTICLES.filter(a => a.cat === topic);
-  label.textContent = topic === 'all' ? 'Latest articles' : (TOPIC_LABELS[topic] || 'Articles');
-  list.innerHTML = '';
-  filtered.forEach(a => {
-    const card = document.createElement('a');
-    card.className = 'article-card fade-in' + (a.featured ? ' featured' : '') + (!a.img ? ' no-img' : '');
-    card.setAttribute('data-topic', a.cat);
-    card.href = a.href;
-    const tagText = a.tag + (a.featured ? ' · Featured' : '');
-    card.innerHTML = `
-      ${a.img ? `<img class="card-thumb" src="${a.img}" alt="${a.title}" loading="lazy">` : ''}
-      <div>
-        <span class="article-tag">${tagText}</span>
+const TOPIC_ORDER = ['sleep', 'anxiety', 'focus', 'stoicism', 'health', 'books', 'sport'];
+const SECTION_SIZE = 3; // cards shown per topic on the "All topics" gallery view
+
+function articleCardHTML(a) {
+  const premiumFlag = a.premium ? '<span class="premium-flag">🔒 Premium</span>' : '';
+  return `
+    <a class="article-card fade-in${!a.img ? ' no-img' : ''}" href="${a.href}" data-topic="${a.cat}">
+      <div class="article-thumb-wrap">
+        ${a.img ? `<img src="${a.img}" alt="${a.title}" loading="lazy">` : ''}
+        ${premiumFlag}
+      </div>
+      <div class="article-card-body">
+        <span class="article-tag">${a.tag}</span>
         <div class="article-title">${a.title}</div>
         <div class="article-excerpt">${a.excerpt}</div>
         <div class="article-meta"><span>${a.date}</span><span>${a.readTime}</span></div>
       </div>
-      ${!a.featured ? '<span class="article-arrow">→</span>' : ''}`;
-    list.appendChild(card);
-  });
+    </a>`;
+}
+
+function renderHero(a) {
+  const slot = document.getElementById('hero-slot');
+  if (!a) { slot.innerHTML = ''; return; }
+  slot.innerHTML = `
+    <a class="hero-card fade-in" href="${a.href}">
+      ${a.img ? `<img src="${a.img}" alt="${a.title}" loading="lazy">` : ''}
+      <div class="hero-overlay">
+        <span class="hero-tag">${a.tag} · Featured</span>
+        <div class="hero-title">${a.title}</div>
+        <div class="hero-excerpt">${a.excerpt}</div>
+        <div class="hero-meta"><span>${a.date}</span><span>${a.readTime}</span></div>
+      </div>
+    </a>`;
+}
+
+function renderHomepageArticles(topic) {
+  const gallery = document.getElementById('gallery');
+  gallery.innerHTML = '';
+
+  if (topic === 'all') {
+    // Gallery view: hero + one horizontal section per topic
+    const heroSource = ARTICLES.find(a => a.featured) || ARTICLES[0];
+    renderHero(heroSource);
+
+    TOPIC_ORDER.forEach(cat => {
+      const items = ARTICLES.filter(a => a.cat === cat);
+      if (!items.length) return;
+      const section = document.createElement('div');
+      section.className = 'topic-section';
+      section.innerHTML = `
+        <div class="topic-section-head">
+          <span class="topic-section-title">${TOPIC_LABELS[cat]}</span>
+          <button class="topic-section-more" data-topic="${cat}">View all ${items.length} →</button>
+        </div>
+        <div class="article-grid">${items.slice(0, SECTION_SIZE).map(articleCardHTML).join('')}</div>`;
+      gallery.appendChild(section);
+    });
+
+    gallery.querySelectorAll('.topic-section-more').forEach(btn => {
+      btn.addEventListener('click', () => setTopic(btn.dataset.topic));
+    });
+  } else {
+    // Single-topic view: full grid of every article in that topic
+    renderHero(null);
+    const items = ARTICLES.filter(a => a.cat === topic);
+    const section = document.createElement('div');
+    section.className = 'topic-section';
+    section.innerHTML = `
+      <div class="topic-section-head">
+        <span class="topic-section-title">${TOPIC_LABELS[topic]} · ${items.length} article${items.length === 1 ? '' : 's'}</span>
+      </div>
+      <div class="article-grid">${items.map(articleCardHTML).join('')}</div>`;
+    gallery.appendChild(section);
+  }
+
   observeFadeIns();
 }
 
@@ -789,8 +732,6 @@ function handleSubFull(e) {
 }
 
 /* ── INIT ── */
-// Remove the static hardcoded cards that were in HTML before this script
-document.getElementById('articles-list').innerHTML = '';
 renderHomepageArticles('all');
 renderTopicCounts();
 observeFadeIns();

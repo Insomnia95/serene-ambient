@@ -72,6 +72,28 @@ footer a { color:#888; text-decoration:none; margin:0 8px; }
 .share-copy .copy-done { display:none; }
 .share-copy.copied .copy-label { display:none; }
 .share-copy.copied .copy-done { display:inline; color:#1a1a1a; }
+
+/* ── SITE FOOTER (shared) ──────────────── */
+#site-footer { background:#111; padding:48px 40px 0; }
+.footer-inner { max-width:1200px; margin:0 auto; display:grid; grid-template-columns:2fr 1fr 1fr; gap:40px; padding-bottom:36px; border-bottom:1px solid rgba(255,255,255,.08); }
+.footer-brand { padding-right:20px; }
+.footer-logo { font-size:13px; font-weight:500; letter-spacing:.2em; text-transform:uppercase; color:#fff; margin-bottom:14px; }
+.footer-blurb { font-size:12px; font-weight:300; line-height:1.75; color:rgba(255,255,255,.4); max-width:320px; margin-bottom:16px; }
+.footer-social { display:inline-flex; align-items:center; color:rgba(255,255,255,.4); transition:color .15s; }
+.footer-social:hover { color:#FF0000; }
+.footer-col-title { font-size:11px; font-weight:500; letter-spacing:.14em; text-transform:uppercase; color:rgba(255,255,255,.3); margin-bottom:14px; }
+.footer-col a { display:block; font-size:13px; font-weight:300; color:rgba(255,255,255,.55); text-decoration:none; margin-bottom:10px; transition:color .15s; }
+.footer-col a:hover { color:#fff; }
+.footer-bottom { max-width:1200px; margin:0 auto; padding:20px 0; display:flex; align-items:center; justify-content:space-between; gap:16px; flex-wrap:wrap; }
+.footer-bottom span { font-size:11px; font-weight:300; letter-spacing:.04em; color:rgba(255,255,255,.25); }
+.footer-affiliate a { color:rgba(255,255,255,.4); text-decoration:none; border-bottom:1px solid rgba(255,255,255,.15); }
+.footer-affiliate a:hover { color:rgba(255,255,255,.7); }
+@media (max-width:680px) {
+  #site-footer { padding:32px 20px 0; }
+  .footer-inner { grid-template-columns:1fr; gap:26px; padding-bottom:24px; }
+  .footer-brand { padding-right:0; }
+  .footer-bottom { flex-direction:column; align-items:flex-start; gap:8px; padding:16px 0 24px; }
+}
 </style>
 <link rel="canonical" href="https://www.calm-veritas.com/blog/post-workout-anabolic-window-guide">
 <meta property="og:type" content="article">
@@ -119,6 +141,7 @@ footer a { color:#888; text-decoration:none; margin:0 8px; }
       <a href="/blog/">Blog</a>
       <a href="/downloads/">Downloads</a>
       <a href="/forum.html">Community</a>
+      <a href="/contact.html">Contact</a>
     </nav>
     <button class="burger" id="burger" aria-label="Menu" onclick="var n=document.getElementById('hn');var b=document.getElementById('burger');n.classList.toggle('open');b.classList.toggle('open');"><span></span><span></span><span></span></button>
   </div>
@@ -213,11 +236,30 @@ footer a { color:#888; text-decoration:none; margin:0 8px; }
   </div>
   <p class="disclosure" style="margin-top:16px;">These are affiliate links — if you purchase, we earn a small commission at no cost to you. We only list products we've researched and believe in. <a href="/disclosure.html" style="color:#bbb">Read our disclosure.</a></p>
 </div></article>
-<footer>
-  <a href="/">Home</a> · <a href="/blog/">Blog</a> · <a href="/downloads/">Downloads</a> · <a href="/disclosure.html">Disclosure</a> · <a href="/privacy-policy.html">Privacy</a>
-  <div style="margin-top:12px;display:flex;align-items:center;justify-content:center;gap:16px;">
+<footer id="site-footer">
+  <div class="footer-inner">
+    <div class="footer-col footer-brand">
+      <div class="footer-logo">Calm Veritas</div>
+      <p class="footer-blurb">Evidence-based writing on sleep, anxiety, focus, and stoic practice. No trends, no fluff — just what the research actually supports.</p>
+      <a class="footer-social" href="https://www.youtube.com/@Calm-Veritas" target="_blank" rel="noopener" aria-label="YouTube"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg></a>
+    </div>
+    <div class="footer-col">
+      <div class="footer-col-title">Explore</div>
+      <a href="/">Home</a>
+      <a href="/blog/">Blog</a>
+      <a href="/downloads/">Downloads</a>
+      <a href="/forum.html">Community</a>
+    </div>
+    <div class="footer-col">
+      <div class="footer-col-title">Company</div>
+      <a href="/contact.html">Contact &amp; Advertise</a>
+      <a href="/disclosure.html">Disclosure</a>
+      <a href="/privacy-policy.html">Privacy Policy</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
     <span>© 2026 Calm Veritas · No fluff. Just truth.</span>
-    <a href="https://www.youtube.com/@Calm-Veritas" target="_blank" rel="noopener" aria-label="YouTube" style="display:inline-flex;align-items:center;color:#bbb;text-decoration:none;transition:color .15s;" onmouseover="this.style.color='#FF0000'" onmouseout="this.style.color='#bbb'"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg></a>
+    <span class="footer-affiliate">Some links on this site are affiliate links — <a href="/disclosure.html">full disclosure →</a></span>
   </div>
 </footer>
 </body>

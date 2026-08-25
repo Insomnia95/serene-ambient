@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-DJE2HJVD6N"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-DJE2HJVD6N');
+</script>
+<meta charset="UTF-8">
+<link rel="icon" type="image/x-icon" href="/favicon.ico">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Contact &amp; Advertise — Calm Veritas</title>
+<meta name="description" content="Get in touch with Calm Veritas about advertising, partnerships, press, or anything else.">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+body { font-family:'Montserrat',sans-serif; background:#f5f5f3; color:#1a1a1a; -webkit-font-smoothing:antialiased; }
+#header { background:#111; padding:0 40px; }
+.header-top { display:flex; align-items:center; justify-content:space-between; padding:20px 0; border-bottom:1px solid rgba(255,255,255,.08); }
+.logo { text-decoration:none; display:flex; align-items:center; }
+.logo img { height:48px; display:block; }
+.header-nav { display:flex; gap:24px; align-items:center; }
+.header-nav a { font-size:12px; font-weight:400; letter-spacing:.08em; text-transform:uppercase; color:rgba(255,255,255,.5); text-decoration:none; transition:color .15s; }
+.header-nav a:hover, .header-nav a.active { color:#fff; }
+.page-hero { background:#111; padding:40px 40px 48px; border-bottom:1px solid rgba(255,255,255,.06); }
+.page-hero h1 { font-size:28px; font-weight:400; letter-spacing:-.01em; color:#fff; margin-bottom:8px; }
+.page-hero p { font-size:13px; font-weight:300; letter-spacing:.03em; color:rgba(255,255,255,.4); line-height:1.7; max-width:520px; }
+
+main { max-width:920px; margin:0 auto; padding:56px 40px 90px; display:grid; grid-template-columns:1fr 1.3fr; gap:56px; align-items:start; }
+
+.info-col .info-label { font-size:11px; font-weight:500; letter-spacing:.16em; text-transform:uppercase; color:#999; margin-bottom:16px; padding-bottom:10px; border-bottom:1px solid #e8e8e6; }
+.info-col p { font-size:13px; font-weight:300; color:#555; line-height:1.8; margin-bottom:20px; }
+.info-item { display:flex; gap:12px; padding:14px 0; border-top:1px solid #e8e8e6; }
+.info-item:first-of-type { border-top:none; }
+.info-icon { font-size:15px; flex-shrink:0; padding-top:1px; }
+.info-item-title { font-size:13px; font-weight:400; color:#1a1a1a; margin-bottom:3px; }
+.info-item-sub { font-size:12px; font-weight:300; color:#888; line-height:1.6; }
+
+form { background:#fff; border:1px solid #e8e8e6; padding:32px; }
+.field { margin-bottom:18px; }
+.field label { display:block; font-size:11px; font-weight:500; letter-spacing:.1em; text-transform:uppercase; color:#999; margin-bottom:8px; }
+.field input, .field select, .field textarea {
+  width:100%; padding:11px 13px; font-family:'Montserrat',sans-serif; font-size:13px; font-weight:400;
+  background:#f5f5f3; border:1px solid #e2e2df; color:#1a1a1a; outline:none; transition:border-color .15s;
+}
+.field input:focus, .field select:focus, .field textarea:focus { border-color:#1a1a1a; }
+.field textarea { resize:vertical; min-height:120px; line-height:1.6; }
+.field select { cursor:pointer; }
+.hp-field { position:absolute; left:-9999px; top:-9999px; }
+.submit-btn {
+  width:100%; padding:13px; font-family:'Montserrat',sans-serif; font-size:12px; font-weight:500; letter-spacing:.12em;
+  text-transform:uppercase; background:#1a1a1a; color:#fff; border:none; cursor:pointer; transition:background .15s;
+}
+.submit-btn:hover { background:#333; }
+.submit-btn:disabled { background:#999; cursor:not-allowed; }
+.form-msg { font-size:12px; font-weight:400; letter-spacing:.03em; margin-top:14px; display:none; line-height:1.6; }
+.form-msg.show { display:block; }
+.form-msg.ok { color:#2f6b3f; }
+.form-msg.err { color:#a33; }
+
+@media (max-width:760px) {
+  main { grid-template-columns:1fr; padding:36px 20px 60px; gap:36px; }
+  #header { padding:0 20px; }
+  .page-hero { padding:32px 20px; }
+}
+
+.burger { display:none; flex-direction:column; gap:5px; cursor:pointer; padding:4px; background:none; border:none; }
+.burger span { display:block; width:22px; height:2px; background:rgba(255,255,255,.7); transition:all .25s; }
+.burger.open span:nth-child(1) { transform:translateY(7px) rotate(45deg); }
+.burger.open span:nth-child(2) { opacity:0; }
+.burger.open span:nth-child(3) { transform:translateY(-7px) rotate(-45deg); }
+@media (max-width:680px) {
+  #header { padding:0 20px !important; }
+  .burger { display:flex; }
+  .header-nav { display:none; flex-direction:column; gap:0; position:absolute; top:100%; left:0; right:0; background:#111; border-top:1px solid rgba(255,255,255,.08); z-index:100; }
+  .header-nav.open { display:flex; }
+  .header-nav a { padding:14px 20px; border-bottom:1px solid rgba(255,255,255,.06); font-size:12px; letter-spacing:.1em; }
+  #header { position:relative; }
+}
+
+/* ── SITE FOOTER (shared) ──────────────── */
+#site-footer { background:#111; padding:48px 40px 0; }
+.footer-inner { max-width:1200px; margin:0 auto; display:grid; grid-template-columns:2fr 1fr 1fr; gap:40px; padding-bottom:36px; border-bottom:1px solid rgba(255,255,255,.08); }
+.footer-brand { padding-right:20px; }
+.footer-logo { font-size:13px; font-weight:500; letter-spacing:.2em; text-transform:uppercase; color:#fff; margin-bottom:14px; }
+.footer-blurb { font-size:12px; font-weight:300; line-height:1.75; color:rgba(255,255,255,.4); max-width:320px; margin-bottom:16px; }
+.footer-social { display:inline-flex; align-items:center; color:rgba(255,255,255,.4); transition:color .15s; }
+.footer-social:hover { color:#FF0000; }
+.footer-col-title { font-size:11px; font-weight:500; letter-spacing:.14em; text-transform:uppercase; color:rgba(255,255,255,.3); margin-bottom:14px; }
+.footer-col a { display:block; font-size:13px; font-weight:300; color:rgba(255,255,255,.55); text-decoration:none; margin-bottom:10px; transition:color .15s; }
+.footer-col a:hover { color:#fff; }
+.footer-bottom { max-width:1200px; margin:0 auto; padding:20px 0; display:flex; align-items:center; justify-content:space-between; gap:16px; flex-wrap:wrap; }
+.footer-bottom span { font-size:11px; font-weight:300; letter-spacing:.04em; color:rgba(255,255,255,.25); }
+.footer-affiliate a { color:rgba(255,255,255,.4); text-decoration:none; border-bottom:1px solid rgba(255,255,255,.15); }
+.footer-affiliate a:hover { color:rgba(255,255,255,.7); }
+@media (max-width:680px) {
+  #site-footer { padding:32px 20px 0; }
+  .footer-inner { grid-template-columns:1fr; gap:26px; padding-bottom:24px; }
+  .footer-brand { padding-right:0; }
+  .footer-bottom { flex-direction:column; align-items:flex-start; gap:8px; padding:16px 0 24px; }
+}
+</style>
+<link rel="canonical" href="https://www.calm-veritas.com/contact.html">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Contact &amp; Advertise — Calm Veritas">
+<meta property="og:description" content="Get in touch with Calm Veritas about advertising, partnerships, press, or anything else.">
+<meta property="og:url" content="https://www.calm-veritas.com/contact.html">
+<meta property="og:image" content="https://www.calm-veritas.com/og-image.jpg">
+<meta property="og:site_name" content="Calm Veritas">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Contact &amp; Advertise — Calm Veritas">
+<meta name="twitter:description" content="Get in touch with Calm Veritas about advertising, partnerships, press, or anything else.">
+<meta name="twitter:image" content="https://www.calm-veritas.com/og-image.jpg">
+</head>
+<body>
+
+<header id="header">
+  <div class="header-top">
+    <a class="logo" href="/"><img src="/logo-dark.png" alt="Calm Veritas" style="filter:invert(1);"></a>
+    <nav class="header-nav" id="hn">
+      <a href="/">Home</a>
+      <a href="/blog/">Blog</a>
+      <a href="/downloads/">Downloads</a>
+      <a href="/forum.html">Community</a>
+      <a href="/contact.html" class="active">Contact</a>
+    </nav>
+    <button class="burger" id="burger" aria-label="Menu" onclick="var n=document.getElementById('hn');var b=document.getElementById('burger');n.classList.toggle('open');b.classList.toggle('open');"><span></span><span></span><span></span></button>
+  </div>
+</header>
+
+<div class="page-hero">
+  <h1>Contact &amp; Advertise</h1>
+  <p>Advertising, partnerships, press, or anything else — tell us what's on your mind and we'll get back to you.</p>
+</div>
+
+<main>
+  <div class="info-col">
+    <div class="info-label">What we cover</div>
+    <div class="info-item">
+      <span class="info-icon">📣</span>
+      <div>
+        <div class="info-item-title">Advertising</div>
+        <div class="info-item-sub">Sponsorships, display placements, and newsletter mentions.</div>
+      </div>
+    </div>
+    <div class="info-item">
+      <span class="info-icon">🤝</span>
+      <div>
+        <div class="info-item-title">Partnerships</div>
+        <div class="info-item-sub">Affiliate, product, and content collaborations.</div>
+      </div>
+    </div>
+    <div class="info-item">
+      <span class="info-icon">📰</span>
+      <div>
+        <div class="info-item-title">Press</div>
+        <div class="info-item-sub">Interviews, citations, and media requests.</div>
+      </div>
+    </div>
+    <div class="info-item">
+      <span class="info-icon">✉️</span>
+      <div>
+        <div class="info-item-title">Everything else</div>
+        <div class="info-item-sub">Corrections, questions, or general feedback.</div>
+      </div>
+    </div>
+  </div>
+
+  <form id="contact-form" novalidate>
+    <div class="field">
+      <label for="cf-name">Name</label>
+      <input type="text" id="cf-name" name="name" autocomplete="name" required>
+    </div>
+    <div class="field">
+      <label for="cf-email">Email</label>
+      <input type="email" id="cf-email" name="email" autocomplete="email" required>
+    </div>
+    <div class="field">
+      <label for="cf-reason">Reason</label>
+      <select id="cf-reason" name="reason">
+        <option value="Advertising">Advertising</option>
+        <option value="Partnership">Partnership</option>
+        <option value="Press">Press</option>
+        <option value="General">General</option>
+      </select>
+    </div>
+    <div class="field">
+      <label for="cf-message">Message</label>
+      <textarea id="cf-message" name="message" required></textarea>
+    </div>
+    <!-- honeypot — hidden from real visitors, bots tend to fill every field -->
+    <div class="field hp-field" aria-hidden="true">
+      <label for="cf-company">Company</label>
+      <input type="text" id="cf-company" name="company" tabindex="-1" autocomplete="off">
+    </div>
+    <button class="submit-btn" type="submit" id="cf-submit">Send message</button>
+    <div class="form-msg" id="cf-msg"></div>
+  </form>
+</main>
+
+<footer id="site-footer">
+  <div class="footer-inner">
+    <div class="footer-col footer-brand">
+      <div class="footer-logo">Calm Veritas</div>
+      <p class="footer-blurb">Evidence-based writing on sleep, anxiety, focus, and stoic practice. No trends, no fluff — just what the research actually supports.</p>
+      <a class="footer-social" href="https://www.youtube.com/@Calm-Veritas" target="_blank" rel="noopener" aria-label="YouTube"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg></a>
+    </div>
+    <div class="footer-col">
+      <div class="footer-col-title">Explore</div>
+      <a href="/">Home</a>
+      <a href="/blog/">Blog</a>
+      <a href="/downloads/">Downloads</a>
+      <a href="/forum.html">Community</a>
+    </div>
+    <div class="footer-col">
+      <div class="footer-col-title">Company</div>
+      <a href="/contact.html">Contact &amp; Advertise</a>
+      <a href="/disclosure.html">Disclosure</a>
+      <a href="/privacy-policy.html">Privacy Policy</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2026 Calm Veritas · No fluff. Just truth.</span>
+    <span class="footer-affiliate">Some links on this site are affiliate links — <a href="/disclosure.html">full disclosure →</a></span>
+  </div>
+</footer>
+
+<script>
+document.getElementById('contact-form').addEventListener('submit', async function (e) {
+  e.preventDefault();
+  const form = e.target;
+  const btn = document.getElementById('cf-submit');
+  const msg = document.getElementById('cf-msg');
+  msg.className = 'form-msg';
+  msg.textContent = '';
+
+  const payload = {
+    name: form.name.value.trim(),
+    email: form.email.value.trim(),
+    reason: form.reason.value,
+    message: form.message.value.trim(),
+    company: form.company.value, // honeypot
+  };
+
+  if (!payload.name || !payload.email || !payload.message) {
+    msg.textContent = 'Please fill in your name, email, and message.';
+    msg.classList.add('show', 'err');
+    return;
+  }
+
+  btn.disabled = true;
+  btn.textContent = 'Sending…';
+
+  try {
+    const res = await fetch('/api/contact', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload),
+    });
+    const data = await res.json().catch(() => ({}));
+
+    if (res.ok) {
+      form.reset();
+      msg.textContent = "Thanks — your message is on its way. We'll get back to you soon.";
+      msg.classList.add('show', 'ok');
+    } else {
+      msg.textContent = data.error || 'Something went wrong. Please try again in a moment.';
+      msg.classList.add('show', 'err');
+    }
+  } catch (err) {
+    msg.textContent = 'Could not reach the server. Please check your connection and try again.';
+    msg.classList.add('show', 'err');
+  } finally {
+    btn.disabled = false;
+    btn.textContent = 'Send message';
+  }
+});
+</script>
+</body>
+</html>

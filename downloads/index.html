@@ -34,10 +34,12 @@ body { font-family:'Montserrat',sans-serif; background:#f5f5f3; color:#1a1a1a; -
 main { max-width:1100px; margin:0 auto; padding:48px 40px 80px; }
 .section-label { font-size:10px; font-weight:500; letter-spacing:.18em; text-transform:uppercase; color:#999; margin-bottom:20px; padding-bottom:10px; border-bottom:1px solid #e8e8e6; }
 .grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(300px,1fr)); gap:16px; margin-bottom:48px; }
-.card { background:#fff; border:1px solid #e8e8e6; display:flex; flex-direction:column; transition:box-shadow .15s, transform .15s; }
+.card { background:#fff; border:1px solid #e8e8e6; display:flex; flex-direction:column; overflow:hidden; transition:box-shadow .15s, transform .15s; }
 .card:hover { box-shadow:0 4px 20px rgba(0,0,0,.08); transform:translateY(-2px); }
+.card-img-wrap { aspect-ratio:4/3; overflow:hidden; background:#eceae6; }
+.card-img-wrap img { width:100%; height:100%; object-fit:cover; display:block; }
 .card-body { padding:24px 24px 18px; flex:1; }
-.card-type { font-size:9px; font-weight:500; letter-spacing:.16em; text-transform:uppercase; color:#bbb; margin-bottom:10px; }
+.card-type, .card-tag { font-size:9px; font-weight:500; letter-spacing:.16em; text-transform:uppercase; color:#bbb; margin-bottom:10px; }
 .card-type.guide { color:#888; }
 .card-title { font-size:16px; font-weight:400; letter-spacing:-.01em; color:#1a1a1a; line-height:1.35; margin-bottom:10px; }
 .card-desc { font-size:12px; font-weight:300; letter-spacing:.02em; color:#888; line-height:1.75; }
@@ -61,6 +63,28 @@ footer a { color:#888; text-decoration:none; margin:0 8px; }
   .header-nav.open { display:flex; }
   .header-nav a { padding:14px 20px; border-bottom:1px solid rgba(255,255,255,.06); font-size:12px; letter-spacing:.1em; }
   #header { position:relative; }
+}
+
+/* ── SITE FOOTER (shared) ──────────────── */
+#site-footer { background:#111; padding:48px 40px 0; }
+.footer-inner { max-width:1200px; margin:0 auto; display:grid; grid-template-columns:2fr 1fr 1fr; gap:40px; padding-bottom:36px; border-bottom:1px solid rgba(255,255,255,.08); }
+.footer-brand { padding-right:20px; }
+.footer-logo { font-size:13px; font-weight:500; letter-spacing:.2em; text-transform:uppercase; color:#fff; margin-bottom:14px; }
+.footer-blurb { font-size:12px; font-weight:300; line-height:1.75; color:rgba(255,255,255,.4); max-width:320px; margin-bottom:16px; }
+.footer-social { display:inline-flex; align-items:center; color:rgba(255,255,255,.4); transition:color .15s; }
+.footer-social:hover { color:#FF0000; }
+.footer-col-title { font-size:11px; font-weight:500; letter-spacing:.14em; text-transform:uppercase; color:rgba(255,255,255,.3); margin-bottom:14px; }
+.footer-col a { display:block; font-size:13px; font-weight:300; color:rgba(255,255,255,.55); text-decoration:none; margin-bottom:10px; transition:color .15s; }
+.footer-col a:hover { color:#fff; }
+.footer-bottom { max-width:1200px; margin:0 auto; padding:20px 0; display:flex; align-items:center; justify-content:space-between; gap:16px; flex-wrap:wrap; }
+.footer-bottom span { font-size:11px; font-weight:300; letter-spacing:.04em; color:rgba(255,255,255,.25); }
+.footer-affiliate a { color:rgba(255,255,255,.4); text-decoration:none; border-bottom:1px solid rgba(255,255,255,.15); }
+.footer-affiliate a:hover { color:rgba(255,255,255,.7); }
+@media (max-width:680px) {
+  #site-footer { padding:32px 20px 0; }
+  .footer-inner { grid-template-columns:1fr; gap:26px; padding-bottom:24px; }
+  .footer-brand { padding-right:0; }
+  .footer-bottom { flex-direction:column; align-items:flex-start; gap:8px; padding:16px 0 24px; }
 }
 </style>
 <link rel="canonical" href="https://www.calm-veritas.com/downloads/">
@@ -95,6 +119,7 @@ footer a { color:#888; text-decoration:none; margin:0 8px; }
       <a href="/blog/">Blog</a>
       <a href="/downloads/" class="active">Downloads</a>
       <a href="/forum.html">Community</a>
+      <a href="/contact.html">Contact</a>
     </nav>
     <button class="burger" id="burger" aria-label="Menu" onclick="var n=document.getElementById('hn');var b=document.getElementById('burger');n.classList.toggle('open');b.classList.toggle('open');"><span></span><span></span><span></span></button>
   </div>
@@ -396,6 +421,9 @@ footer a { color:#888; text-decoration:none; margin:0 8px; }
     </div>
 
     <div class="card">
+      <div class="card-img-wrap">
+        <img src="/images/pin-foam-rolling-recovery-guide.jpg" alt="Foam Rolling & Myofascial Release Guide" loading="lazy">
+      </div>
       <div class="card-body">
         <div class="card-type guide">Guide · Sport</div>
         <div class="card-title">Foam Rolling & Myofascial Release Guide</div>
@@ -408,6 +436,9 @@ footer a { color:#888; text-decoration:none; margin:0 8px; }
     </div>
 
     <div class="card">
+      <div class="card-img-wrap">
+        <img src="/images/pin-sleep-hygiene-checklist.jpg" alt="Sleep Hygiene Checklist" loading="lazy">
+      </div>
       <div class="card-body">
         <div class="card-type">Checklist · Sleep</div>
         <div class="card-title">Sleep Hygiene Checklist</div>
@@ -420,6 +451,9 @@ footer a { color:#888; text-decoration:none; margin:0 8px; }
     </div>
 
     <div class="card">
+      <div class="card-img-wrap">
+        <img src="/images/pin-anxiety-protocol.jpg" alt="Anxiety Reset Protocol" loading="lazy">
+      </div>
       <div class="card-body">
         <div class="card-type">Checklist · Anxiety</div>
         <div class="card-title">Anxiety Reset Protocol</div>
@@ -432,6 +466,9 @@ footer a { color:#888; text-decoration:none; margin:0 8px; }
     </div>
 
     <div class="card">
+      <div class="card-img-wrap">
+        <img src="/images/pin-cold-exposure-checklist.jpg" alt="Cold Exposure Protocol" loading="lazy">
+      </div>
       <div class="card-body">
         <div class="card-type">Checklist · Health</div>
         <div class="card-title">Cold Exposure Protocol</div>
@@ -444,6 +481,9 @@ footer a { color:#888; text-decoration:none; margin:0 8px; }
     </div>
 
     <div class="card">
+      <div class="card-img-wrap">
+        <img src="/images/pin-strength-training-checklist.jpg" alt="Strength Training Checklist" loading="lazy">
+      </div>
       <div class="card-body">
         <div class="card-type">Checklist · Sport</div>
         <div class="card-title">Strength Training Checklist</div>
@@ -456,6 +496,9 @@ footer a { color:#888; text-decoration:none; margin:0 8px; }
     </div>
 
     <div class="card">
+      <div class="card-img-wrap">
+        <img src="/images/pin-nap-protocol-guide.jpg" alt="Strategic Napping Protocol" loading="lazy">
+      </div>
       <div class="card-body">
         <div class="card-type">Checklist · Sleep</div>
         <div class="card-title">Strategic Napping Protocol</div>
@@ -533,6 +576,9 @@ footer a { color:#888; text-decoration:none; margin:0 8px; }
   <div class="grid">
 
     <div class="card">
+      <div class="card-img-wrap">
+        <img src="/images/pin-morning-stoic-journal.jpg" alt="Stoic Morning Journal" loading="lazy">
+      </div>
       <div class="card-body">
         <div class="card-type guide">Guide · Stoicism</div>
         <div class="card-title">Stoic Morning Journal</div>
@@ -545,6 +591,9 @@ footer a { color:#888; text-decoration:none; margin:0 8px; }
     </div>
 
     <div class="card">
+      <div class="card-img-wrap">
+        <img src="/images/pin-focus-deep-work-guide.jpg" alt="Deep Focus Protocol" loading="lazy">
+      </div>
       <div class="card-body">
         <div class="card-type guide">Guide · Focus</div>
         <div class="card-title">Deep Focus Protocol</div>
@@ -557,6 +606,9 @@ footer a { color:#888; text-decoration:none; margin:0 8px; }
     </div>
 
     <div class="card">
+      <div class="card-img-wrap">
+        <img src="/images/pin-supplement-stack-guide.jpg" alt="Evidence-Based Supplement Guide" loading="lazy">
+      </div>
       <div class="card-body">
         <div class="card-type guide">Guide · Health</div>
         <div class="card-title">Evidence-Based Supplement Guide</div>
@@ -569,6 +621,9 @@ footer a { color:#888; text-decoration:none; margin:0 8px; }
     </div>
 
     <div class="card">
+      <div class="card-img-wrap">
+        <img src="/images/pin-cortisol-reset-guide.jpg" alt="Cortisol Reset Guide" loading="lazy">
+      </div>
       <div class="card-body">
         <div class="card-type guide">Guide · Anxiety</div>
         <div class="card-title">Cortisol Reset Guide</div>
@@ -581,6 +636,9 @@ footer a { color:#888; text-decoration:none; margin:0 8px; }
     </div>
 
     <div class="card">
+      <div class="card-img-wrap">
+        <img src="/images/pin-hrv-recovery-guide.jpg" alt="HRV-Based Recovery Guide" loading="lazy">
+      </div>
       <div class="card-body">
         <div class="card-type guide">Guide · Sport</div>
         <div class="card-title">HRV-Based Recovery Guide</div>
@@ -593,6 +651,9 @@ footer a { color:#888; text-decoration:none; margin:0 8px; }
     </div>
 
     <div class="card">
+      <div class="card-img-wrap">
+        <img src="/images/pin-mindfulness-meditation-guide.jpg" alt="Mindfulness Meditation Protocol" loading="lazy">
+      </div>
       <div class="card-body">
         <div class="card-type guide">Guide · Anxiety</div>
         <div class="card-title">Mindfulness Meditation Protocol</div>
@@ -605,6 +666,9 @@ footer a { color:#888; text-decoration:none; margin:0 8px; }
     </div>
 
     <div class="card">
+      <div class="card-img-wrap">
+        <img src="/images/pin-anti-inflammatory-nutrition-guide.jpg" alt="Anti-Inflammatory Nutrition Guide" loading="lazy">
+      </div>
       <div class="card-body">
         <div class="card-type guide">Guide · Health</div>
         <div class="card-title">Anti-Inflammatory Nutrition Guide</div>
@@ -617,6 +681,9 @@ footer a { color:#888; text-decoration:none; margin:0 8px; }
     </div>
 
     <div class="card">
+      <div class="card-img-wrap">
+        <img src="/images/pin-sleep-debt-recovery-guide.jpg" alt="Sleep Debt Recovery Guide" loading="lazy">
+      </div>
       <div class="card-body">
         <div class="card-type guide">Guide · Sleep</div>
         <div class="card-title">Sleep Debt Recovery Guide</div>
@@ -629,6 +696,9 @@ footer a { color:#888; text-decoration:none; margin:0 8px; }
     </div>
 
     <div class="card">
+      <div class="card-img-wrap">
+        <img src="/images/pin-endurance-training-nutrition-guide.jpg" alt="Endurance Athlete Nutrition Guide" loading="lazy">
+      </div>
       <div class="card-body">
         <div class="card-type guide">Guide · Sport</div>
         <div class="card-title">Endurance Athlete Nutrition Guide</div>
@@ -641,6 +711,9 @@ footer a { color:#888; text-decoration:none; margin:0 8px; }
     </div>
 
     <div class="card">
+      <div class="card-img-wrap">
+        <img src="/images/pin-weekly-stress-reset-checklist.jpg" alt="Weekly Stress Reset Checklist" loading="lazy">
+      </div>
       <div class="card-body">
         <div class="card-type guide">Checklist · Anxiety</div>
         <div class="card-title">Weekly Stress Reset Checklist</div>
@@ -653,6 +726,9 @@ footer a { color:#888; text-decoration:none; margin:0 8px; }
     </div>
 
     <div class="card">
+      <div class="card-img-wrap">
+        <img src="/images/pin-zone-2-training-checklist.jpg" alt="Zone 2 Training Weekly Tracker" loading="lazy">
+      </div>
       <div class="card-body">
         <div class="card-type guide">Guide · Sport</div>
         <div class="card-title">Zone 2 Training Weekly Tracker</div>
@@ -665,6 +741,9 @@ footer a { color:#888; text-decoration:none; margin:0 8px; }
     </div>
 
     <div class="card">
+      <div class="card-img-wrap">
+        <img src="/images/pin-melatonin-timing-guide.jpg" alt="Melatonin Timing & Dosing Guide" loading="lazy">
+      </div>
       <div class="card-body">
         <div class="card-type guide">Guide · Sleep</div>
         <div class="card-title">Melatonin Timing & Dosing Guide</div>
@@ -677,6 +756,9 @@ footer a { color:#888; text-decoration:none; margin:0 8px; }
     </div>
 
     <div class="card">
+      <div class="card-img-wrap">
+        <img src="/images/pin-intermittent-fasting-protocol.jpg" alt="Intermittent Fasting Protocol" loading="lazy">
+      </div>
       <div class="card-body">
         <div class="card-type guide">Guide · Health</div>
         <div class="card-title">Intermittent Fasting Protocol</div>
@@ -689,6 +771,9 @@ footer a { color:#888; text-decoration:none; margin:0 8px; }
     </div>
 
     <div class="card">
+      <div class="card-img-wrap">
+        <img src="/images/pin-gut-health-reset-checklist.jpg" alt="Gut Health Reset Protocol" loading="lazy">
+      </div>
       <div class="card-body">
         <div class="card-type guide">Guide · Health</div>
         <div class="card-title">Gut Health Reset Protocol</div>
@@ -701,6 +786,9 @@ footer a { color:#888; text-decoration:none; margin:0 8px; }
     </div>
 
     <div class="card">
+      <div class="card-img-wrap">
+        <img src="/images/pin-hydration-performance-guide.jpg" alt="Hydration &amp; Performance Guide" loading="lazy">
+      </div>
       <div class="card-body">
         <div class="card-type guide">Guide · Health</div>
         <div class="card-title">Hydration &amp; Performance Guide</div>
@@ -713,6 +801,9 @@ footer a { color:#888; text-decoration:none; margin:0 8px; }
     </div>
 
     <div class="card">
+      <div class="card-img-wrap">
+        <img src="/images/pin-walking-protocol-guide.jpg" alt="Walking for Mental Health: Daily Protocol" loading="lazy">
+      </div>
       <div class="card-body">
         <div class="card-type guide">Guide · Sport</div>
         <div class="card-title">Walking for Mental Health: Daily Protocol</div>
@@ -725,6 +816,9 @@ footer a { color:#888; text-decoration:none; margin:0 8px; }
     </div>
 
     <div class="card">
+      <div class="card-img-wrap">
+        <img src="/images/pin-mobility-flexibility-guide.jpg" alt="Mobility &amp; Flexibility Protocol Guide" loading="lazy">
+      </div>
       <div class="card-body">
         <div class="card-type guide">Guide · Sport</div>
         <div class="card-title">Mobility &amp; Flexibility Protocol Guide</div>
@@ -737,6 +831,9 @@ footer a { color:#888; text-decoration:none; margin:0 8px; }
     </div>
 
     <div class="card">
+      <div class="card-img-wrap">
+        <img src="/images/pin-pre-sleep-routine-checklist.jpg" alt="Pre-Sleep Routine Checklist" loading="lazy">
+      </div>
       <div class="card-body">
         <div class="card-type guide">Checklist · Sleep</div>
         <div class="card-title">Pre-Sleep Routine Checklist</div>
@@ -764,6 +861,9 @@ footer a { color:#888; text-decoration:none; margin:0 8px; }
     </div>
 
     <div class="card">
+      <div class="card-img-wrap">
+        <img src="/images/pin-stoic-evening-review-checklist.jpg" alt="Stoic Evening Review Checklist" loading="lazy">
+      </div>
       <div class="card-body">
         <div class="card-type guide">Checklist · Stoicism</div>
         <div class="card-title">Stoic Evening Review Checklist</div>
@@ -776,6 +876,9 @@ footer a { color:#888; text-decoration:none; margin:0 8px; }
     </div>
 
     <div class="card">
+      <div class="card-img-wrap">
+        <img src="/images/pin-breathwork-anxiety-protocol.jpg" alt="Breathwork Protocol for Anxiety" loading="lazy">
+      </div>
       <div class="card-body">
         <div class="card-type guide">Guide · Anxiety</div>
         <div class="card-title">Breathwork Protocol for Anxiety</div>
@@ -788,6 +891,9 @@ footer a { color:#888; text-decoration:none; margin:0 8px; }
     </div>
 
     <div class="card">
+      <div class="card-img-wrap">
+        <img src="/images/pin-caffeine-optimization-guide.jpg" alt="Caffeine Optimization Guide" loading="lazy">
+      </div>
       <div class="card-body">
         <div class="card-type guide">Guide · Health / Focus</div>
         <div class="card-title">Caffeine Optimization Guide</div>
@@ -891,6 +997,9 @@ footer a { color:#888; text-decoration:none; margin:0 8px; }
 
 
     <div class="card">
+      <div class="card-img-wrap">
+        <img src="/images/pin-testosterone-optimization-guide.jpg" alt="Natural Testosterone Optimization Protocol" loading="lazy">
+      </div>
       <div class="card-body">
         <div class="card-type guide">Guide · Health / Sport</div>
         <div class="card-title">Natural Testosterone Optimization Protocol</div>
@@ -903,6 +1012,9 @@ footer a { color:#888; text-decoration:none; margin:0 8px; }
     </div>
 
     <div class="card">
+      <div class="card-img-wrap">
+        <img src="/images/pin-protein-timing-guide.jpg" alt="Protein Timing Guide" loading="lazy">
+      </div>
       <div class="card-body">
         <div class="card-type guide">Guide · Sport / Health</div>
         <div class="card-title">Protein Timing Guide</div>
@@ -915,6 +1027,9 @@ footer a { color:#888; text-decoration:none; margin:0 8px; }
     </div>
 
     <div class="card">
+      <div class="card-img-wrap">
+        <img src="/images/pin-blue-light-sleep-guide.jpg" alt="Blue Light &amp; Sleep Guide" loading="lazy">
+      </div>
       <div class="card-body">
         <div class="card-type guide">Guide · Sleep</div>
         <div class="card-title">Blue Light &amp; Sleep Guide</div>
@@ -927,6 +1042,9 @@ footer a { color:#888; text-decoration:none; margin:0 8px; }
     </div>
 
     <div class="card">
+      <div class="card-img-wrap">
+        <img src="/images/pin-plant-based-protein-guide.jpg" alt="Plant-Based Protein Guide" loading="lazy">
+      </div>
       <div class="card-body">
         <div class="card-type guide">Guide · Sport</div>
         <div class="card-title">Plant-Based Protein Guide</div>
@@ -939,6 +1057,9 @@ footer a { color:#888; text-decoration:none; margin:0 8px; }
     </div>
 
     <div class="card">
+      <div class="card-img-wrap">
+        <img src="/images/pin-digital-detox-sleep-guide.jpg" alt="Digital Detox &amp; Sleep Reset Guide" loading="lazy">
+      </div>
       <div class="card-body">
         <div class="card-type guide">Guide · Sleep</div>
         <div class="card-title">Digital Detox &amp; Sleep Reset Guide</div>
@@ -951,6 +1072,9 @@ footer a { color:#888; text-decoration:none; margin:0 8px; }
     </div>
 
     <div class="card">
+      <div class="card-img-wrap">
+        <img src="/images/pin-digital-minimalism-checklist.jpg" alt="Digital Minimalism Reset: 7-Day Checklist" loading="lazy">
+      </div>
       <div class="card-body">
         <div class="card-type guide">Guide · Focus</div>
         <div class="card-title">Digital Minimalism Reset: 7-Day Checklist</div>
@@ -1191,9 +1315,31 @@ footer a { color:#888; text-decoration:none; margin:0 8px; }
 
 </main>
 
-<footer>
-  <a href="/">Home</a> · <a href="/blog/">Blog</a> · <a href="/forum.html">Community</a> · <a href="/disclosure.html">Disclosure</a> · <a href="/privacy-policy.html">Privacy</a>
-  <div style="margin-top:12px;display:flex;align-items:center;justify-content:center;gap:16px;"><span>© 2026 Calm Veritas · No fluff. Just truth.</span><a href="https://www.youtube.com/@Calm-Veritas" target="_blank" rel="noopener" aria-label="YouTube" style="display:inline-flex;align-items:center;color:#bbb;text-decoration:none;transition:color .15s;" onmouseover="this.style.color='#FF0000'" onmouseout="this.style.color='#bbb'"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg></a></div>
+<footer id="site-footer">
+  <div class="footer-inner">
+    <div class="footer-col footer-brand">
+      <div class="footer-logo">Calm Veritas</div>
+      <p class="footer-blurb">Evidence-based writing on sleep, anxiety, focus, and stoic practice. No trends, no fluff — just what the research actually supports.</p>
+      <a class="footer-social" href="https://www.youtube.com/@Calm-Veritas" target="_blank" rel="noopener" aria-label="YouTube"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg></a>
+    </div>
+    <div class="footer-col">
+      <div class="footer-col-title">Explore</div>
+      <a href="/">Home</a>
+      <a href="/blog/">Blog</a>
+      <a href="/downloads/">Downloads</a>
+      <a href="/forum.html">Community</a>
+    </div>
+    <div class="footer-col">
+      <div class="footer-col-title">Company</div>
+      <a href="/contact.html">Contact &amp; Advertise</a>
+      <a href="/disclosure.html">Disclosure</a>
+      <a href="/privacy-policy.html">Privacy Policy</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2026 Calm Veritas · No fluff. Just truth.</span>
+    <span class="footer-affiliate">Some links on this site are affiliate links — <a href="/disclosure.html">full disclosure →</a></span>
+  </div>
 </footer>
 </body>
 </html>
