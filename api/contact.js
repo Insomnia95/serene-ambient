@@ -16,7 +16,7 @@
 //    like "Calm Veritas <contact@calm-veritas.com>" for better deliverability/branding.
 // ─────────────────────────────────────────────────────────────────────────
 
-const TO_ADDRESS = 'annacranberry66@gmail.com';
+const TO_ADDRESS = 'calmveritas@gmail.com';
 const FROM_ADDRESS = 'Calm Veritas <onboarding@resend.dev>';
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
