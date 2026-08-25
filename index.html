@@ -716,19 +716,51 @@ function observeFadeIns() {
 }
 
 /* ── EMAIL ── */
+async function submitSubscribe({ email, btn, msg, successText, defaultText, defaultColor }) {
+  if (!email) return;
+  const originalBtnText = btn ? btn.textContent : null;
+  if (btn) { btn.disabled = true; btn.textContent = '…'; }
+  msg.textContent = 'Subscribing…';
+  msg.style.color = 'rgba(255,255,255,.6)';
+  try {
+    const res = await fetch('/api/subscribe', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email }),
+    });
+    const data = await res.json().catch(() => ({}));
+    if (res.ok && data.ok) {
+      msg.textContent = successText;
+      msg.style.color = 'rgba(255,255,255,.6)';
+    } else {
+      msg.textContent = data.error || 'Could not subscribe right now. Please try again later.';
+      msg.style.color = '#ff9a9a';
+    }
+  } catch (err) {
+    msg.textContent = 'Could not subscribe right now. Please try again later.';
+    msg.style.color = '#ff9a9a';
+  } finally {
+    if (btn) { btn.disabled = false; btn.textContent = originalBtnText; }
+  }
+}
+
 function handleSub(e) {
   e.preventDefault();
-  document.getElementById('sb-input').value = '';
+  const input = document.getElementById('sb-input');
+  const email = input.value.trim();
+  const btn = e.target.querySelector('button[type="submit"]');
   const msg = document.getElementById('sb-msg');
-  msg.textContent = '✓ You\'re in — first issue coming soon.';
-  msg.style.color = 'rgba(255,255,255,.6)';
+  submitSubscribe({ email, btn, msg, successText: '✓ You\'re in — first issue coming soon.' });
+  input.value = '';
 }
 function handleSubFull(e) {
   e.preventDefault();
-  document.getElementById('full-input').value = '';
+  const input = document.getElementById('full-input');
+  const email = input.value.trim();
+  const btn = e.target.querySelector('button[type="submit"]');
   const msg = document.getElementById('full-msg');
-  msg.textContent = '✓ Subscribed. First issue on its way.';
-  msg.style.color = 'rgba(255,255,255,.5)';
+  submitSubscribe({ email, btn, msg, successText: '✓ Subscribed. First issue on its way.' });
+  input.value = '';
 }
 
 /* ── INIT ── */
