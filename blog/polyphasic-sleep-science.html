@@ -94,6 +94,17 @@ footer a { color:#888; text-decoration:none; margin:0 8px; }
   .footer-brand { padding-right:0; }
   .footer-bottom { flex-direction:column; align-items:flex-start; gap:8px; padding:16px 0 24px; }
 }
+
+/* ── NAV SEARCH ─────────────────────────── */
+.nav-search { display:flex; align-items:center; position:relative; }
+.nav-search input { background:rgba(255,255,255,.08); border:1px solid rgba(255,255,255,.16); border-radius:20px; padding:6px 12px 6px 30px; font-family:'Montserrat',sans-serif; font-size:11px; font-weight:300; letter-spacing:.02em; color:#fff; width:110px; transition:width .2s ease, background .2s ease; }
+.nav-search input::placeholder { color:rgba(255,255,255,.35); }
+.nav-search input:focus { width:160px; background:rgba(255,255,255,.13); outline:none; border-color:rgba(255,255,255,.32); }
+.nav-search svg { position:absolute; left:10px; width:12px; height:12px; pointer-events:none; }
+@media (max-width:680px) {
+  .header-nav .nav-search { padding:14px 20px; }
+  .header-nav .nav-search input { width:100%; }
+}
 </style>
 <link rel="canonical" href="https://www.calm-veritas.com/blog/polyphasic-sleep-science">
 <meta property="og:type" content="article">
@@ -142,6 +153,10 @@ footer a { color:#888; text-decoration:none; margin:0 8px; }
       <a href="/downloads/">Downloads</a>
       <a href="/forum.html">Community</a>
       <a href="/contact.html">Contact</a>
+          <form class="nav-search" action="/blog/" method="get">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,.4)" stroke-width="2.4" stroke-linecap="round"><circle cx="11" cy="11" r="7"></circle><line x1="21" y1="21" x2="16.2" y2="16.2"></line></svg>
+        <input type="text" name="q" placeholder="Search" autocomplete="off">
+      </form>
     </nav>
     <button class="burger" id="burger" aria-label="Menu" onclick="var n=document.getElementById('hn');var b=document.getElementById('burger');n.classList.toggle('open');b.classList.toggle('open');"><span></span><span></span><span></span></button>
   </div>

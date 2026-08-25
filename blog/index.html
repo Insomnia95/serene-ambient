@@ -62,6 +62,21 @@ body { font-family:'Montserrat',sans-serif; background:#f5f5f3; color:#1a1a1a; -
   font-size:11px; font-weight:600; letter-spacing:.18em;
   text-transform:uppercase; color:#444; margin-bottom:20px;
 }
+.clear-search { text-transform:none; letter-spacing:0; font-weight:400; color:#999; text-decoration:none; border-bottom:1px solid #ccc; }
+.clear-search:hover { color:#1a1a1a; border-color:#1a1a1a; }
+.no-results { font-size:13px; font-weight:300; color:#666; padding:40px 0; }
+.no-results a { color:#1a1a1a; border-bottom:1px solid #ccc; text-decoration:none; }
+
+/* ── NAV SEARCH ─────────────────────────── */
+.nav-search { display:flex; align-items:center; position:relative; }
+.nav-search input { background:rgba(255,255,255,.08); border:1px solid rgba(255,255,255,.16); border-radius:20px; padding:6px 12px 6px 30px; font-family:'Montserrat',sans-serif; font-size:11px; font-weight:300; letter-spacing:.02em; color:#fff; width:110px; transition:width .2s ease, background .2s ease; }
+.nav-search input::placeholder { color:rgba(255,255,255,.35); }
+.nav-search input:focus { width:160px; background:rgba(255,255,255,.13); outline:none; border-color:rgba(255,255,255,.32); }
+.nav-search svg { position:absolute; left:10px; width:12px; height:12px; pointer-events:none; }
+@media (max-width:680px) {
+  .header-nav .nav-search { padding:14px 20px; }
+  .header-nav .nav-search input { width:100%; }
+}
 
 /* ── ARTICLE CARDS ──────────────────────── */
 .articles-grid {
@@ -212,6 +227,10 @@ footer a { color:#888; text-decoration:none; margin:0 8px; }
       <a href="/downloads/">Downloads</a>
       <a href="/forum.html">Community</a>
       <a href="/contact.html">Contact</a>
+      <form class="nav-search" action="/blog/" method="get">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,.4)" stroke-width="2.4" stroke-linecap="round"><circle cx="11" cy="11" r="7"></circle><line x1="21" y1="21" x2="16.2" y2="16.2"></line></svg>
+        <input type="text" name="q" placeholder="Search" autocomplete="off">
+      </form>
     </nav>
     <button class="burger" id="burger" aria-label="Menu" onclick="var n=document.getElementById('hn');var b=document.getElementById('burger');n.classList.toggle('open');b.classList.toggle('open');"><span></span><span></span><span></span></button>
   </div>
@@ -273,27 +292,53 @@ const ALL_BLOG_ITEMS = ARTICLES.concat(CHECKLISTS.map(c => ({
 const LABELS = { all:'All articles', sleep:'Sleep', anxiety:'Anxiety', focus:'Focus', stoicism:'Stoicism', health:'Health', books:'Books', sport:'Sport', checklists:'Downloads' };
 let currentCat = 'all';
 
-function renderArticles(cat) {
+function articleCardHTML(a) {
+  return `
+    ${a.img ? `<img class="card-thumb" src="${a.img}" alt="${a.title}" loading="lazy">` : ''}
+    <div>
+      ${a.badge ? `<span class="article-badge">${a.badge.toUpperCase()}</span>` : ''}
+      <span class="article-tag">${a.tag}${a.featured ? ' · Featured' : ''}</span>
+      <div class="article-title">${a.title}</div>
+      <div class="article-excerpt">${a.excerpt}</div>
+      <div class="article-meta"><span>${a.date}</span><span>${a.readTime}</span></div>
+    </div>
+    ${!a.featured ? '<span class="article-arrow">→</span>' : ''}`;
+}
+
+function renderItems(items) {
   const grid = document.getElementById('articles-grid');
-  const filtered = cat === 'all' ? ALL_BLOG_ITEMS : ALL_BLOG_ITEMS.filter(a => a.cat === cat);
-  document.getElementById('section-label').textContent = LABELS[cat] || 'All articles';
   grid.innerHTML = '';
-  filtered.forEach(a => {
+  items.forEach(a => {
     const card = document.createElement('a');
     card.className = 'article-card' + (a.featured ? ' featured' : '') + (!a.img ? ' no-img' : '');
     card.href = a.href;
-    card.innerHTML = `
-      ${a.img ? `<img class="card-thumb" src="${a.img}" alt="${a.title}" loading="lazy">` : ''}
-      <div>
-        ${a.badge ? `<span class="article-badge">${a.badge.toUpperCase()}</span>` : ''}
-        <span class="article-tag">${a.tag}${a.featured ? ' · Featured' : ''}</span>
-        <div class="article-title">${a.title}</div>
-        <div class="article-excerpt">${a.excerpt}</div>
-        <div class="article-meta"><span>${a.date}</span><span>${a.readTime}</span></div>
-      </div>
-      ${!a.featured ? '<span class="article-arrow">→</span>' : ''}`;
+    card.innerHTML = articleCardHTML(a);
     grid.appendChild(card);
   });
+}
+
+function renderArticles(cat) {
+  const filtered = cat === 'all' ? ALL_BLOG_ITEMS : ALL_BLOG_ITEMS.filter(a => a.cat === cat);
+  document.getElementById('section-label').textContent = LABELS[cat] || 'All articles';
+  renderItems(filtered);
+}
+
+function renderSearchResults(query) {
+  const q = query.toLowerCase();
+  const filtered = ALL_BLOG_ITEMS.filter(a =>
+    a.title.toLowerCase().includes(q) ||
+    a.excerpt.toLowerCase().includes(q) ||
+    (a.tag && a.tag.toLowerCase().includes(q))
+  );
+  document.querySelector('.filter-bar').style.display = 'none';
+  const label = document.getElementById('section-label');
+  label.innerHTML = `${filtered.length} result${filtered.length === 1 ? '' : 's'} for &ldquo;${query.replace(/</g,'&lt;')}&rdquo; &nbsp;<a href="/blog/" class="clear-search">Clear search ✕</a>`;
+  const grid = document.getElementById('articles-grid');
+  if (!filtered.length) {
+    grid.innerHTML = '<div class="no-results">No articles match that search. Try a different term, or <a href="/blog/">browse everything</a>.</div>';
+    return;
+  }
+  renderItems(filtered);
 }
 
 document.querySelectorAll('.filter-tab').forEach(btn => {
@@ -305,9 +350,17 @@ document.querySelectorAll('.filter-tab').forEach(btn => {
   });
 });
 
-const hash = window.location.hash.replace('#','');
-if (hash && LABELS[hash]) { currentCat = hash; document.querySelectorAll('.filter-tab').forEach(b => b.classList.toggle('active', b.dataset.cat === hash)); }
-renderArticles(currentCat);
+const searchParams = new URLSearchParams(window.location.search);
+const searchQuery = (searchParams.get('q') || '').trim();
+
+if (searchQuery) {
+  renderSearchResults(searchQuery);
+  document.querySelectorAll('.nav-search input').forEach(el => { el.value = searchQuery; });
+} else {
+  const hash = window.location.hash.replace('#','');
+  if (hash && LABELS[hash]) { currentCat = hash; document.querySelectorAll('.filter-tab').forEach(b => b.classList.toggle('active', b.dataset.cat === hash)); }
+  renderArticles(currentCat);
+}
 </script>
 </body>
 </html>
