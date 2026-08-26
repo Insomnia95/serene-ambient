@@ -19,7 +19,9 @@
 <title>Calm Veritas — Evidence-Based Wellness</title>
 <meta name="description" content="Evidence-based writing on sleep, anxiety, focus, and stoic practice. Actionable guides backed by science, not trends. Free checklists and a weekly newsletter.">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>◎</text></svg>">
-<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600&display=optional" rel="stylesheet">
 <style>
 *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
 html { scroll-behavior:smooth; }
@@ -636,7 +638,7 @@ function renderHero(a) {
   if (!a) { slot.innerHTML = ''; return; }
   slot.innerHTML = `
     <a class="hero-card fade-in" href="${a.href}">
-      ${a.img ? `<img src="${a.img}" alt="${a.title}" loading="lazy">` : ''}
+      ${a.img ? `<img src="${a.img}" alt="${a.title}" fetchpriority="high">` : ''}
       <div class="hero-overlay">
         <span class="hero-tag">${a.tag} · Featured</span>
         <div class="hero-title">${a.title}</div>
