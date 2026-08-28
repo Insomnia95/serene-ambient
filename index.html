@@ -155,6 +155,11 @@ body {
   font-size:9px; font-weight:500; letter-spacing:.1em; text-transform:uppercase;
   background:#1a1a1a; color:#fff; padding:5px 9px;
 }
+.sponsored-flag {
+  position:absolute; top:10px; right:10px; display:flex; align-items:center; gap:5px;
+  font-size:9px; font-weight:500; letter-spacing:.1em; text-transform:uppercase;
+  background:rgba(255,255,255,.92); color:#555; padding:5px 9px;
+}
 .article-card-body { padding:18px 18px 16px; flex:1; display:flex; flex-direction:column; }
 .article-tag {
   font-size:11px; font-weight:500; letter-spacing:.14em;
@@ -618,11 +623,12 @@ const SECTION_SIZE = 3; // cards shown per topic on the "All topics" gallery vie
 
 function articleCardHTML(a) {
   const premiumFlag = a.premium ? '<span class="premium-flag">🔒 Premium</span>' : '';
+  const sponsoredFlag = a.sponsored ? '<span class="sponsored-flag">Sponsored</span>' : '';
   return `
     <a class="article-card fade-in${!a.img ? ' no-img' : ''}" href="${a.href}" data-topic="${a.cat}">
       <div class="article-thumb-wrap">
         ${a.img ? `<img src="${a.img}" alt="${a.title}" loading="lazy">` : ''}
-        ${premiumFlag}
+        ${premiumFlag}${sponsoredFlag}
       </div>
       <div class="article-card-body">
         <span class="article-tag">${a.tag}</span>
@@ -636,11 +642,12 @@ function articleCardHTML(a) {
 function renderHero(a) {
   const slot = document.getElementById('hero-slot');
   if (!a) { slot.innerHTML = ''; return; }
+  const featuredLabel = a.sponsored ? 'Sponsored' : 'Featured';
   slot.innerHTML = `
     <a class="hero-card fade-in" href="${a.href}">
       ${a.img ? `<img src="${a.img}" alt="${a.title}" fetchpriority="high">` : ''}
       <div class="hero-overlay">
-        <span class="hero-tag">${a.tag} · Featured</span>
+        <span class="hero-tag">${a.tag} · ${featuredLabel}</span>
         <div class="hero-title">${a.title}</div>
         <div class="hero-excerpt">${a.excerpt}</div>
         <div class="hero-meta"><span>${a.date}</span><span>${a.readTime}</span></div>
@@ -648,16 +655,26 @@ function renderHero(a) {
     </a>`;
 }
 
+// An article is "pinned" while its pinnedUntil date is still in the future.
+// No cron/expiry job needed — this is just a date comparison done at render
+// time, so a pin quietly expires on its own and the site falls back to the
+// normal newest-article hero.
+function getPinnedArticle() {
+  const now = Date.now();
+  return ARTICLES.find(a => a.pinnedUntil && new Date(a.pinnedUntil).getTime() > now) || null;
+}
+
 function renderHomepageArticles(topic) {
   const gallery = document.getElementById('gallery');
   gallery.innerHTML = '';
+  const pinned = getPinnedArticle();
 
   if (topic === 'all') {
-    // Gallery view: hero + one horizontal section per topic
-    // Hero always shows the newest article (by date), so the daily
-    // content-engine's latest post surfaces automatically — regardless
-    // of insertion order or the (legacy) `featured` flag.
-    const heroSource = ARTICLES.reduce((newest, a) => {
+    // Gallery view: hero + one horizontal section per topic.
+    // Hero shows the pinned article if one is active, otherwise the
+    // newest article (by date) — so the daily content-engine's latest
+    // post surfaces automatically when nothing is pinned.
+    const heroSource = pinned || ARTICLES.reduce((newest, a) => {
       const t = new Date(a.date).getTime() || 0;
       const bestT = newest ? (new Date(newest.date).getTime() || 0) : -1;
       return t >= bestT ? a : newest;
@@ -665,8 +682,13 @@ function renderHomepageArticles(topic) {
     renderHero(heroSource);
 
     TOPIC_ORDER.forEach(cat => {
-      const items = ARTICLES.filter(a => a.cat === cat);
+      let items = ARTICLES.filter(a => a.cat === cat);
       if (!items.length) return;
+      // While a pin is active, float it to the front of its own topic's
+      // card row too (in addition to the hero banner above).
+      if (pinned && pinned.cat === cat) {
+        items = [pinned, ...items.filter(a => a.id !== pinned.id)];
+      }
       const section = document.createElement('div');
       section.className = 'topic-section';
       section.innerHTML = `

@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>Calm Veritas — Admin</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600&display=optional" rel="stylesheet">
+<style>
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+body { font-family:'Montserrat',sans-serif; background:#f5f5f3; color:#1a1a1a; -webkit-font-smoothing:antialiased; font-size:14px; }
+a { color:inherit; }
+.wrap { max-width:1000px; margin:0 auto; padding:40px 24px 100px; }
+h1 { font-size:20px; font-weight:500; letter-spacing:-.01em; margin-bottom:4px; }
+.sub { font-size:12px; color:#999; margin-bottom:32px; }
+h2 { font-size:14px; font-weight:500; letter-spacing:.02em; margin:36px 0 14px; text-transform:uppercase; color:#555; }
+label { display:block; font-size:11px; font-weight:500; letter-spacing:.06em; text-transform:uppercase; color:#888; margin-bottom:6px; }
+input[type=text], input[type=password], input[type=number], input[type=url], textarea, select {
+  width:100%; font-family:'Montserrat',sans-serif; font-size:13px; font-weight:400; color:#1a1a1a;
+  background:#fff; border:1px solid #ddd; padding:10px 12px; margin-bottom:16px;
+}
+textarea { resize:vertical; min-height:100px; line-height:1.6; }
+.row { display:flex; gap:16px; }
+.row > div { flex:1; }
+button { font-family:'Montserrat',sans-serif; font-size:12px; font-weight:500; letter-spacing:.04em; text-transform:uppercase;
+  background:#1a1a1a; color:#fff; border:1px solid #1a1a1a; padding:10px 18px; cursor:pointer; }
+button.secondary { background:#fff; color:#1a1a1a; }
+button.danger { background:#fff; color:#a33; border-color:#c99; }
+button:disabled { opacity:.5; cursor:default; }
+button:hover:not(:disabled) { opacity:.85; }
+.btn-row { display:flex; gap:10px; flex-wrap:wrap; margin-top:8px; }
+table { width:100%; border-collapse:collapse; font-size:12px; margin-bottom:8px; }
+th, td { text-align:left; padding:9px 10px; border-bottom:1px solid #e8e8e6; vertical-align:top; }
+th { font-size:10px; text-transform:uppercase; letter-spacing:.06em; color:#999; font-weight:500; }
+.pin-badge { background:#1a1a1a; color:#fff; font-size:9px; padding:3px 7px; letter-spacing:.05em; text-transform:uppercase; }
+.spon-badge { background:#eee; color:#555; font-size:9px; padding:3px 7px; letter-spacing:.05em; text-transform:uppercase; margin-left:4px; }
+.small { font-size:11px; color:#999; }
+.msg { font-size:12px; padding:10px 12px; margin-bottom:16px; border:1px solid #ddd; }
+.msg.err { border-color:#c99; color:#a33; background:#fdf2f2; }
+.msg.ok { border-color:#9c9; color:#3a3; background:#f2fdf4; }
+.card { background:#fff; border:1px solid #e8e8e6; padding:24px; margin-bottom:20px; }
+.product-row { display:flex; gap:8px; margin-bottom:8px; align-items:flex-start; }
+.product-row input { margin-bottom:0; }
+.pin-controls { display:flex; gap:6px; align-items:center; }
+.pin-controls input[type=number] { width:56px; margin-bottom:0; padding:6px 8px; }
+.pin-controls button { padding:6px 10px; font-size:10px; }
+#login-screen { max-width:340px; margin:120px auto; }
+.hidden { display:none !important; }
+img.thumb { width:44px; height:44px; object-fit:cover; display:block; border:1px solid #eee; }
+
+/* Preview panel — mirrors the live article template's typography */
+.preview-panel { background:#fff; border:1px solid #e8e8e6; padding:32px; max-width:600px; }
+.preview-panel .art-tag { font-size:10px; font-weight:500; letter-spacing:.16em; text-transform:uppercase; color:#999; margin-bottom:14px; }
+.preview-panel h1 { font-size:26px; font-weight:400; letter-spacing:-.02em; line-height:1.25; color:#1a1a1a; margin-bottom:10px; text-transform:none; }
+.preview-panel .art-meta { font-size:11px; font-weight:300; letter-spacing:.06em; color:#bbb; margin-bottom:24px; text-transform:uppercase; }
+.preview-panel p { font-size:14px; font-weight:300; line-height:1.85; color:#333; margin-bottom:18px; }
+.preview-panel h2 { font-size:16px; font-weight:500; color:#1a1a1a; margin:28px 0 10px; text-transform:none; letter-spacing:-.01em; }
+.preview-panel img.art-preview-img { max-width:280px; display:block; margin:20px auto; border-radius:2px; }
+.preview-panel .products { background:#faf9f7; border:1px solid #eee; padding:18px 20px; margin-top:20px; font-size:12px; }
+.preview-panel .products div { margin-bottom:6px; }
+</style>
+</head>
+<body>
+
+<div id="login-screen" class="wrap">
+  <h1>Calm Veritas — Admin</h1>
+  <p class="sub">Enter the admin password to continue.</p>
+  <div id="login-msg"></div>
+  <label for="pw">Password</label>
+  <input type="password" id="pw" autocomplete="current-password">
+  <button id="login-btn">Log in</button>
+</div>
+
+<div id="dashboard" class="wrap hidden">
+  <div style="display:flex;justify-content:space-between;align-items:baseline;">
+    <div>
+      <h1>Calm Veritas — Admin</h1>
+      <p class="sub">All articles — from the daily scheduled task and from here.</p>
+    </div>
+    <button class="secondary" id="logout-btn">Log out</button>
+  </div>
+
+  <div id="global-msg"></div>
+
+  <h2>Articles (<span id="article-count">0</span>)</h2>
+  <div class="card" style="padding:0;overflow-x:auto;">
+    <table>
+      <thead>
+        <tr><th>Article</th><th>Category</th><th>Date</th><th>Status</th><th>Pin</th></tr>
+      </thead>
+      <tbody id="articles-tbody"></tbody>
+    </table>
+  </div>
+
+  <h2>New article</h2>
+  <div class="card">
+    <div class="row">
+      <div>
+        <label>Title</label>
+        <input type="text" id="f-title">
+      </div>
+      <div>
+        <label>Author</label>
+        <input type="text" id="f-author" value="Anna">
+      </div>
+    </div>
+    <label>Excerpt (1–2 sentences, shown on cards)</label>
+    <textarea id="f-excerpt" style="min-height:60px;"></textarea>
+    <div class="row">
+      <div>
+        <label>Category</label>
+        <select id="f-cat">
+          <option value="sleep">Sleep</option>
+          <option value="anxiety">Anxiety</option>
+          <option value="focus">Focus</option>
+          <option value="stoicism">Stoicism</option>
+          <option value="health">Health</option>
+          <option value="books">Books</option>
+          <option value="sport">Sport</option>
+        </select>
+      </div>
+      <div>
+        <label>Tag (shown on the card, e.g. "Health")</label>
+        <input type="text" id="f-tag" value="Health">
+      </div>
+    </div>
+    <label>Cover image (will be re-encoded as a real JPEG in your browser before upload)</label>
+    <input type="file" id="f-image" accept="image/*">
+    <div class="small" id="image-status" style="margin-bottom:16px;"></div>
+
+    <label>Body — plain text, blank line = new paragraph. Or paste raw HTML and check the box below.</label>
+    <textarea id="f-body" style="min-height:220px;"></textarea>
+    <label style="display:flex;align-items:center;gap:6px;text-transform:none;font-size:12px;">
+      <input type="checkbox" id="f-raw-html" style="width:auto;margin:0;"> This is already HTML — don't auto-paragraph it
+    </label>
+
+    <h2 style="margin-top:24px;">Amazon / product links (optional)</h2>
+    <div id="products-list"></div>
+    <button type="button" class="secondary" id="add-product-btn" style="margin-bottom:16px;">+ Add product</button>
+
+    <div class="row">
+      <div>
+        <label style="display:flex;align-items:center;gap:6px;text-transform:none;font-size:12px;">
+          <input type="checkbox" id="f-sponsored" style="width:auto;margin:0;"> Sponsored content (shows a "Sponsored" disclosure)
+        </label>
+      </div>
+      <div>
+        <label>Pin as homepage hero for N days (optional, 1–90)</label>
+        <input type="number" id="f-pindays" min="1" max="90" placeholder="e.g. 7">
+      </div>
+    </div>
+
+    <div class="btn-row">
+      <button id="save-draft-btn">Save draft</button>
+      <button class="secondary" id="preview-btn">Preview</button>
+      <button id="publish-btn" disabled title="Save a draft first">Publish live</button>
+    </div>
+  </div>
+
+  <div id="preview-wrap" class="hidden">
+    <h2>Preview</h2>
+    <div class="preview-panel" id="preview-content"></div>
+  </div>
+
+  <h2>Drafts</h2>
+  <div class="card" style="padding:0;overflow-x:auto;">
+    <table>
+      <thead><tr><th>Title</th><th>Category</th><th>Updated</th><th>Actions</th></tr></thead>
+      <tbody id="drafts-tbody"></tbody>
+    </table>
+  </div>
+</div>
+
+<script>
+const TOPIC_LABELS = { sleep:'Sleep', anxiety:'Anxiety', focus:'Focus', stoicism:'Stoicism', health:'Health', books:'Books', sport:'Sport' };
+
+function $(id) { return document.getElementById(id); }
+function showMsg(el, text, ok) {
+  el.innerHTML = text ? `<div class="msg ${ok ? 'ok' : 'err'}">${text}</div>` : '';
+}
+function escHtml(s) {
+  return String(s || '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
+function autoParagraphs(text) {
+  return String(text || '').split(/\n\s*\n/).map(b => b.trim()).filter(Boolean)
+    .map(b => `<p>${escHtml(b).replace(/\n/g,'<br>')}</p>`).join('\n');
+}
+
+/* ── auth ── */
+async function api(path, opts) {
+  const res = await fetch(path, { credentials: 'same-origin', ...opts });
+  let data = {};
+  try { data = await res.json(); } catch {}
+  if (!res.ok) throw new Error(data.error || `Request failed (${res.status})`);
+  return data;
+}
+
+$('login-btn').addEventListener('click', doLogin);
+$('pw').addEventListener('keydown', e => { if (e.key === 'Enter') doLogin(); });
+
+async function doLogin() {
+  const pw = $('pw').value;
+  $('login-btn').disabled = true;
+  try {
+    await api('/api/admin-login', { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({ password: pw }) });
+    $('login-screen').classList.add('hidden');
+    $('dashboard').classList.remove('hidden');
+    loadEverything();
+  } catch (e) {
+    showMsg($('login-msg'), e.message, false);
+  } finally {
+    $('login-btn').disabled = false;
+  }
+}
+
+$('logout-btn').addEventListener('click', async () => {
+  await api('/api/admin-logout', { method:'POST' });
+  location.reload();
+});
+
+/* ── articles table ── */
+async function loadArticles() {
+  const data = await api('/api/admin-articles');
+  const tbody = $('articles-tbody');
+  tbody.innerHTML = '';
+  $('article-count').textContent = data.articles.length;
+  data.articles.forEach(a => {
+    const isPinned = a.pinnedUntil && new Date(a.pinnedUntil).getTime() > Date.now();
+    const tr = document.createElement('tr');
+    tr.innerHTML = `
+      <td><img class="thumb" src="${a.img || ''}" alt=""><div style="margin-top:4px;max-width:260px;">${escHtml(a.title)}</div></td>
+      <td>${TOPIC_LABELS[a.cat] || a.cat}</td>
+      <td>${escHtml(a.date)}</td>
+      <td>${isPinned ? `<span class="pin-badge">Pinned to ${a.pinnedUntil}</span>` : ''}${a.sponsored ? '<span class="spon-badge">Sponsored</span>' : ''}</td>
+      <td>
+        <div class="pin-controls">
+          <input type="number" min="1" max="90" placeholder="days" data-id="${a.id}" class="pin-days-input">
+          <button type="button" class="secondary pin-btn" data-id="${a.id}">Pin</button>
+          ${isPinned ? `<button type="button" class="danger unpin-btn" data-id="${a.id}">Unpin</button>` : ''}
+        </div>
+      </td>`;
+    tbody.appendChild(tr);
+  });
+  tbody.querySelectorAll('.pin-btn').forEach(btn => btn.addEventListener('click', onPinClick));
+  tbody.querySelectorAll('.unpin-btn').forEach(btn => btn.addEventListener('click', onUnpinClick));
+}
+
+async function onPinClick(e) {
+  const id = e.target.dataset.id;
+  const input = document.querySelector(`.pin-days-input[data-id="${id}"]`);
+  const days = parseInt(input.value, 10);
+  if (!days || days < 1 || days > 90) { showMsg($('global-msg'), 'Enter days (1–90) for that article first.', false); return; }
+  e.target.disabled = true;
+  try {
+    await api('/api/admin-pin', { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({ id, days }) });
+    showMsg($('global-msg'), `Pinned "${id}" for ${days} day(s).`, true);
+    loadArticles();
+  } catch (err) {
+    showMsg($('global-msg'), err.message, false);
+  } finally {
+    e.target.disabled = false;
+  }
+}
+
+async function onUnpinClick(e) {
+  const id = e.target.dataset.id;
+  e.target.disabled = true;
+  try {
+    await api('/api/admin-pin', { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({ id, unpin: true }) });
+    showMsg($('global-msg'), `Unpinned "${id}".`, true);
+    loadArticles();
+  } catch (err) {
+    showMsg($('global-msg'), err.message, false);
+  } finally {
+    e.target.disabled = false;
+  }
+}
+
+/* ── product rows ── */
+function addProductRow(vals) {
+  vals = vals || {};
+  const div = document.createElement('div');
+  div.className = 'product-row';
+  div.innerHTML = `
+    <input type="text" placeholder="Product name" class="p-name" value="${escHtml(vals.name||'')}" style="flex:1;">
+    <input type="text" placeholder="Short description" class="p-desc" value="${escHtml(vals.desc||'')}" style="flex:1;">
+    <input type="url" placeholder="Amazon URL" class="p-url" value="${escHtml(vals.url||'')}" style="flex:1;">
+    <button type="button" class="secondary remove-product-btn" style="padding:9px 12px;">✕</button>`;
+  div.querySelector('.remove-product-btn').addEventListener('click', () => div.remove());
+  $('products-list').appendChild(div);
+}
+$('add-product-btn').addEventListener('click', () => addProductRow());
+
+function collectProducts() {
+  return Array.from($('products-list').querySelectorAll('.product-row')).map(row => ({
+    name: row.querySelector('.p-name').value.trim(),
+    desc: row.querySelector('.p-desc').value.trim(),
+    url: row.querySelector('.p-url').value.trim(),
+  })).filter(p => p.name && p.url);
+}
+
+/* ── image: re-encode to a real JPEG client-side (canvas) before it ever leaves the browser ── */
+let currentImageDataUrl = '';
+$('f-image').addEventListener('change', async (e) => {
+  const file = e.target.files[0];
+  if (!file) return;
+  $('image-status').textContent = 'Processing…';
+  try {
+    currentImageDataUrl = await fileToJpegDataUrl(file, 1600);
+    $('image-status').textContent = `Ready (${Math.round(currentImageDataUrl.length/1024)} KB as JPEG).`;
+  } catch (err) {
+    $('image-status').textContent = 'Could not process that image: ' + err.message;
+    currentImageDataUrl = '';
+  }
+});
+
+function fileToJpegDataUrl(file, maxDim) {
+  return new Promise((resolve, reject) => {
+    const img = new Image();
+    const reader = new FileReader();
+    reader.onload = () => { img.src = reader.result; };
+    reader.onerror = () => reject(new Error('Could not read file.'));
+    img.onload = () => {
+      let { width, height } = img;
+      if (width > maxDim || height > maxDim) {
+        const scale = maxDim / Math.max(width, height);
+        width = Math.round(width * scale);
+        height = Math.round(height * scale);
+      }
+      const canvas = document.createElement('canvas');
+      canvas.width = width; canvas.height = height;
+      const ctx = canvas.getContext('2d');
+      ctx.fillStyle = '#fff'; ctx.fillRect(0, 0, width, height); // flatten transparency
+      ctx.drawImage(img, 0, 0, width, height);
+      resolve(canvas.toDataURL('image/jpeg', 0.85));
+    };
+    img.onerror = () => reject(new Error('Not a readable image.'));
+    reader.readAsDataURL(file);
+  });
+}
+
+/* ── draft save / preview / publish ── */
+let currentDraftId = '';
+
+function readForm() {
+  return {
+    id: currentDraftId || undefined,
+    title: $('f-title').value.trim(),
+    excerpt: $('f-excerpt').value.trim(),
+    cat: $('f-cat').value,
+    tag: $('f-tag').value.trim() || TOPIC_LABELS[$('f-cat').value],
+    author: $('f-author').value.trim() || 'Anna',
+    bodyHtml: $('f-raw-html').checked ? $('f-body').value : autoParagraphs($('f-body').value),
+    products: collectProducts(),
+    sponsored: $('f-sponsored').checked,
+    pinDays: $('f-pindays').value ? parseInt($('f-pindays').value, 10) : null,
+    imageDataUrl: currentImageDataUrl || undefined,
+  };
+}
+
+$('save-draft-btn').addEventListener('click', async () => {
+  const payload = readForm();
+  if (!payload.title || !payload.excerpt || !payload.bodyHtml) {
+    showMsg($('global-msg'), 'Title, excerpt and body are required.', false);
+    return;
+  }
+  $('save-draft-btn').disabled = true;
+  try {
+    const data = await api('/api/admin-draft', { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify(payload) });
+    currentDraftId = data.draft.id;
+    $('publish-btn').disabled = false;
+    showMsg($('global-msg'), `Draft saved (id: ${currentDraftId}).`, true);
+    loadDrafts();
+  } catch (err) {
+    showMsg($('global-msg'), err.message, false);
+  } finally {
+    $('save-draft-btn').disabled = false;
+  }
+});
+
+$('preview-btn').addEventListener('click', () => {
+  const f = readForm();
+  const productsHtml = f.products.length ? `
+    <div class="products">
+      <div style="font-weight:500;margin-bottom:8px;">Referenced &amp; Recommended</div>
+      ${f.products.map(p => `<div>• <strong>${escHtml(p.name)}</strong> — ${escHtml(p.desc)}</div>`).join('')}
+    </div>` : '';
+  const sponsoredNote = f.sponsored ? `<p class="small">This is sponsored content.</p>` : '';
+  $('preview-content').innerHTML = `
+    <div class="art-tag">${escHtml(f.tag)}</div>
+    <h1>${escHtml(f.title) || '(untitled)'}</h1>
+    <div class="art-meta">${new Date().toLocaleDateString('en-US',{month:'long',day:'numeric',year:'numeric'})} · preview</div>
+    ${sponsoredNote}
+    ${currentImageDataUrl ? `<img class="art-preview-img" src="${currentImageDataUrl}">` : ''}
+    ${f.bodyHtml || '<p class="small">(no body yet)</p>'}
+    ${productsHtml}
+  `;
+  $('preview-wrap').classList.remove('hidden');
+  $('preview-wrap').scrollIntoView({ behavior:'smooth' });
+});
+
+$('publish-btn').addEventListener('click', async () => {
+  if (!currentDraftId) return;
+  if (!confirm('Publish this article live now? This commits to GitHub and goes live in ~1 minute.')) return;
+  $('publish-btn').disabled = true;
+  try {
+    const data = await api('/api/admin-publish', { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({ id: currentDraftId }) });
+    showMsg($('global-msg'), `Published: <a href="${data.url}" target="_blank">${data.url}</a>${data.pinnedUntil ? ` — pinned until ${data.pinnedUntil}` : ''}`, true);
+    loadArticles();
+    loadDrafts();
+  } catch (err) {
+    showMsg($('global-msg'), err.message, false);
+  } finally {
+    $('publish-btn').disabled = false;
+  }
+});
+
+/* ── drafts list ── */
+async function loadDrafts() {
+  const data = await api('/api/admin-draft');
+  const tbody = $('drafts-tbody');
+  tbody.innerHTML = '';
+  (data.drafts || []).filter(d => d.status === 'draft').forEach(d => {
+    const tr = document.createElement('tr');
+    tr.innerHTML = `
+      <td>${escHtml(d.title)}</td>
+      <td>${TOPIC_LABELS[d.cat] || d.cat}</td>
+      <td>${new Date(d.updated_at).toLocaleString()}</td>
+      <td class="btn-row">
+        <button type="button" class="secondary load-draft-btn" data-id="${d.id}" style="padding:6px 10px;font-size:10px;">Edit</button>
+        <button type="button" class="danger delete-draft-btn" data-id="${d.id}" style="padding:6px 10px;font-size:10px;">Delete</button>
+      </td>`;
+    tbody.appendChild(tr);
+  });
+  tbody.querySelectorAll('.load-draft-btn').forEach(btn => btn.addEventListener('click', () => loadDraftIntoForm(btn.dataset.id, data.drafts)));
+  tbody.querySelectorAll('.delete-draft-btn').forEach(btn => btn.addEventListener('click', () => deleteDraft(btn.dataset.id)));
+}
+
+function loadDraftIntoForm(id, drafts) {
+  const d = (drafts || []).find(x => x.id === id);
+  if (!d) return;
+  currentDraftId = d.id;
+  $('f-title').value = d.title || '';
+  $('f-excerpt').value = d.excerpt || '';
+  $('f-cat').value = d.cat || 'health';
+  $('f-tag').value = d.tag || '';
+  $('f-author').value = d.author || 'Anna';
+  $('f-body').value = d.body_html || '';
+  $('f-raw-html').checked = true; // stored body is already HTML
+  $('f-sponsored').checked = !!d.sponsored;
+  $('f-pindays').value = d.pin_days || '';
+  $('products-list').innerHTML = '';
+  (d.products || []).forEach(p => addProductRow(p));
+  currentImageDataUrl = d.image_data_url || '';
+  $('image-status').textContent = currentImageDataUrl ? 'Using previously saved image.' : '';
+  $('publish-btn').disabled = false;
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+  showMsg($('global-msg'), `Loaded draft "${d.title}" for editing.`, true);
+}
+
+async function deleteDraft(id) {
+  if (!confirm('Delete this draft? This cannot be undone.')) return;
+  await api('/api/admin-draft', { method:'DELETE', headers:{'Content-Type':'application/json'}, body: JSON.stringify({ id }) });
+  loadDrafts();
+}
+
+function loadEverything() {
+  loadArticles().catch(e => showMsg($('global-msg'), e.message, false));
+  loadDrafts().catch(e => showMsg($('global-msg'), e.message, false));
+}
+</script>
+</body>
+</html>
