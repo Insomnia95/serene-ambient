@@ -654,7 +654,14 @@ function renderHomepageArticles(topic) {
 
   if (topic === 'all') {
     // Gallery view: hero + one horizontal section per topic
-    const heroSource = ARTICLES.find(a => a.featured) || ARTICLES[0];
+    // Hero always shows the newest article (by date), so the daily
+    // content-engine's latest post surfaces automatically — regardless
+    // of insertion order or the (legacy) `featured` flag.
+    const heroSource = ARTICLES.reduce((newest, a) => {
+      const t = new Date(a.date).getTime() || 0;
+      const bestT = newest ? (new Date(newest.date).getTime() || 0) : -1;
+      return t >= bestT ? a : newest;
+    }, null);
     renderHero(heroSource);
 
     TOPIC_ORDER.forEach(cat => {
