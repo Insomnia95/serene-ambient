@@ -84,16 +84,6 @@ img.thumb { width:44px; height:44px; object-fit:cover; display:block; border:1px
 
   <div id="global-msg"></div>
 
-  <h2>Articles (<span id="article-count">0</span>)</h2>
-  <div class="card" style="padding:0;overflow-x:auto;">
-    <table>
-      <thead>
-        <tr><th>Article</th><th>Category</th><th>Date</th><th>Status</th><th>Pin</th></tr>
-      </thead>
-      <tbody id="articles-tbody"></tbody>
-    </table>
-  </div>
-
   <h2>New article</h2>
   <div class="card">
     <div class="row">
@@ -169,6 +159,16 @@ img.thumb { width:44px; height:44px; object-fit:cover; display:block; border:1px
     <table>
       <thead><tr><th>Title</th><th>Category</th><th>Updated</th><th>Actions</th></tr></thead>
       <tbody id="drafts-tbody"></tbody>
+    </table>
+  </div>
+
+  <h2>Articles (<span id="article-count">0</span>)</h2>
+  <div class="card" style="padding:0;overflow:auto;max-height:520px;">
+    <table>
+      <thead>
+        <tr><th>Article</th><th>Category</th><th>Date</th><th>Status</th><th>Pin</th></tr>
+      </thead>
+      <tbody id="articles-tbody"></tbody>
     </table>
   </div>
 </div>

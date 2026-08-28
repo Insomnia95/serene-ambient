@@ -25,12 +25,16 @@ export default async function handler(req, res) {
   }
 
   if (req.method === 'GET') {
-    const r = await fetch(`${SUPABASE_URL}/rest/v1/drafts?select=*&order=updated_at.desc`, {
-      headers: sbHeaders(),
-    });
-    const data = await r.json().catch(() => []);
-    if (!r.ok) return res.status(502).json({ error: 'Could not list drafts.', detail: data });
-    return res.status(200).json({ drafts: data });
+    try {
+      const r = await fetch(`${SUPABASE_URL}/rest/v1/drafts?select=*&order=updated_at.desc`, {
+        headers: sbHeaders(),
+      });
+      const data = await r.json().catch(() => []);
+      if (!r.ok) return res.status(502).json({ error: 'Could not list drafts.', detail: data });
+      return res.status(200).json({ drafts: data });
+    } catch (e) {
+      return res.status(502).json({ error: 'Could not reach Supabase (check SUPABASE_URL).', detail: String(e && e.message || e) });
+    }
   }
 
   let body = req.body;
@@ -42,11 +46,15 @@ export default async function handler(req, res) {
   if (req.method === 'DELETE') {
     const id = (body.id || '').toString();
     if (!id) return res.status(400).json({ error: 'Missing id.' });
-    const r = await fetch(`${SUPABASE_URL}/rest/v1/drafts?id=eq.${encodeURIComponent(id)}`, {
-      method: 'DELETE',
-      headers: sbHeaders(),
-    });
-    return res.status(r.ok ? 200 : 502).json({ ok: r.ok });
+    try {
+      const r = await fetch(`${SUPABASE_URL}/rest/v1/drafts?id=eq.${encodeURIComponent(id)}`, {
+        method: 'DELETE',
+        headers: sbHeaders(),
+      });
+      return res.status(r.ok ? 200 : 502).json({ ok: r.ok });
+    } catch (e) {
+      return res.status(502).json({ error: 'Could not reach Supabase (check SUPABASE_URL).', detail: String(e && e.message || e) });
+    }
   }
 
   if (req.method === 'POST') {
@@ -93,14 +101,18 @@ export default async function handler(req, res) {
       updated_at: new Date().toISOString(),
     };
 
-    const r = await fetch(`${SUPABASE_URL}/rest/v1/drafts?on_conflict=id`, {
-      method: 'POST',
-      headers: sbHeaders({ Prefer: 'resolution=merge-duplicates,return=representation' }),
-      body: JSON.stringify(payload),
-    });
-    const data = await r.json().catch(() => null);
-    if (!r.ok) return res.status(502).json({ error: 'Could not save draft.', detail: data });
-    return res.status(200).json({ ok: true, draft: Array.isArray(data) ? data[0] : data });
+    try {
+      const r = await fetch(`${SUPABASE_URL}/rest/v1/drafts?on_conflict=id`, {
+        method: 'POST',
+        headers: sbHeaders({ Prefer: 'resolution=merge-duplicates,return=representation' }),
+        body: JSON.stringify(payload),
+      });
+      const data = await r.json().catch(() => null);
+      if (!r.ok) return res.status(502).json({ error: 'Could not save draft.', detail: data });
+      return res.status(200).json({ ok: true, draft: Array.isArray(data) ? data[0] : data });
+    } catch (e) {
+      return res.status(502).json({ error: 'Could not reach Supabase (check SUPABASE_URL).', detail: String(e && e.message || e) });
+    }
   }
 
   res.setHeader('Allow', 'GET, POST, DELETE');
