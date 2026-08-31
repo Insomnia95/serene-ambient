@@ -308,7 +308,7 @@ $('f-image').addEventListener('change', async (e) => {
   if (!file) return;
   $('image-status').textContent = 'Processing…';
   try {
-    currentImageDataUrl = await fileToJpegDataUrl(file, 1600);
+    currentImageDataUrl = await fileToJpegDataUrl(file, 1200);
     $('image-status').textContent = `Ready (${Math.round(currentImageDataUrl.length/1024)} KB as JPEG).`;
   } catch (err) {
     $('image-status').textContent = 'Could not process that image: ' + err.message;
