@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>Journal files | Calm Veritas</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box}body{margin:0;background:#f4f2ed;color:#20201d;font:14px Montserrat,Arial,sans-serif}.shell{max-width:760px;margin:0 auto;padding:50px 20px 90px}.brand{background:#171715;color:#d2b47f;padding:22px 26px;letter-spacing:.24em;text-transform:uppercase;font-size:12px}.panel{background:white;padding:30px;margin-top:18px;border:1px solid #e6e1d8}h1{font:36px Georgia,serif;margin:0 0 12px}p{color:#68675f;line-height:1.7}.small{font-size:12px;color:#8b8981}.field{margin:18px 0}label{display:block;font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:#777;margin-bottom:8px}input[type=password],input[type=file]{width:100%;padding:12px;border:1px solid #dedbd3;background:#fff;font:13px Montserrat,Arial,sans-serif}button{background:#c9a56b;border:0;padding:13px 18px;color:#171715;font:600 11px Montserrat,Arial,sans-serif;letter-spacing:.12em;text-transform:uppercase;cursor:pointer}button:disabled{opacity:.55}.row{display:grid;grid-template-columns:1fr auto;gap:12px;align-items:end}.status{margin:10px 0 0;font-size:12px;color:#54735f}.error{color:#9b4848}.hidden{display:none!important}.item{padding:18px 0;border-bottom:1px solid #eee9df}.item:last-child{border-bottom:0}.message{min-height:20px}@media(max-width:520px){.shell{padding:20px 14px 60px}.panel{padding:22px 18px}h1{font-size:30px}.row{grid-template-columns:1fr}}
+</style></head>
+<body><main class="shell">
+<div class="brand">Calm Veritas · Journal files</div>
+<section class="panel" id="login">
+<h1>Secure journal setup</h1>
+<p>Sign in with the same admin password used for the Calm Veritas publishing dashboard. Then add the matching interior PDF to private storage.</p>
+<div class="field"><label for="password">Admin password</label><input id="password" type="password" autocomplete="current-password"></div>
+<button id="login-button">Sign in</button><div id="login-message" class="message"></div>
+</section>
+<section class="panel hidden" id="uploads">
+<h1>Add journal PDFs</h1>
+<p>Each PDF is stored in a private bucket. Buyers receive a temporary download link only after Paddle confirms payment.</p>
+<div class="item"><label for="anxiety">Anxiety &amp; Calm Journal</label><div class="row"><input id="anxiety" type="file" accept="application/pdf,.pdf"><button data-product="anxiety-calm">Upload PDF</button></div><div class="status" id="status-anxiety-calm"></div></div>
+<div class="item"><label for="dream">Dream &amp; Sleep Journal</label><div class="row"><input id="dream" type="file" accept="application/pdf,.pdf"><button data-product="dream-sleep">Upload PDF</button></div><div class="status" id="status-dream-sleep"></div></div>
+<div class="item"><label for="focus">Focus &amp; Productivity Journal</label><div class="row"><input id="focus" type="file" accept="application/pdf,.pdf"><button data-product="focus-productivity">Upload PDF</button></div><div class="status" id="status-focus-productivity"></div></div>
+<p class="small">This page is private and not linked from the public site. Files can be replaced here without changing the store buttons.</p>
+</section></main>
+<script>
+const $=id=>document.getElementById(id);
+async function api(path,body){const r=await fetch(path,{method:'POST',credentials:'same-origin',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)});let d={};try{d=await r.json()}catch{}if(!r.ok)throw new Error(d.error||'Request failed');return d}
+$('login-button').addEventListener('click',async()=>{const b=$('login-button');b.disabled=true;try{await api('/api/admin-login',{password:$('password').value});$('login').classList.add('hidden');$('uploads').classList.remove('hidden')}catch(e){$('login-message').textContent=e.message;$('login-message').className='message error'}finally{b.disabled=false}});
+document.querySelectorAll('[data-product]').forEach(button=>button.addEventListener('click',async()=>{const product=button.dataset.product;const input=$(product==='anxiety-calm'?'anxiety':product==='dream-sleep'?'dream':'focus');const status=$('status-'+product);if(!input.files||!input.files[0]){status.textContent='Choose the correct journal PDF first.';status.className='status error';return}const file=input.files[0];if(file.type!=='application/pdf'&& !file.name.toLowerCase().endsWith('.pdf')){status.textContent='Please choose a PDF file.';status.className='status error';return}button.disabled=true;status.textContent='Uploading securely…';status.className='status';try{const data=await new Promise((resolve,reject)=>{const reader=new FileReader();reader.onload=()=>resolve(reader.result);reader.onerror=()=>reject(new Error('Could not read file.'));reader.readAsDataURL(file)});await api('/api/admin-journal-upload',{product,file:data});status.textContent='Uploaded. This journal is ready for secure fulfillment.';status.className='status'}catch(e){status.textContent=e.message;status.className='status error'}finally{button.disabled=false}}));
+</script></body></html>
