@@ -1051,24 +1051,54 @@ observeFadeIns();
 </script>
 <!-- Calm Veritas journal shop popup -->
 <style>
-#cv-shop-popup{position:fixed;right:24px;bottom:24px;z-index:9998;width:min(360px,calc(100vw - 32px));padding:27px 28px 25px;background:#171715;color:#f6f3ec;border:1px solid rgba(201,168,111,.48);box-shadow:0 18px 55px rgba(0,0,0,.28);font-family:'Montserrat',sans-serif;transform:translateY(14px);opacity:0;visibility:hidden;transition:opacity .35s ease,transform .35s ease,visibility .35s}
+#cv-shop-popup{position:fixed;right:24px;bottom:24px;z-index:9998;width:min(520px,calc(100vw - 32px));padding:25px;background:#171715;color:#f6f3ec;border:1px solid rgba(201,168,111,.48);box-shadow:0 18px 55px rgba(0,0,0,.28);font-family:'Montserrat',sans-serif;transform:translateY(14px);opacity:0;visibility:hidden;transition:opacity .35s ease,transform .35s ease,visibility .35s}
 #cv-shop-popup.cv-visible{opacity:1;transform:translateY(0);visibility:visible}
+#cv-shop-popup .cv-popup-layout{display:grid;grid-template-columns:minmax(0,1fr) 190px;align-items:center;gap:16px}
+#cv-shop-popup .cv-popup-copy{position:relative;z-index:2}
 #cv-shop-popup .cv-popup-kicker{margin:0 30px 11px 0;color:#c9a86f;font-size:10px;font-weight:600;letter-spacing:.18em;text-transform:uppercase}
-#cv-shop-popup h2{margin:0 25px 9px 0;font-family:Georgia,serif;font-size:26px;line-height:1.18;font-weight:400}
-#cv-shop-popup p{margin:0 0 20px;color:rgba(246,243,236,.72);font-size:13px;line-height:1.65}
-#cv-shop-popup .cv-popup-link{display:inline-flex;align-items:center;gap:10px;padding:12px 16px;background:#c9a86f;color:#171715;text-decoration:none;font-size:11px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;transition:background .2s}
+#cv-shop-popup h2{margin:0 0 10px;font-family:'Montserrat',sans-serif;font-size:25px;letter-spacing:-.03em;line-height:1.2;font-weight:400}
+#cv-shop-popup .cv-popup-description{margin:0 0 18px;color:rgba(246,243,236,.72);font-size:13px;line-height:1.65}
+#cv-shop-popup .cv-popup-link{display:inline-flex;align-items:center;gap:10px;padding:12px 16px;background:#c9a86f;color:#171715;text-decoration:none;font-size:10px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;transition:background .2s}
 #cv-shop-popup .cv-popup-link:hover{background:#dfc28f}
-#cv-shop-popup .cv-popup-close{position:absolute;top:12px;right:13px;width:32px;height:32px;border:0;background:transparent;color:rgba(246,243,236,.7);font-size:23px;line-height:1;cursor:pointer}
+#cv-shop-popup .cv-popup-close{position:absolute;top:8px;right:8px;width:32px;height:32px;border:0;background:transparent;color:rgba(246,243,236,.7);font-size:23px;line-height:1;cursor:pointer;z-index:5}
 #cv-shop-popup .cv-popup-close:hover{color:#fff}
-@media(max-width:600px){#cv-shop-popup{right:12px;bottom:12px;width:calc(100vw - 24px);padding:23px 22px 21px}}
+#cv-shop-popup .cv-journal-stack{position:relative;height:174px;width:190px;perspective:700px}
+#cv-shop-popup .cv-journal{position:absolute;top:18px;width:84px;height:132px;padding:12px 8px 10px;display:flex;flex-direction:column;justify-content:center;text-align:center;color:#f4efe5;border:1px solid rgba(198,164,107,.68);box-shadow:5px 8px 14px rgba(0,0,0,.42);transform-style:preserve-3d}
+#cv-shop-popup .cv-journal:before{content:"";position:absolute;inset:5px;border:1px solid rgba(198,164,107,.28);pointer-events:none}
+#cv-shop-popup .cv-journal:after{content:"";position:absolute;left:0;top:0;bottom:0;width:5px;background:rgba(0,0,0,.25);border-right:1px solid rgba(255,255,255,.07)}
+#cv-shop-popup .cv-journal.anxiety{left:4px;top:28px;background:radial-gradient(ellipse at 50% 40%,#40342c 0,#211d1a 62%,#141312 100%);transform:rotateY(-18deg) rotateZ(-11deg);z-index:1}
+#cv-shop-popup .cv-journal.dream{left:42px;top:7px;background:radial-gradient(ellipse at 50% 38%,#3a3544 0,#211e28 62%,#141317 100%);transform:rotateY(-12deg) rotateZ(-4deg);z-index:2}
+#cv-shop-popup .cv-journal.focus{left:80px;top:22px;background:radial-gradient(ellipse at 50% 38%,#3b4032 0,#20221d 62%,#141512 100%);transform:rotateY(-8deg) rotateZ(5deg);z-index:3}
+#cv-shop-popup .cv-journal.plan{left:116px;top:34px;background:radial-gradient(ellipse at 50% 42%,#41372b 0,#24201b 62%,#151412 100%);transform:rotateY(-5deg) rotateZ(11deg);z-index:4}
+#cv-shop-popup .cv-book-brand{font-size:5px;font-weight:500;letter-spacing:.17em;color:#d0b27e;margin:0 0 10px;position:relative;z-index:1}
+#cv-shop-popup .cv-book-title{font-family:'Montserrat',sans-serif;font-size:10px;font-weight:500;line-height:1.15;letter-spacing:-.04em;position:relative;z-index:1}
+#cv-shop-popup .cv-book-rule{width:15px;border-top:1px solid #c6a46b;margin:8px auto 6px;position:relative;z-index:1}
+#cv-shop-popup .cv-book-sub{font-size:4px;line-height:1.45;letter-spacing:.1em;text-transform:uppercase;color:rgba(246,243,236,.72);position:relative;z-index:1}
+@media(max-width:600px){
+#cv-shop-popup{right:12px;bottom:12px;width:calc(100vw - 24px);max-height:calc(100dvh - 24px);overflow:auto;padding:22px 20px}
+#cv-shop-popup .cv-popup-layout{grid-template-columns:1fr;gap:2px}
+#cv-shop-popup h2{font-size:23px;max-width:280px}
+#cv-shop-popup .cv-popup-description{font-size:12px;margin-bottom:14px}
+#cv-shop-popup .cv-journal-stack{height:112px;width:220px;margin:3px auto 0;transform:scale(.82);transform-origin:top center}
+}
 @media(prefers-reduced-motion:reduce){#cv-shop-popup{transition:none}}
 </style>
 <aside id="cv-shop-popup" role="dialog" aria-modal="false" aria-labelledby="cv-shop-popup-title" aria-describedby="cv-shop-popup-copy">
   <button class="cv-popup-close" type="button" aria-label="Close">×</button>
-  <p class="cv-popup-kicker">Calm Veritas Journals</p>
-  <h2 id="cv-shop-popup-title">A quieter place to begin.</h2>
-  <p id="cv-shop-popup-copy">Explore guided journals for calmer days, better sleep, focused work, and thoughtful planning.</p>
-  <a class="cv-popup-link" href="/shop.html">Visit the shop <span aria-hidden="true">→</span></a>
+  <div class="cv-popup-layout">
+    <div class="cv-popup-copy">
+      <p class="cv-popup-kicker">Calm Veritas Journals</p>
+      <h2 id="cv-shop-popup-title">A quieter place to begin.</h2>
+      <p class="cv-popup-description" id="cv-shop-popup-copy">Explore guided journals for calmer days, better sleep, focused work, and thoughtful planning.</p>
+      <a class="cv-popup-link" href="/shop.html">Visit the shop <span aria-hidden="true">→</span></a>
+    </div>
+    <div class="cv-journal-stack" role="img" aria-label="Four dark guided journals: Anxiety & Calm, Dream & Sleep, Focus & Productivity, and Plan & Reflect">
+      <div class="cv-journal anxiety"><span class="cv-book-brand">CALM VERITAS</span><span class="cv-book-title">Anxiety<br>&amp; Calm</span><span class="cv-book-rule"></span><span class="cv-book-sub">A guided journal<br>for calmer days</span></div>
+      <div class="cv-journal dream"><span class="cv-book-brand">CALM VERITAS</span><span class="cv-book-title">Dream<br>&amp; Sleep</span><span class="cv-book-rule"></span><span class="cv-book-sub">A guided journal<br>for restful nights</span></div>
+      <div class="cv-journal focus"><span class="cv-book-brand">CALM VERITAS</span><span class="cv-book-title">Focus<br>&amp; Productivity</span><span class="cv-book-rule"></span><span class="cv-book-sub">A guided journal<br>for focused work</span></div>
+      <div class="cv-journal plan"><span class="cv-book-brand">CALM VERITAS</span><span class="cv-book-title">Plan<br>&amp; Reflect</span><span class="cv-book-rule"></span><span class="cv-book-sub">A guided journal<br>for intentional days</span></div>
+    </div>
+  </div>
 </aside>
 <script>
 (function(){
