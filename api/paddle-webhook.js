@@ -192,7 +192,7 @@ export default async function handler(req, res) {
   let existing;
   try {
     existing = await supabaseRequest(
-      '/rest/v1/journal_orders?transaction_id=eq.' + encodeURIComponent(transactionId) + '&select=status',
+      '/rest/v1/journal_orders?transaction_id=eq.' + encodeURIComponent(transactionId) + '&select=status,updated_at',
       'GET',
       key,
     );
@@ -204,7 +204,10 @@ export default async function handler(req, res) {
     return res.status(200).json({ ok: true, duplicate: true });
   }
   if (Array.isArray(existing) && existing[0] && existing[0].status === 'processing') {
-    return res.status(200).json({ ok: true, processing: true });
+    const updatedAt = Date.parse(existing[0].updated_at || '');
+    if (Number.isFinite(updatedAt) && Date.now() - updatedAt < 5 * 60 * 1000) {
+      return res.status(200).json({ ok: true, processing: true });
+    }
   }
 
   try {
@@ -252,7 +255,7 @@ export default async function handler(req, res) {
       body: JSON.stringify({
         from: FROM,
         to: [email],
-        reply_to: 'hello@calm-veritas.com',
+        reply_to: 'calmveritas@gmail.com',
         subject: products.length === 1
           ? 'Your ' + products[0].title + ' is ready'
           : 'Your Calm Veritas journals are ready',
