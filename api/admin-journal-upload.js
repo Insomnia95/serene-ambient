@@ -4,6 +4,7 @@ const PRODUCTS = {
   'anxiety-calm': 'anxiety-calm.pdf',
   'dream-sleep': 'dream-sleep.pdf',
   'focus-productivity': 'focus-productivity.pdf',
+  'plan-reflect': 'plan-reflect.pdf',
 };
 
 export default async function handler(req, res) {
