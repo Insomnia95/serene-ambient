@@ -434,6 +434,7 @@ body {
     <nav class="header-nav" id="hn">
       <a href="/blog/" class="header-link">Blog</a>
       <a href="/downloads/">Downloads</a>
+      <a href="/shop.html">Shop</a>
       <a href="/forum.html">Community</a>
       <a href="/contact.html">Contact</a>
       <a href="#email-full" class="subscribe-btn">Subscribe</a>
@@ -775,6 +776,7 @@ body {
       <a href="/">Home</a>
       <a href="/blog/">Blog</a>
       <a href="/downloads/">Downloads</a>
+      <a href="/shop.html">Shop</a>
       <a href="/forum.html">Community</a>
     </div>
     <div class="footer-col">
@@ -1046,6 +1048,45 @@ function handleSubFull(e) {
 renderHomepageArticles('all');
 renderTopicCounts();
 observeFadeIns();
+</script>
+<!-- Calm Veritas journal shop popup -->
+<style>
+#cv-shop-popup{position:fixed;right:24px;bottom:24px;z-index:9998;width:min(360px,calc(100vw - 32px));padding:27px 28px 25px;background:#171715;color:#f6f3ec;border:1px solid rgba(201,168,111,.48);box-shadow:0 18px 55px rgba(0,0,0,.28);font-family:'Montserrat',sans-serif;transform:translateY(14px);opacity:0;visibility:hidden;transition:opacity .35s ease,transform .35s ease,visibility .35s}
+#cv-shop-popup.cv-visible{opacity:1;transform:translateY(0);visibility:visible}
+#cv-shop-popup .cv-popup-kicker{margin:0 30px 11px 0;color:#c9a86f;font-size:10px;font-weight:600;letter-spacing:.18em;text-transform:uppercase}
+#cv-shop-popup h2{margin:0 25px 9px 0;font-family:Georgia,serif;font-size:26px;line-height:1.18;font-weight:400}
+#cv-shop-popup p{margin:0 0 20px;color:rgba(246,243,236,.72);font-size:13px;line-height:1.65}
+#cv-shop-popup .cv-popup-link{display:inline-flex;align-items:center;gap:10px;padding:12px 16px;background:#c9a86f;color:#171715;text-decoration:none;font-size:11px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;transition:background .2s}
+#cv-shop-popup .cv-popup-link:hover{background:#dfc28f}
+#cv-shop-popup .cv-popup-close{position:absolute;top:12px;right:13px;width:32px;height:32px;border:0;background:transparent;color:rgba(246,243,236,.7);font-size:23px;line-height:1;cursor:pointer}
+#cv-shop-popup .cv-popup-close:hover{color:#fff}
+@media(max-width:600px){#cv-shop-popup{right:12px;bottom:12px;width:calc(100vw - 24px);padding:23px 22px 21px}}
+@media(prefers-reduced-motion:reduce){#cv-shop-popup{transition:none}}
+</style>
+<aside id="cv-shop-popup" role="dialog" aria-modal="false" aria-labelledby="cv-shop-popup-title" aria-describedby="cv-shop-popup-copy">
+  <button class="cv-popup-close" type="button" aria-label="Close">×</button>
+  <p class="cv-popup-kicker">Calm Veritas Journals</p>
+  <h2 id="cv-shop-popup-title">A quieter place to begin.</h2>
+  <p id="cv-shop-popup-copy">Explore guided journals for calmer days, better sleep, focused work, and thoughtful planning.</p>
+  <a class="cv-popup-link" href="/shop.html">Visit the shop <span aria-hidden="true">→</span></a>
+</aside>
+<script>
+(function(){
+  var popup=document.getElementById('cv-shop-popup');
+  if(!popup)return;
+  var close=popup.querySelector('.cv-popup-close');
+  var key='cvShopPopupDismissedUntil';
+  var dismissed=false;
+  try{dismissed=Number(localStorage.getItem(key)||0)>Date.now()}catch(e){}
+  if(dismissed)return;
+  window.setTimeout(function(){popup.classList.add('cv-visible')},5000);
+  function dismiss(){
+    popup.classList.remove('cv-visible');
+    try{localStorage.setItem(key,String(Date.now()+7*24*60*60*1000))}catch(e){}
+  }
+  close.addEventListener('click',dismiss);
+  document.addEventListener('keydown',function(e){if(e.key==='Escape'&&popup.classList.contains('cv-visible'))dismiss()});
+})();
 </script>
 </body>
 </html>
