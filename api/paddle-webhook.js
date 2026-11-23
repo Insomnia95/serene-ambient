@@ -21,6 +21,12 @@ const PRODUCTS = {
     object: 'focus-productivity.pdf',
     filename: 'Focus-and-Productivity-Journal.pdf',
   },
+  'pri_01m848p4dqx7b1bdsxp9cc3ar0': {
+    slug: 'plan-reflect',
+    title: 'Plan & Reflect Journal',
+    object: 'plan-reflect.pdf',
+    filename: 'Plan-and-Reflect-Journal.pdf',
+  },
 };
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
